@@ -82,7 +82,7 @@ const porchPois = (() => {
       stage: sorted[0].stage,
       name: `Stage ${sorted[0].stage} — ${address}`,
       where: sorted[0].venue,
-      blurb: sorted.map((s) => `${formatTime(s.start)} ${s.act}`).join(' · '),
+      blurb: sorted.map((s) => `${formatTime(s.start)} ${s.act} — ${s.genre}`).join('  ·  '),
       lat: PORCH_COORDS[address][0],
       lon: PORCH_COORDS[address][1],
       confirmed: true,

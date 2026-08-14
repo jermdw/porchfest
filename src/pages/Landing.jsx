@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
-import guitar from '../assets/guitar-flag.png'
+import wordmark from '../assets/porchfest-wordmark.svg'
 
 const HIGHLIGHTS = [
   ['Free', 'Admission — stroll porch to porch all evening'],
@@ -33,36 +33,31 @@ export default function Landing() {
     <div className="min-h-screen bg-ink flex flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <section className="px-6 pt-12 pb-14">
-          <div className="max-w-4xl mx-auto flex items-center justify-center gap-10">
+        <section className="text-center px-6 pt-14 pb-14">
+          <h1>
+            <span className="block font-script text-flag-bright text-4xl sm:text-5xl mb-4">
+              Senoia
+            </span>
+            {/* The 2026 vector wordmark from the shirt-print design system —
+                same art the printed merch carries. */}
             <img
-              src={guitar}
-              alt=""
-              className="hidden sm:block h-80 w-auto drop-shadow-[0_4px_24px_rgba(202,24,21,0.25)]"
+              src={wordmark}
+              alt="PorchFest 2026"
+              className="w-80 sm:w-[28rem] max-w-full mx-auto drop-shadow-[0_4px_24px_rgba(176,42,48,0.3)]"
             />
-            <div className="text-center">
-              <h1>
-                <span className="block font-script text-flag-bright text-5xl sm:text-6xl mb-1">
-                  Senoia
-                </span>
-                <span className="block font-display text-6xl sm:text-7xl uppercase tracking-wide text-cream font-semibold">
-                  PorchFest
-                </span>
-                <span className="block font-display text-2xl sm:text-3xl uppercase tracking-wide text-cream mt-5">
-                  Sunday, September 6, 2026 &middot; 3&ndash;10pm
-                </span>
-              </h1>
-              <p className="font-display text-lg uppercase tracking-widest text-pale/80 mt-1 mb-10">
-                5th Annual &middot; Live music on the porches of historic Senoia
-              </p>
-              <Link
-                to="/volunteer"
-                className="inline-block bg-flag hover:bg-flag-deep text-cream font-display font-semibold text-xl uppercase tracking-wider px-10 py-4 rounded-md shadow-lg transition-colors"
-              >
-                Volunteer Sign-Up
-              </Link>
-            </div>
-          </div>
+            <span className="block font-display text-2xl sm:text-3xl uppercase tracking-wide text-cream mt-6">
+              Sunday, September 6, 2026 &middot; 3&ndash;10pm
+            </span>
+          </h1>
+          <p className="font-display text-lg uppercase tracking-widest text-pale/80 mt-1 mb-10">
+            5th Annual &middot; Live music on the porches of historic Senoia
+          </p>
+          <Link
+            to="/volunteer"
+            className="inline-block bg-flag hover:bg-flag-deep text-cream font-display font-semibold text-xl uppercase tracking-wider px-10 py-4 rounded-md shadow-lg transition-colors"
+          >
+            Volunteer Sign-Up
+          </Link>
         </section>
 
         <section className="bg-cream py-12 px-4">

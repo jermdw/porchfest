@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import wordmark from '../assets/porchfest-wordmark.svg'
 import { warmRoute } from '../lib/routeLoaders.js'
 
 // Start fetching a lazily-loaded route's chunk as soon as intent is visible, so the
@@ -27,12 +28,9 @@ export default function SiteHeader() {
   return (
     <header className="bg-ink sticky top-0 z-40 shadow-lg shadow-black/30">
       <div className="max-w-5xl mx-auto flex items-center gap-2 px-4 py-2">
-        {/* Text wordmark until real PorchFest art exists — keeps every page light. */}
-        <Link to="/" className="shrink-0 leading-none py-1" onClick={() => setOpen(false)}>
-          <span className="font-script text-flag-bright text-2xl mr-1.5">Senoia</span>
-          <span className="font-display uppercase tracking-wider text-cream text-xl font-semibold">
-            PorchFest
-          </span>
+        {/* The 2026 vector wordmark (11 kB SVG) — same art as the printed merch. */}
+        <Link to="/" className="shrink-0 py-1" onClick={() => setOpen(false)}>
+          <img src={wordmark} alt="Senoia PorchFest 2026 — home" className="h-12 w-auto" />
         </Link>
         <nav className="hidden md:flex flex-1 justify-end items-center">
           {LINKS.map((l) => (

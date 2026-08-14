@@ -4,20 +4,21 @@
 @import "@fontsource/yellowtail";
 @import "tailwindcss";
 
-/* Senoia PorchFest brand — red, white & blue from the official 2026 poster
-   (flag-guitar artwork): flag red #CA1815, deep navy, paper white.
-   `flag` is the accent on light backgrounds and button fill (5:1 on cream);
+/* Senoia PorchFest brand — the exact inks from the 2026 shirt-print design
+   system (~/senoia_car_show/2026_porchfest_shirt_front): navy #101D3A, red
+   #B02A30, warm white #F5F1E6 — the same red/white/blue as the official poster.
+   `flag` is the accent on light backgrounds and button fill (6:1 on cream);
    `flag-bright` is the same red lifted for use ON navy, where true flag red
-   fails contrast (1.6:1); `pale` is the secondary text tint on navy.
+   fails contrast; `pale` is the secondary text tint on navy.
    Not named `red`: a `--color-red` theme token would override Tailwind's stock
    red-* utilities, which the error messages use. Neutrals stay warm stone-*. */
 @theme {
-  --color-cream: #faf8f2;
-  --color-flag: #ca1815;
-  --color-flag-deep: #9e120f;
+  --color-cream: #f5f1e6;
+  --color-flag: #b02a30;
+  --color-flag-deep: #8c1f24;
   --color-flag-bright: #e35a55;
   --color-pale: #cdd3e8;
-  --color-ink: #0a0f2b;
+  --color-ink: #101d3a;
   --font-display: "Oswald", "Arial Narrow", sans-serif;
   --font-script: "Yellowtail", cursive;
 }
