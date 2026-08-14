@@ -166,6 +166,7 @@ async function seedViaRest() {
 
   const str = (v) => ({ stringValue: v })
   const int = (v) => ({ integerValue: String(v) })
+  const transforms = []
   const writes = [{
     update: {
       name: name(`events/${EVENT_ID}`),
@@ -222,8 +223,11 @@ async function seedViaRest() {
         },
       })
     }
+    // The spotsFilled increments go in a SECOND request: a shift doc already has
+    // an update in `writes`, and Firestore rejects a batch that touches the same
+    // document twice.
     for (const [shiftId, n] of newByShift) {
-      writes.push({
+      transforms.push({
         transform: {
           document: name(`events/${EVENT_ID}/shifts/${shiftId}`),
           fieldTransforms: [{ fieldPath: 'spotsFilled', increment: int(n) }],
@@ -233,17 +237,22 @@ async function seedViaRest() {
     console.log(`${volunteers.length - found.size} new pre-registered volunteers to write (${found.size} already present)`)
   }
 
-  const res = await fetch(`${docs}:batchWrite`, {
-    method: 'POST', headers, body: JSON.stringify({ writes }),
-  })
-  if (!res.ok) throw new Error(`batchWrite failed: ${res.status} ${await res.text()}`)
-  // batchWrite is non-atomic: HTTP 200 can still carry per-write failures
-  const body = await res.json()
-  const failed = (body.status ?? []).filter((s) => s.code)
-  if (failed.length) {
-    throw new Error(`batchWrite had ${failed.length} failed writes: ${JSON.stringify(failed.slice(0, 3))}`)
+  await sendBatch(writes, 'main')
+  if (transforms.length) await sendBatch(transforms, 'spotsFilled increments')
+
+  async function sendBatch(w, label) {
+    const res = await fetch(`${docs}:batchWrite`, {
+      method: 'POST', headers, body: JSON.stringify({ writes: w }),
+    })
+    if (!res.ok) throw new Error(`batchWrite (${label}) failed: ${res.status} ${await res.text()}`)
+    // batchWrite is non-atomic: HTTP 200 can still carry per-write failures
+    const body = await res.json()
+    const failed = (body.status ?? []).filter((s) => s.code)
+    if (failed.length) {
+      throw new Error(`batchWrite (${label}) had ${failed.length} failed writes: ${JSON.stringify(failed.slice(0, 3))}`)
+    }
+    console.log(`batchWrite (${label}) applied ${body.writeResults?.length ?? 0} writes (${existing.size} pre-existing shifts preserved)`)
   }
-  console.log(`batchWrite applied ${body.writeResults?.length ?? 0} writes (${existing.size} pre-existing shifts preserved)`)
 }
 
 for (const s of shifts.values()) console.log(`  ${s.day}  ${s.role} (${s.spotsTotal})`)
