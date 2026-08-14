@@ -1,0 +1,26 @@
+@import "@fontsource/oswald/500.css";
+@import "@fontsource/oswald/600.css";
+@import "@fontsource/oswald/700.css";
+@import "@fontsource/yellowtail";
+@import "tailwindcss";
+
+/* Senoia PorchFest brand — built around "haint blue", the traditional Southern
+   porch-ceiling color. `porch` is the mid-tone accent (buttons on ink, large
+   display text), `porch-deep` is the small-text accent on cream (5.9:1), and
+   `porch-pale` plays the role gold-pale plays on the car show site. Neutrals
+   are warm stone-*, matching the sister site. */
+@theme {
+  --color-cream: #f6f1e3;
+  --color-porch: #4f93a8;
+  --color-porch-deep: #2e6273;
+  --color-porch-pale: #cde4ea;
+  --color-ink: #0f181c;
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-script: "Yellowtail", cursive;
+}
+
+/* Public pages end in the ink footer, so overscroll (iOS rubber-banding)
+   must reveal ink, not the browser's default white. */
+html {
+  background-color: var(--color-ink);
+}
