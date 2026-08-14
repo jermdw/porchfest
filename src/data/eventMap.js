@@ -179,9 +179,8 @@ export const POIS = [
     id: 'restrooms',
     category: 'restroom',
     name: 'Restrooms',
-    where: 'Around the festival perimeter',
-    blurb:
-      'Marked locations including the Senoia Housing Authority & Seavy Street Park. Maps of porches and amenities are posted at most intersections.',
+    where: 'Located throughout the venue',
+    blurb: null,
     lat: null, // exact placements pending the organizers' final site plan
     lon: null,
     confirmed: true,
