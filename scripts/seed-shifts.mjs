@@ -1,10 +1,14 @@
 // Seed events/2026/shifts from a CSV (one row per volunteer slot; duplicate
 // rows collapse into a shift's spot count) — same format the car show used.
+//
+// Rows that carry a volunteer name (columns 4-7) are pre-registered volunteers
+// from the organizers' paper sheets: each becomes a `signups` doc (deterministic
+// ID, so re-running never duplicates) and counts toward the shift's spotsFilled.
 // Usage:
-//   node scripts/seed-shifts.mjs data/shifts_template.csv            # against emulator (FIRESTORE_EMULATOR_HOST=localhost:8080)
-//   node scripts/seed-shifts.mjs data/shifts_template.csv --prod     # against production
+//   node scripts/seed-shifts.mjs data/shifts_2026.csv            # against emulator (FIRESTORE_EMULATOR_HOST=localhost:8081)
+//   node scripts/seed-shifts.mjs data/shifts_2026.csv --prod     # against production
 import { readFileSync } from 'node:fs'
-import { createHash } from 'node:crypto'
+import { createHash, randomBytes } from 'node:crypto'
 import { initializeApp } from 'firebase-admin/app'
 import { getFirestore } from 'firebase-admin/firestore'
 
@@ -15,7 +19,7 @@ if (!csvPath) {
   process.exit(1)
 }
 if (!prod && !process.env.FIRESTORE_EMULATOR_HOST) {
-  process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080'
+  process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8081'
 }
 
 const PROJECT_ID = 'senoiaporchfest'
@@ -50,8 +54,9 @@ if (header[0] !== 'What' || header[1] !== 'When') {
 
 // Collapse duplicate rows (one row per slot) into shifts with spot counts.
 const shifts = new Map()
+const volunteers = [] // pre-registered signups from the organizers' sheets
 let sortOrder = 0
-for (const [i, [role, when]] of rows.entries()) {
+for (const [i, [role, when, , first, last, email, phone]] of rows.entries()) {
   if (!role) continue
   if (!when) {
     console.error(`Row ${i + 2}: "${role}" has no When column`)
@@ -75,6 +80,18 @@ for (const [i, [role, when]] of rows.entries()) {
     })
   }
   shifts.get(key).spotsTotal++
+  if (first?.trim() || last?.trim()) {
+    const shiftId = shifts.get(key).id
+    volunteers.push({
+      // Deterministic per (shift, name): re-seeding is idempotent.
+      id: createHash('sha1').update(`${shiftId}|${first}|${last}`).digest('hex').slice(0, 20),
+      shiftId,
+      firstName: (first ?? '').trim(),
+      lastName: (last ?? '').trim(),
+      email: (email ?? '').trim().toLowerCase(),
+      phone: (phone ?? '').trim(),
+    })
+  }
 }
 
 console.log(`Seeding ${shifts.size} shifts (${[...shifts.values()].reduce((n, s) => n + s.spotsTotal, 0)} total spots) → ${prod ? 'PRODUCTION' : 'emulator'}`)
@@ -102,6 +119,30 @@ async function seedViaAdminSdk() {
     batch.set(ref, existing.exists ? data : { ...data, spotsFilled: 0 }, { merge: true })
   }
   await batch.commit()
+
+  // Pre-registered volunteers: create-if-absent, and count only NEW docs toward
+  // spotsFilled so re-runs never double-count. Live signups race through the
+  // signUp callable's transaction, not this script — seeding happens pre-launch.
+  const newByShift = new Map()
+  for (const v of volunteers) {
+    const ref = db.doc(`signups/${v.id}`)
+    if ((await ref.get()).exists) continue
+    await ref.set({
+      eventId: EVENT_ID, shiftId: v.shiftId,
+      firstName: v.firstName, lastName: v.lastName, email: v.email, phone: v.phone,
+      cancelToken: randomBytes(24).toString('hex'),
+      status: 'active',
+      createdAt: new Date(),
+      seededFrom: 'organizer-sheet',
+    })
+    newByShift.set(v.shiftId, (newByShift.get(v.shiftId) ?? 0) + 1)
+  }
+  for (const [shiftId, n] of newByShift) {
+    const ref = db.doc(`events/${EVENT_ID}/shifts/${shiftId}`)
+    const snap = await ref.get()
+    await ref.update({ spotsFilled: (snap.data().spotsFilled ?? 0) + n })
+  }
+  console.log(`Seeded ${[...newByShift.values()].reduce((a, b) => a + b, 0)} pre-registered volunteers (${volunteers.length} on sheet)`)
 }
 
 // The Admin SDK requires ADC/cert credentials; for prod we use the REST API
@@ -151,6 +192,47 @@ async function seedViaRest() {
       updateMask: { fieldPaths },
     })
   }
+  // Pre-registered volunteers: find which signup docs already exist so re-runs
+  // never duplicate a person or double-count spotsFilled.
+  if (volunteers.length) {
+    const bgRes = await fetch(`https://firestore.googleapis.com/v1/${dbPath}/documents:batchGet`, {
+      method: 'POST', headers,
+      body: JSON.stringify({ documents: volunteers.map((v) => name(`signups/${v.id}`)) }),
+    })
+    if (!bgRes.ok) throw new Error(`batchGet failed: ${bgRes.status} ${await bgRes.text()}`)
+    const found = new Set(
+      (await bgRes.json()).filter((r) => r.found).map((r) => r.found.name.split('/').pop()),
+    )
+    const newByShift = new Map()
+    for (const v of volunteers) {
+      if (found.has(v.id)) continue
+      newByShift.set(v.shiftId, (newByShift.get(v.shiftId) ?? 0) + 1)
+      writes.push({
+        update: {
+          name: name(`signups/${v.id}`),
+          fields: {
+            eventId: str(EVENT_ID), shiftId: str(v.shiftId),
+            firstName: str(v.firstName), lastName: str(v.lastName),
+            email: str(v.email), phone: str(v.phone),
+            cancelToken: str(randomBytes(24).toString('hex')),
+            status: str('active'),
+            createdAt: { timestampValue: new Date().toISOString() },
+            seededFrom: str('organizer-sheet'),
+          },
+        },
+      })
+    }
+    for (const [shiftId, n] of newByShift) {
+      writes.push({
+        transform: {
+          document: name(`events/${EVENT_ID}/shifts/${shiftId}`),
+          fieldTransforms: [{ fieldPath: 'spotsFilled', increment: int(n) }],
+        },
+      })
+    }
+    console.log(`${volunteers.length - found.size} new pre-registered volunteers to write (${found.size} already present)`)
+  }
+
   const res = await fetch(`${docs}:batchWrite`, {
     method: 'POST', headers, body: JSON.stringify({ writes }),
   })

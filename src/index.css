@@ -4,19 +4,43 @@
 @import "@fontsource/yellowtail";
 @import "tailwindcss";
 
-/* Senoia PorchFest brand — built around "haint blue", the traditional Southern
-   porch-ceiling color. `porch` is the mid-tone accent (buttons on ink, large
-   display text), `porch-deep` is the small-text accent on cream (5.9:1), and
-   `porch-pale` plays the role gold-pale plays on the car show site. Neutrals
-   are warm stone-*, matching the sister site. */
+/* Senoia PorchFest brand — red, white & blue from the official 2026 poster
+   (flag-guitar artwork): flag red #CA1815, deep navy, paper white.
+   `flag` is the accent on light backgrounds and button fill (5:1 on cream);
+   `flag-bright` is the same red lifted for use ON navy, where true flag red
+   fails contrast (1.6:1); `pale` is the secondary text tint on navy.
+   Not named `red`: a `--color-red` theme token would override Tailwind's stock
+   red-* utilities, which the error messages use. Neutrals stay warm stone-*. */
 @theme {
-  --color-cream: #f6f1e3;
-  --color-porch: #4f93a8;
-  --color-porch-deep: #2e6273;
-  --color-porch-pale: #cde4ea;
-  --color-ink: #0f181c;
+  --color-cream: #faf8f2;
+  --color-flag: #ca1815;
+  --color-flag-deep: #9e120f;
+  --color-flag-bright: #e35a55;
+  --color-pale: #cdd3e8;
+  --color-ink: #0a0f2b;
   --font-display: "Oswald", "Arial Narrow", sans-serif;
   --font-script: "Yellowtail", cursive;
+}
+
+/* Day-of map categories. Deep, muted hues that sit next to flag red and navy
+   without shouting; every one clears 4.5:1 against `cream`. The bright gold
+   `--color-star` is reserved for the SELECTED pin (echoing the yellow VIP star
+   on the official printed map) so "selected" never reads as a category.
+
+   Deliberately NOT in @theme: these are read as `var(--color-cat-<id>)` built
+   from a category id at runtime, never as a utility class, and Tailwind v4
+   drops theme variables no utility references. */
+:root {
+  --color-star: #d9a41f;
+  --color-cat-porch: #24365e;
+  --color-cat-stage: #7c1f3f;
+  --color-cat-vip: #6d4c12;
+  --color-cat-food: #3f6327;
+  --color-cat-drinks: #14595e;
+  --color-cat-kids: #6a2f52;
+  --color-cat-restroom: #1d4a63;
+  --color-cat-parking: #3d3527;
+  --color-cat-aid: #93262c;
 }
 
 /* Public pages end in the ink footer, so overscroll (iOS rubber-banding)

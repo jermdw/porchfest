@@ -12,7 +12,7 @@ Firebase project: `senoiaporchfest`. Sister site to
 npm install
 (cd functions && npm install)
 npx firebase-tools emulators:start --only auth,functions,firestore   # terminal 1
-node scripts/seed-shifts.mjs data/shifts_template.csv                # seed emulator
+node scripts/seed-shifts.mjs data/shifts_2026.csv                    # seed emulator
 npm run dev                                                          # terminal 2 → http://localhost:5174
 ```
 

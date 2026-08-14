@@ -7,7 +7,7 @@ export default function NotFound() {
     <div className="min-h-screen bg-cream flex flex-col">
       <SiteHeader />
       <main className="flex-1 max-w-2xl mx-auto px-4 py-20 w-full text-center">
-        <p className="font-script text-porch text-4xl mb-2">Wrong porch!</p>
+        <p className="font-script text-flag-bright text-4xl mb-2">Wrong porch!</p>
         <h1 className="font-display text-3xl uppercase tracking-wide text-ink mb-4">
           Page Not Found
         </h1>
@@ -17,7 +17,7 @@ export default function NotFound() {
         </p>
         <Link
           to="/"
-          className="inline-block bg-porch hover:bg-porch-deep text-ink hover:text-cream font-display font-semibold uppercase tracking-wider px-8 py-3 rounded-md transition-colors"
+          className="inline-block bg-flag hover:bg-flag-deep text-cream font-display font-semibold uppercase tracking-wider px-8 py-3 rounded-md transition-colors"
         >
           Back to Home
         </Link>

@@ -9,9 +9,10 @@ const db = getFirestore()
 
 const RESEND_API_KEY = defineSecret('RESEND_API_KEY')
 
-// TODO: point both at the custom domain once it's purchased and live.
-const SITE_URL = 'https://senoiaporchfest.web.app'
-const FROM = 'Senoia PorchFest <noreply@senoiaporchfest.web.app>'
+const SITE_URL = 'https://senoiaporchfest.org'
+// Resend can only send from senoiaporchfest.org after the domain is verified
+// there (DNS records) — until then the key stays placeholder and sends skip.
+const FROM = 'Senoia PorchFest <noreply@senoiaporchfest.org>'
 const CONTACT = 'info@enjoysenoia.com'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/

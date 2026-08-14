@@ -31,9 +31,11 @@ export const functions = getFunctions(app)
 export const auth = getAuth(app)
 
 if (import.meta.env.DEV) {
-  connectFirestoreEmulator(db, 'localhost', 8080)
-  connectFunctionsEmulator(functions, 'localhost', 5001)
-  connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
+  // Ports offset from the defaults so this can run beside the car show's
+  // emulator suite (8080/5001/9099) — keep in sync with firebase.json.
+  connectFirestoreEmulator(db, 'localhost', 8081)
+  connectFunctionsEmulator(functions, 'localhost', 5002)
+  connectAuthEmulator(auth, 'http://localhost:9098', { disableWarnings: true })
   // Emulator-only: lets tests sign in without the Google popup flow
   window.__testSignIn = (email) =>
     signInWithCredential(

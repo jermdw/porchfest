@@ -54,9 +54,9 @@ export default function Volunteer() {
       <SiteHeader />
       <header className="bg-ink text-cream px-6 pt-6 pb-8 text-center">
         <h1 className="text-3xl sm:text-4xl font-display font-semibold uppercase tracking-wide">
-          Volunteer <span className="text-porch">Sign-Up</span>
+          Volunteer <span className="text-flag-bright">Sign-Up</span>
         </h1>
-        <p className="text-porch-pale/80 mt-3 max-w-xl mx-auto">
+        <p className="text-pale/80 mt-3 max-w-xl mx-auto">
           PorchFest is free to attend because volunteers make it happen. Pick a
           shift below — no account needed. You'll get a confirmation email with
           a link in case you need to cancel.
@@ -83,7 +83,7 @@ export default function Volunteer() {
         ) : (
           Object.entries(byDay).map(([day, dayShifts]) => (
             <section key={day} className="mb-10">
-              <h2 className="text-xl font-bold text-stone-800 border-b-2 border-porch pb-2 mb-4">
+              <h2 className="text-xl font-bold text-stone-800 border-b-2 border-flag pb-2 mb-4">
                 {DAY_LABELS[day] ?? day}
               </h2>
               <ul className="space-y-3">
@@ -128,7 +128,7 @@ function ShiftRow({ shift, onSignUp }) {
       <button
         onClick={onSignUp}
         disabled={full}
-        className="bg-porch hover:bg-porch-deep disabled:bg-stone-200 disabled:text-stone-400 text-ink hover:text-cream font-bold px-5 py-2 rounded-lg transition-colors"
+        className="bg-flag hover:bg-flag-deep disabled:bg-stone-200 disabled:text-stone-400 text-cream font-bold px-5 py-2 rounded-lg transition-colors"
       >
         Sign Up
       </button>
@@ -190,23 +190,23 @@ function SignupModal({ shift, onClose }) {
               <label className="block col-span-1">
                 <span className="text-sm font-medium text-stone-700">First name</span>
                 <input required value={form.firstName} onChange={set('firstName')} autoComplete="given-name"
-                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-porch" />
+                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flag" />
               </label>
               <label className="block col-span-1">
                 <span className="text-sm font-medium text-stone-700">Last name</span>
                 <input required value={form.lastName} onChange={set('lastName')} autoComplete="family-name"
-                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-porch" />
+                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flag" />
               </label>
             </div>
             <label className="block mb-3">
               <span className="text-sm font-medium text-stone-700">Email</span>
               <input required type="email" value={form.email} onChange={set('email')} autoComplete="email"
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-porch" />
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flag" />
             </label>
             <label className="block mb-5">
               <span className="text-sm font-medium text-stone-700">Phone</span>
               <input required type="tel" value={form.phone} onChange={set('phone')} autoComplete="tel"
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-porch" />
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-flag" />
             </label>
             {state.error && (
               <p className="text-red-600 text-sm mb-3" role="alert">{state.error}</p>
@@ -217,7 +217,7 @@ function SignupModal({ shift, onClose }) {
                 Cancel
               </button>
               <button type="submit" disabled={state.status === 'submitting'}
-                className="flex-1 bg-porch hover:bg-porch-deep disabled:opacity-60 text-ink hover:text-cream font-bold px-4 py-2 rounded-lg">
+                className="flex-1 bg-flag hover:bg-flag-deep disabled:opacity-60 text-cream font-bold px-4 py-2 rounded-lg">
                 {state.status === 'submitting' ? 'Signing up…' : 'Sign Up'}
               </button>
             </div>

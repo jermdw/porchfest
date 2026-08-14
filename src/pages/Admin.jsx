@@ -121,7 +121,7 @@ function SignIn({ linkError, onClearLinkError }) {
     <div className="min-h-screen bg-ink flex items-center justify-center p-4">
       <div className="bg-white rounded-xl p-8 max-w-sm w-full text-center">
         <p className="leading-none mb-4">
-          <span className="font-script text-porch-deep text-3xl mr-1.5">Senoia</span>
+          <span className="font-script text-flag text-3xl mr-1.5">Senoia</span>
           <span className="font-display uppercase tracking-wider text-ink text-2xl font-semibold">
             PorchFest
           </span>
@@ -155,7 +155,7 @@ function SignIn({ linkError, onClearLinkError }) {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               autoComplete="email"
-              className="w-full rounded-lg border border-stone-300 px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-porch"
+              className="w-full rounded-lg border border-stone-300 px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-flag"
             />
             <button
               type="submit"
@@ -303,7 +303,7 @@ function Dashboard({ user }) {
       <header className="bg-ink text-white px-6 py-4 flex flex-wrap items-center gap-3">
         <h1 className="font-bold text-lg flex-1">Senoia PorchFest — Organizer Dashboard</h1>
         <span className="text-stone-300 text-sm">{totalFilled} / {totalSpots} spots filled</span>
-        <button onClick={exportCsv} className="bg-porch text-ink font-semibold px-4 py-2 rounded-lg text-sm">
+        <button onClick={exportCsv} className="bg-flag text-cream font-semibold px-4 py-2 rounded-lg text-sm">
           Export CSV
         </button>
         <button onClick={() => setEditing('new')} className="bg-white/10 px-4 py-2 rounded-lg text-sm">
@@ -331,7 +331,7 @@ function Dashboard({ user }) {
                       <span className="text-stone-500 text-sm ml-2">{shift.time}</span>
                     </button>
                     <span className={`text-sm font-semibold rounded-full px-3 py-1 ${
-                      roster.length >= shift.spotsTotal ? 'bg-green-100 text-green-800' : 'bg-porch-pale text-porch-deep'
+                      roster.length >= shift.spotsTotal ? 'bg-green-100 text-green-800' : 'bg-pale text-flag'
                     }`}>
                       {roster.length} / {shift.spotsTotal}
                     </span>

@@ -22,7 +22,7 @@ export default function Cancel() {
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-md max-w-md w-full p-8 text-center">
-        <p className="text-porch-deep text-sm tracking-widest uppercase font-semibold mb-2">
+        <p className="text-flag text-sm tracking-widest uppercase font-semibold mb-2">
           Senoia PorchFest 2026
         </p>
         {!token ? (
@@ -41,7 +41,7 @@ export default function Cancel() {
               Your spot has been released. Thanks for letting us know — we hope
               to see you at PorchFest!
             </p>
-            <Link to="/volunteer" className="text-porch-deep font-semibold underline">
+            <Link to="/volunteer" className="text-flag font-semibold underline">
               Browse other shifts
             </Link>
           </>
