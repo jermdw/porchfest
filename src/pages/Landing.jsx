@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
+import usePageMeta from '../lib/usePageMeta.js'
 import wordmark from '../assets/porchfest-wordmark.svg'
 
 const HIGHLIGHTS = [
@@ -29,6 +30,13 @@ const SECTIONS = [
 ]
 
 export default function Landing() {
+  usePageMeta({
+    title: 'Senoia PorchFest — Sept 6, 2026 · Historic Senoia, GA',
+    description:
+      'Senoia PorchFest: live music on the porches of historic Senoia, Georgia. Sunday, September 6, 2026, starting at 3pm. Free admission, presented by the Senoia Downtown Development Authority.',
+    path: '/',
+  })
+
   return (
     <div className="min-h-screen bg-ink flex flex-col">
       <SiteHeader />
@@ -43,7 +51,9 @@ export default function Landing() {
             <img
               src={wordmark}
               alt="PorchFest 2026"
-              className="w-80 sm:w-[28rem] max-w-full mx-auto drop-shadow-[0_4px_24px_rgba(176,42,48,0.3)]"
+              width="571"
+              height="264"
+              className="w-80 sm:w-[28rem] max-w-full h-auto mx-auto drop-shadow-[0_4px_24px_rgba(176,42,48,0.3)]"
             />
             <span className="block font-display text-2xl sm:text-3xl uppercase tracking-wide text-cream mt-6">
               Sunday, September 6, 2026 &middot; 3&ndash;10pm

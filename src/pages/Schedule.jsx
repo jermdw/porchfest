@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
+import usePageMeta from '../lib/usePageMeta.js'
 import { publishedPerformances } from '../data/schedule.js'
 
 export default function Schedule() {
+  usePageMeta({
+    title: '2026 Schedule — Who Plays Where & When | Senoia PorchFest',
+    description:
+      'The Senoia PorchFest 2026 schedule: new sets every hour from 3 to 8pm on porches across historic Senoia, plus the Main Stage closing act at 8pm. Free admission.',
+    path: '/schedule',
+  })
+
   const confirmed = publishedPerformances()
 
   // Group by display time so simultaneous sets read as one walkable block.
