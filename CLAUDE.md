@@ -75,11 +75,11 @@ default senoiahistory.com account has a broken token).
 ## Brand
 
 Use the theme tokens in `src/index.css` (`@theme`), not raw Tailwind palette
-colors: `cream` (page bg), `porch`/`porch-deep` (haint blue, buttons/accents),
-`porch-pale`, `ink` (near-black surfaces). Neutrals are warm `stone-*`, never
-`slate`. Fonts: `font-display` (Oswald) and `font-script` (Yellowtail). There
-is no logo art yet — the header/hero wordmarks are text; if real PorchFest art
-arrives, follow the car show's WebP-per-slot pattern.
+colors: `cream` (page bg), `flag`/`flag-deep`/`flag-bright` (flag red,
+buttons/accents), `pale` (soft blue-grey), `ink` (deep navy surfaces).
+Neutrals are warm `stone-*`, never `slate`. Fonts: `font-display` (Oswald) and
+`font-script` (Yellowtail). Hero art is the 2026 vector wordmark
+(`src/assets/porchfest-wordmark.svg`, from the shirt-print design system).
 
 ## Gotchas
 
