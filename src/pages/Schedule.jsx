@@ -57,8 +57,15 @@ export default function Schedule() {
               <ul className="space-y-3">
                 {sets.map((p) => (
                   <li key={`${p.act}|${p.address}`}>
+                    {/* 40 Travis Street is published on the map as the VIP pin,
+                        not a numbered porch (see eventMap.js) — a porch-N link
+                        for it would select nothing. */}
                     <Link
-                      to={p.stage != null ? `/map?poi=porch-${p.stage}` : '/map?poi=stage-main'}
+                      to={
+                        p.stage == null ? '/map?poi=stage-main'
+                        : p.address === '40 Travis Street' ? '/map?poi=vip'
+                        : `/map?poi=porch-${p.stage}`
+                      }
                       className="bg-white rounded-lg shadow-sm border border-stone-200 hover:border-flag transition-colors p-4 flex items-center gap-4"
                     >
                       <span
