@@ -4,6 +4,7 @@ import { httpsCallable } from 'firebase/functions'
 import { db, functions, EVENT_ID } from '../firebase'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
+import usePageMeta from '../lib/usePageMeta.js'
 
 const DAY_LABELS = {
   '2026-09-05': 'Saturday, Sept 5 — Setup',
@@ -12,6 +13,13 @@ const DAY_LABELS = {
 }
 
 export default function Volunteer() {
+  usePageMeta({
+    title: 'Volunteer at Senoia PorchFest 2026',
+    description:
+      'PorchFest runs on volunteers — browse open shifts for setup, festival day, and cleanup (September 5–7, 2026) and sign up in seconds. No account needed.',
+    path: '/volunteer',
+  })
+
   const [shifts, setShifts] = useState(null)
   const [event, setEvent] = useState(null)
   const [loadError, setLoadError] = useState(false)

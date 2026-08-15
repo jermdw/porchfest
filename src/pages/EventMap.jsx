@@ -6,6 +6,7 @@ import CategoryIcon from '../components/CategoryIcon.jsx'
 import MapCanvas from '../components/MapCanvas.jsx'
 import PoiList from '../components/PoiList.jsx'
 import ScheduleList from '../components/ScheduleList.jsx'
+import usePageMeta from '../lib/usePageMeta.js'
 import {
   CATEGORIES,
   POIS,
@@ -14,6 +15,13 @@ import {
 } from '../data/eventMap.js'
 
 export default function EventMap() {
+  usePageMeta({
+    title: 'Day-Of Map — Porch Stages, Food & Parking | Senoia PorchFest',
+    description:
+      'The interactive Senoia PorchFest 2026 festival map: every porch stage, plus food, restrooms, parking, and more across historic Senoia, Georgia.',
+    path: '/map',
+  })
+
   const pois = useMemo(publishedPois, [])
   const schedule = useMemo(publishedSchedule, [])
 

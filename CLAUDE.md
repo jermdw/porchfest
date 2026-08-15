@@ -94,6 +94,14 @@ arrives, follow the car show's WebP-per-slot pattern.
   verify senoiaporchfest.org (DNS records) before `FROM` works.
 - `html` background is `ink` on purpose — iOS overscroll must match the footer.
 - Page content is deliberately hardcoded in components (no CMS).
+- **SEO plumbing**: `public/robots.txt` + `public/sitemap.xml` must list any new
+  public route (the SPA rewrite otherwise answers everything, even robots.txt,
+  with the app shell). `index.html` carries the Event JSON-LD and social-card
+  meta — update dates/status and `share-card-2026.png` each year. Per-route
+  titles/canonicals come from `src/lib/usePageMeta.js`; every new page should
+  call it (`noindex: true` for anything private). senoiaporchfest.org is the
+  canonical host — the `.web.app`/`.firebaseapp.com` mirrors must never be
+  linked or promoted.
 - Dev server port is 5174 so it can run beside the car show repo (5173), and
   the emulators are offset for the same reason: firestore 8081, functions 5002,
   auth 9098, UI 4002 (car show holds the defaults). Port 5000 is unusable on

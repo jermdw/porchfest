@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Senoia PorchFest — Sept 6, 2026 · Historic Senoia, GA</title>
     <meta
@@ -16,6 +18,60 @@
     />
     <meta property="og:url" content="https://senoiaporchfest.org/" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Senoia PorchFest" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://senoiaporchfest.org/share-card-2026.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Senoia PorchFest 2026 — Sunday, September 6, historic Senoia, GA" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://senoiaporchfest.org/share-card-2026.png" />
+    <!-- senoiaporchfest.org is the one canonical host: the Firebase default
+         domains (senoiaporchfest.web.app / .firebaseapp.com) serve identical
+         copies, and this tag keeps them out of the index. -->
+    <link rel="canonical" href="https://senoiaporchfest.org/" />
+    <!-- Event rich-result data. Facts mirror the organizer-provided content in
+         src/ — update dates (and eventStatus if weather forces it) each year. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MusicEvent",
+        "name": "Senoia PorchFest 2026",
+        "startDate": "2026-09-06T15:00:00-04:00",
+        "endDate": "2026-09-06T22:00:00-04:00",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "Place",
+          "name": "Historic Downtown Senoia",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Senoia",
+            "addressRegion": "GA",
+            "postalCode": "30276",
+            "addressCountry": "US"
+          }
+        },
+        "image": [
+          "https://senoiaporchfest.org/share-card-2026.png",
+          "https://senoiaporchfest.org/lineup-poster-2026.png"
+        ],
+        "description": "Live music on the porches of historic Senoia, Georgia — new sets every hour from 3 to 8pm, plus the Main Stage closing act at 8pm. Free admission.",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://senoiaporchfest.org/"
+        },
+        "organizer": {
+          "@type": "Organization",
+          "name": "Senoia Downtown Development Authority",
+          "url": "https://www.enjoysenoia.com/"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

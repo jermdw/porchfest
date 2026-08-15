@@ -7,10 +7,17 @@ import {
   signInWithEmailLink, signInWithPopup, signOut,
 } from 'firebase/auth'
 import { db, auth, EVENT_ID } from '../firebase'
+import usePageMeta from '../lib/usePageMeta.js'
 
 const EMAIL_LINK_KEY = 'spfEmailForSignIn'
 
 export default function Admin() {
+  usePageMeta({
+    title: 'Organizer Dashboard | Senoia PorchFest',
+    description: 'Organizer dashboard for Senoia PorchFest volunteer sign-ups.',
+    noindex: true,
+  })
+
   const [user, setUser] = useState(undefined)
   const [linkError, setLinkError] = useState(null)
   // Set synchronously so the sign-in form never flashes while the link is
