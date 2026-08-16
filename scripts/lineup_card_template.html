@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Senoia PorchFest 2026 Official Lineup Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: 11in 8.5in;
+      margin: 0;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    html, body {
+      width: 11in;
+      height: 8.5in;
+      max-width: 11in;
+      max-height: 8.5in;
+      overflow: hidden;
+      background-color: #F5F1E6;
+      color: #101D3A;
+      font-family: 'Oswald', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .page-container {
+      width: 11in;
+      height: 8.5in;
+      padding: 0.28in 0.35in 0.25in 0.35in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Brand Tokens */
+    :root {
+      --ink: #101D3A;
+      --flag: #B02A30;
+      --flag-deep: #8C1F24;
+      --flag-bright: #E35A55;
+      --cream: #F5F1E6;
+      --pale: #CDD3E8;
+      --card-bg: #FFFFFF;
+      --border: #D6D3D1;
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--ink);
+      color: var(--cream);
+      border-radius: 8px;
+      padding: 10px 20px 8px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 4px solid var(--flag);
+      box-shadow: 0 2px 4px rgba(16, 29, 58, 0.15);
+      flex-shrink: 0;
+    }
+    .header-left h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+    .header-left h1 span {
+      color: var(--flag-bright);
+    }
+    .header-left p {
+      font-size: 11.5px;
+      color: var(--pale);
+      letter-spacing: 0.4px;
+      margin-top: 2px;
+    }
+    .header-right {
+      text-align: right;
+    }
+    .header-right .subtitle {
+      font-family: 'Yellowtail', cursive;
+      color: var(--flag-bright);
+      font-size: 22px;
+      line-height: 1;
+    }
+    .header-right .meta {
+      font-size: 10.5px;
+      color: var(--pale);
+      margin-top: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Callouts: VIP & Main Stage */
+    .callouts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 8px 0;
+      flex-shrink: 0;
+    }
+    .callout-card {
+      background-color: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .callout-card.main-stage {
+      border-color: var(--flag);
+      background: #FFFDF9;
+    }
+    .callout-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--flag);
+      letter-spacing: 0.5px;
+    }
+    .callout-act {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .callout-detail {
+      font-size: 10.5px;
+      color: #57534E;
+      font-weight: 500;
+    }
+
+    /* 5 Hourly Columns */
+    .columns-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      flex: 1;
+      min-height: 0;
+    }
+    .column {
+      background-color: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .column-header {
+      background-color: var(--ink);
+      color: var(--cream);
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2.5px solid var(--flag);
+      flex-shrink: 0;
+    }
+    .column-header h2 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .column-header span {
+      font-size: 9.5px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .column-body {
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    /* Individual Act Card */
+    .act-card {
+      background-color: #FAF8F5;
+      border: 1px solid #E7E5E4;
+      border-radius: 6px;
+      padding: 5px 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      flex: 1;
+      min-height: 0;
+    }
+    .act-card.info-card {
+      background-color: #F1F4F9;
+      border-color: #CDD3E8;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6px 10px;
+    }
+    .act-card.info-card p {
+      font-size: 9px;
+      color: var(--ink);
+      font-weight: 600;
+      line-height: 1.25;
+    }
+    .stage-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background-color: var(--flag);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    }
+    .act-info {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .act-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.15;
+    }
+    .act-genre {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--flag);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+    .act-location {
+      font-size: 8.5px;
+      color: #57534E;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1.5px solid var(--border);
+      padding-top: 6px;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9.5px;
+      color: #57534E;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .footer strong {
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <!-- Top Header Banner -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Senoia PorchFest <span>2026</span> &mdash; Lineup Card</h1>
+      <p>Sunday, September 6, 2026 &bull; Historic Senoia, GA &bull; Music 3:00&ndash;10:00 PM &bull; Free Admission &bull; 41 Acts on ~29 Porches</p>
+    </div>
+    <div class="header-right">
+      <div class="subtitle">Historic Senoia, Georgia</div>
+      <div class="meta">senoiaporchfest.org</div>
+    </div>
+  </div>
+
+  <!-- Special Callouts: VIP Kickoff & Main Stage Closing Act -->
+  <div class="callouts-row">
+    <div class="callout-card">
+      <div>
+        <div class="callout-title">&starf; VIP Kickoff &mdash; 2:00 PM</div>
+        <div class="callout-act">Kellar McCoy <span style="font-weight: normal; font-size: 10.5px; color: var(--flag);">&bull; VIP Luxury Lounge</span></div>
+      </div>
+      <div class="callout-detail">40 Travis St (Farmers' Market)</div>
+    </div>
+
+    <div class="callout-card main-stage">
+      <div>
+        <div class="callout-title">&starf; Main Stage Closing Act &mdash; 8:00 PM</div>
+        <div class="callout-act">Chuck X Nick <span style="font-weight: normal; font-size: 10.5px; color: var(--flag);">&bull; Closing Headliner</span></div>
+      </div>
+      <div class="callout-detail">Bottom of Main St at Travis & Gin</div>
+    </div>
+  </div>
+
+  <!-- 5 Hourly Columns (3 PM - 7 PM) -->
+  <div class="columns-grid">
+
+    <!-- 3:00 PM Column -->
+    <div class="column">
+      <div class="column-header">
+        <h2>3:00 PM</h2>
+        <span>8 Acts</span>
+      </div>
+      <div class="column-body">
+        <div class="act-card">
+          <div class="stage-badge">2</div>
+          <div class="act-info">
+            <div class="act-name">Amir Salam</div>
+            <div class="act-genre">Country</div>
+            <div class="act-location">1 Main St (Senoia Beer Co)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">12</div>
+          <div class="act-info">
+            <div class="act-name">Brain Fog</div>
+            <div class="act-genre">70s, 80s, 90s, 00s Covers</div>
+            <div class="act-location">180 Seavy St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">5</div>
+          <div class="act-info">
+            <div class="act-name">Candler Hobbs</div>
+            <div class="act-genre">Classic Rock</div>
+            <div class="act-location">60 Main St (Olivia James)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">27</div>
+          <div class="act-info">
+            <div class="act-name">Flint River Rev'lers</div>
+            <div class="act-genre">Americana</div>
+            <div class="act-location">31 Morgan St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">16</div>
+          <div class="act-info">
+            <div class="act-name">GRASS</div>
+            <div class="act-genre">60's and 70's Rock</div>
+            <div class="act-location">89 Lower Creek Trl</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">19</div>
+          <div class="act-info">
+            <div class="act-name">James & GA Peaches</div>
+            <div class="act-genre">Pop, Rock, Country & Soul</div>
+            <div class="act-location">252 Seavy St (Veranda Inn)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">7</div>
+          <div class="act-info">
+            <div class="act-name">Mary Martin</div>
+            <div class="act-genre">Indie, Folk, Americana</div>
+            <div class="act-location">22 Main St (Pearl & Pine)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">22</div>
+          <div class="act-info">
+            <div class="act-name">Tyler Lowman Band</div>
+            <div class="act-genre">Country, Southern Rock</div>
+            <div class="act-location">239 Pylant St</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4:00 PM Column -->
+    <div class="column">
+      <div class="column-header">
+        <h2>4:00 PM</h2>
+        <span>8 Acts</span>
+      </div>
+      <div class="column-body">
+        <div class="act-card">
+          <div class="stage-badge">11</div>
+          <div class="act-info">
+            <div class="act-name">David Pippin Group</div>
+            <div class="act-genre">Rock and Blues</div>
+            <div class="act-location">30 Barnes St (Zackie Hart)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">15</div>
+          <div class="act-info">
+            <div class="act-name">Ladega</div>
+            <div class="act-genre">Jam Band, Indie, Rock</div>
+            <div class="act-location">97 Lower Creek Trl</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">8</div>
+          <div class="act-info">
+            <div class="act-name">Last Signal Home</div>
+            <div class="act-genre">Rock</div>
+            <div class="act-location">42 Main St (404 Celsius)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">17</div>
+          <div class="act-info">
+            <div class="act-name">Luke Morgan & Redliners</div>
+            <div class="act-genre">Country Rock</div>
+            <div class="act-location">55 Lower Creek Trl</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">2</div>
+          <div class="act-info">
+            <div class="act-name">Russ Gordon & Rattletrap</div>
+            <div class="act-genre">Country</div>
+            <div class="act-location">1 Main St (Senoia Beer Co)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">1</div>
+          <div class="act-info">
+            <div class="act-name">Tim McGee</div>
+            <div class="act-genre">70s, 90s, R&B, Light Rock</div>
+            <div class="act-location">40 Travis St (Farmers' Mkt)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">21</div>
+          <div class="act-info">
+            <div class="act-name">Whiskey River Saints</div>
+            <div class="act-genre">Southern Rock & Country</div>
+            <div class="act-location">371 Pylant St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">22</div>
+          <div class="act-info">
+            <div class="act-name">Wholly Smokes</div>
+            <div class="act-genre">Classic & Southern Rock</div>
+            <div class="act-location">239 Pylant St</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5:00 PM Column -->
+    <div class="column">
+      <div class="column-header">
+        <h2>5:00 PM</h2>
+        <span>8 Acts</span>
+      </div>
+      <div class="column-body">
+        <div class="act-card">
+          <div class="stage-badge">13</div>
+          <div class="act-info">
+            <div class="act-name">Brian Rivers Band</div>
+            <div class="act-genre">Pop and Rock</div>
+            <div class="act-location">274 Seavy St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">4</div>
+          <div class="act-info">
+            <div class="act-name">Highway 54</div>
+            <div class="act-genre">Blues, Soul and Rock</div>
+            <div class="act-location">70 Main St (Crust & Craft)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">3</div>
+          <div class="act-info">
+            <div class="act-name">Joel Bridges</div>
+            <div class="act-genre">Acoustic, Folk & Rock</div>
+            <div class="act-location">18 Main St (Borgo Italia)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">23</div>
+          <div class="act-info">
+            <div class="act-name">Lucas Smith</div>
+            <div class="act-genre">70s, 80s, Old Country</div>
+            <div class="act-location">270 Pylant St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">14</div>
+          <div class="act-info">
+            <div class="act-name">Luke Brown & Jubilee</div>
+            <div class="act-genre">Country</div>
+            <div class="act-location">77 Lower Creek Trl</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">24</div>
+          <div class="act-info">
+            <div class="act-name">Rob Harlan</div>
+            <div class="act-genre">Classic Rock & Country</div>
+            <div class="act-location">352 Pylant St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">25</div>
+          <div class="act-info">
+            <div class="act-name">Wildcat</div>
+            <div class="act-genre">Classic & Southern Rock</div>
+            <div class="act-location">41 Morgan St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">28</div>
+          <div class="act-info">
+            <div class="act-name">Wyatt Band</div>
+            <div class="act-genre">Dance & Classic Rock</div>
+            <div class="act-location">230 Pylant St</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6:00 PM Column -->
+    <div class="column">
+      <div class="column-header">
+        <h2>6:00 PM</h2>
+        <span>7 Acts</span>
+      </div>
+      <div class="column-body">
+        <div class="act-card">
+          <div class="stage-badge">26</div>
+          <div class="act-info">
+            <div class="act-name">Brian Collins</div>
+            <div class="act-genre">Country / Americana</div>
+            <div class="act-location">57 Morgan St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">6</div>
+          <div class="act-info">
+            <div class="act-name">Cowboy Noyz</div>
+            <div class="act-genre">All Genres</div>
+            <div class="act-location">48 Main St (Glass House)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">20</div>
+          <div class="act-info">
+            <div class="act-name">Greg "Rogan" Rogers</div>
+            <div class="act-genre">Modern Country & Christian</div>
+            <div class="act-location">271 Seavy St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">23</div>
+          <div class="act-info">
+            <div class="act-name">Jake & The Naysayers</div>
+            <div class="act-genre">Jamband & Country</div>
+            <div class="act-location">270 Pylant St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">9</div>
+          <div class="act-info">
+            <div class="act-name">Sarah & Morgan Hendrix</div>
+            <div class="act-genre">Alternative, Indie Pop</div>
+            <div class="act-location">30 Main St (Senoia Coffee)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">18</div>
+          <div class="act-info">
+            <div class="act-name">Souls Hill</div>
+            <div class="act-genre">Southern & Classic Rock</div>
+            <div class="act-location">25 Lower Creek Trl</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">21</div>
+          <div class="act-info">
+            <div class="act-name">Tyler Caldwell</div>
+            <div class="act-genre">Country, Folk & Rock</div>
+            <div class="act-location">371 Pylant St</div>
+          </div>
+        </div>
+        <!-- Festival Tip Card to balance 8-card grid height -->
+        <div class="act-card info-card">
+          <p>🎶 Bring a chair, grab a cold beverage, and please tip the performers!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7:00 PM Column -->
+    <div class="column">
+      <div class="column-header">
+        <h2>7:00 PM</h2>
+        <span>8 Acts</span>
+      </div>
+      <div class="column-body">
+        <div class="act-card">
+          <div class="stage-badge">1</div>
+          <div class="act-info">
+            <div class="act-name">Ashton Dooley Band</div>
+            <div class="act-genre">Americana, Classic Rock</div>
+            <div class="act-location">40 Travis St (Farmers' Mkt)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">7</div>
+          <div class="act-info">
+            <div class="act-name">Atticus Roness</div>
+            <div class="act-genre">Rock n Roll</div>
+            <div class="act-location">22 Main St (Pearl & Pine)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">26</div>
+          <div class="act-info">
+            <div class="act-name">Duncan Brothers Band</div>
+            <div class="act-genre">Country</div>
+            <div class="act-location">57 Morgan St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">2</div>
+          <div class="act-info">
+            <div class="act-name">Gradient</div>
+            <div class="act-genre">Blues and Rock</div>
+            <div class="act-location">1 Main St (Senoia Beer Co)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">10</div>
+          <div class="act-info">
+            <div class="act-name">Grateful To Be</div>
+            <div class="act-genre">Rock</div>
+            <div class="act-location">74 Main St (Buggy Museum)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">19</div>
+          <div class="act-info">
+            <div class="act-name">Joey Thurmond Orch.</div>
+            <div class="act-genre">Rock, Pop, Blues, Gospel</div>
+            <div class="act-location">252 Seavy St (Veranda Inn)</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">29</div>
+          <div class="act-info">
+            <div class="act-name">Rock Soldered Blues</div>
+            <div class="act-genre">Southern & 70s Blues Rock</div>
+            <div class="act-location">258 Pylant St</div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="stage-badge">12</div>
+          <div class="act-info">
+            <div class="act-name">Tavis Lance Mapp</div>
+            <div class="act-genre">Country</div>
+            <div class="act-location">180 Seavy St</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div><strong>Red Badges</strong> = Stage Numbers (Match physical signs at porches)</div>
+    <div>Interactive GPS Map, Schedule & Volunteer Shifts: <strong>senoiaporchfest.org</strong></div>
+    <div>Presented by Senoia Downtown Development Authority (DDA)</div>
+  </div>
+</div>
+
+</body>
+</html>
