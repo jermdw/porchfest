@@ -109,7 +109,7 @@ export const POIS = [
     name: 'VIP Luxury Lounge',
     where: "40 Travis Street — Senoia Farmers' Market",
     blurb:
-      'Presented by BMW of South Atlanta. Doors at 2:00pm with Kellar McCoy; porch sets here at 4:00 (Tim McGee) and 7:00 (Ashton Dooley Band). VIP ticket required — $100, limited.',
+      'Presented by BMW of South Atlanta. Doors at 2:00pm with Kellar McCoy; porch sets here at 4:00 (Tim McGee) and 7:00 (Ashton Dooley Band). VIP ticket required — $100, limited. Buy at senoiaporchfest.org/vip.',
     lat: 33.300254, // TIGER: 40 Travis St
     lon: -84.555167,
     confirmed: true,
@@ -259,7 +259,7 @@ export const SCHEDULE = [
     label: 'VIP Luxury Lounge opens — Kellar McCoy',
     poiId: 'vip',
     detail:
-      "Presented by BMW of South Atlanta at the Senoia Farmers' Market. VIP ticket required ($100, limited).",
+      "Presented by BMW of South Atlanta at the Senoia Farmers' Market. VIP ticket required ($100, limited) — on sale at senoiaporchfest.org/vip.",
     confirmed: true,
   },
   {

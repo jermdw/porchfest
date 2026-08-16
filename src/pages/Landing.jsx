@@ -22,6 +22,11 @@ const SECTIONS = [
     text: 'The interactive festival map: porch stages, food, parking, and more.',
   },
   {
+    to: '/vip',
+    title: 'VIP Tickets',
+    text: 'The VIP Luxury Lounge presented by BMW of South Atlanta — $100, limited.',
+  },
+  {
     to: '/volunteer',
     title: 'Volunteer',
     text: 'PorchFest runs on volunteers — grab a shift and be part of it.',
@@ -82,7 +87,7 @@ export default function Landing() {
         </section>
 
         <section className="bg-cream pb-14 px-4">
-          <div className="max-w-4xl mx-auto grid gap-5 sm:grid-cols-3">
+          <div className="max-w-4xl mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {SECTIONS.map((s) => (
               <Link
                 key={s.to}
