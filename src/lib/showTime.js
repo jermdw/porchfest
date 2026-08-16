@@ -46,3 +46,41 @@ export function currentEntryIndex(schedule, now = new Date()) {
   })
   return index
 }
+
+export const TIME_SLOT_OPTIONS = [
+  { id: 'all', label: 'All Sets' },
+  { id: 'now', label: '⚡ Playing Now' },
+  { id: '14:00', label: '2 PM VIP' },
+  { id: '15:00', label: '3 PM' },
+  { id: '16:00', label: '4 PM' },
+  { id: '17:00', label: '5 PM' },
+  { id: '18:00', label: '6 PM' },
+  { id: '19:00', label: '7 PM' },
+  { id: '20:00', label: '8 PM Main' },
+]
+
+export function getCurrentSlot(now = new Date()) {
+  const { hhmm } = eventLocalParts(now)
+  if (hhmm < '14:00') return '15:00'
+  if (hhmm < '15:00') return '14:00'
+  if (hhmm < '16:00') return '15:00'
+  if (hhmm < '17:00') return '16:00'
+  if (hhmm < '18:00') return '17:00'
+  if (hhmm < '19:00') return '18:00'
+  if (hhmm < '20:00') return '19:00'
+  return '20:00'
+}
+
+export function isPoiActiveInSlot(poi, slot, now = new Date()) {
+  if (!slot || slot === 'all') return true
+  const targetSlot = slot === 'now' ? getCurrentSlot(now) : slot
+
+  // Music stage POIs: check if any scheduled performance starts at targetSlot
+  if (poi.performances && poi.performances.length > 0) {
+    return poi.performances.some((p) => p.start === targetSlot)
+  }
+
+  // Non-music amenities (Food, restrooms, parking, first aid) remain visible
+  return true
+}
+

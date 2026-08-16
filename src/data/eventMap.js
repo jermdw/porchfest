@@ -80,8 +80,16 @@ const porchPois = (() => {
       id: `porch-${sorted[0].stage}`,
       category: 'porch',
       stage: sorted[0].stage,
+      address,
       name: `Stage ${sorted[0].stage} — ${address}`,
       where: sorted[0].venue,
+      directions: `${address}, Senoia, GA 30276`,
+      performances: sorted.map((s) => ({
+        act: s.act,
+        genre: s.genre,
+        start: s.start,
+        time: s.time,
+      })),
       blurb: sorted.map((s) => `${formatTime(s.start)} ${s.act} — ${s.genre}`).join('  ·  '),
       lat: PORCH_COORDS[address][0],
       lon: PORCH_COORDS[address][1],
@@ -98,7 +106,16 @@ export const POIS = [
     category: 'stage',
     name: 'Main Stage',
     where: 'Bottom of Main Street, at Travis & Gin',
+    directions: 'Main Street & Travis Street, Senoia, GA 30276',
     blurb: 'Closing act at 8:00pm — Chuck X Nick.',
+    performances: [
+      {
+        act: 'Chuck X Nick',
+        genre: 'Closing Act',
+        start: '20:00',
+        time: '8:00 PM',
+      },
+    ],
     lat: 33.299966, // node: Main & Travis/Gin junction
     lon: -84.554216,
     confirmed: true,
@@ -108,8 +125,29 @@ export const POIS = [
     category: 'vip',
     name: 'VIP Luxury Lounge',
     where: "40 Travis Street — Senoia Farmers' Market",
+    directions: '40 Travis Street, Senoia, GA 30276',
     blurb:
       'Presented by BMW of South Atlanta. Doors at 2:00pm with Kellar McCoy; porch sets here at 4:00 (Tim McGee) and 7:00 (Ashton Dooley Band). VIP ticket required — $100, limited. Buy at senoiaporchfest.org/vip.',
+    performances: [
+      {
+        act: 'Kellar McCoy',
+        genre: 'VIP Kickoff',
+        start: '14:00',
+        time: '2:00 PM',
+      },
+      {
+        act: 'Tim McGee',
+        genre: '70s, 90s, R&B, Light Rock and Country',
+        start: '16:00',
+        time: '4:00 PM',
+      },
+      {
+        act: 'Ashton Dooley Band',
+        genre: 'Americana, Classic Rock and Country',
+        start: '19:00',
+        time: '7:00 PM',
+      },
+    ],
     lat: 33.300254, // TIGER: 40 Travis St
     lon: -84.555167,
     confirmed: true,

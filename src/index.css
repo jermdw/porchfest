@@ -50,3 +50,13 @@
 html {
   background-color: var(--color-ink);
 }
+
+/* Utilities for touch devices & map UI */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
