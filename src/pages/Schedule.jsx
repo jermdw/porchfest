@@ -50,12 +50,12 @@ export default function Schedule() {
               <span>→</span>
             </Link>
             <a
-              href="/lineup-poster-2026.png"
+              href="/senoia-porchfest-2026-lineup-card.pdf"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 border border-pale/40 hover:border-cream text-pale hover:text-cream font-display uppercase tracking-wider px-4 py-2.5 rounded-lg text-xs transition-colors"
             >
-              <span>🖼️ Lineup Poster (PNG)</span>
+              <span>📄 Download Lineup Card (PDF)</span>
             </a>
           </div>
         </div>
@@ -227,12 +227,12 @@ export default function Schedule() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold text-stone-500">
             <a
-              href="/lineup-poster-2026.png"
+              href="/senoia-porchfest-2026-lineup-card.pdf"
               target="_blank"
               rel="noreferrer"
-              className="text-flag hover:underline"
+              className="text-flag hover:underline inline-flex items-center gap-1 font-semibold"
             >
-              📥 Download 2026 Lineup Poster (PNG)
+              📥 Download Printable Lineup Card (PDF)
             </a>
           </div>
         </footer>
