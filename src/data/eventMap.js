@@ -190,7 +190,7 @@ export const POIS = [
   {
     id: 'parking-vip-maguires',
     category: 'parking',
-    name: "VIP Parking — Maguire's Lot",
+    name: "VIP Parking — Maguire's Parking Lot off Seavy St",
     where: 'Off Travis Street; enter at Johnson & Baggarly',
     blurb: 'Reserved for VIP ticket holders.',
     lat: 33.300077, // OSM: Maguires lot (shared with the car show site's data)
