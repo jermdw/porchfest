@@ -7,11 +7,10 @@ import MapCanvas from '../components/MapCanvas.jsx'
 import PoiList from '../components/PoiList.jsx'
 import ScheduleList from '../components/ScheduleList.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
+import { TIME_SLOT_OPTIONS } from '../lib/showTime.js'
 import {
   CATEGORIES,
-  POIS,
   publishedPois,
-  publishedSchedule,
 } from '../data/eventMap.js'
 
 export default function EventMap() {
@@ -23,16 +22,15 @@ export default function EventMap() {
   })
 
   const pois = useMemo(publishedPois, [])
-  const schedule = useMemo(publishedSchedule, [])
 
-  // Categories that actually have published locations — an empty filter chip is
-  // a dead end for the user and a lie about what's on the map.
+  // Categories that actually have published locations
   const categories = useMemo(
     () => CATEGORIES.filter((c) => pois.some((p) => p.category === c.id)),
     [pois],
   )
 
   const [active, setActive] = useState(() => categories.map((c) => c.id))
+  const [timeSlot, setTimeSlot] = useState('all')
 
   // ?poi=<id> lets a QR code on a sign deep-link straight to one location.
   const [searchParams, setSearchParams] = useSearchParams()
@@ -40,13 +38,19 @@ export default function EventMap() {
 
   const selectPoi = (id) => {
     const next = new URLSearchParams(searchParams)
-    if (id && id !== selectedId) next.set('poi', id)
-    else next.delete('poi')
+    if (id && id !== selectedId) {
+      next.set('poi', id)
+      // If triggered from the schedule tab, switch to map view so the user sees the pin & peek sheet
+      if (view === 'schedule') {
+        next.delete('view')
+      }
+    } else {
+      next.delete('poi')
+    }
     setSearchParams(next, { replace: true })
   }
 
-  // Which tab is showing also lives in the URL, so signage can QR straight to the
-  // schedule (/map?view=schedule) the same way it can QR to a single pin.
+  // Which tab is showing also lives in the URL
   const view = searchParams.get('view') === 'schedule' ? 'schedule' : 'locations'
   const setView = (v) => {
     const next = new URLSearchParams(searchParams)
@@ -55,9 +59,7 @@ export default function EventMap() {
     setSearchParams(next, { replace: true })
   }
 
-  // Arrow/Home/End movement between tabs, per the ARIA tabs pattern. Focus has to
-  // follow the selection: with roving tabindex the old tab drops to tabIndex=-1, so
-  // leaving focus on it breaks the pattern's invariant and announces nothing.
+  // Arrow/Home/End movement between tabs
   const tabRefs = useRef({})
   const onTabKey = (e) => {
     const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End']
@@ -75,22 +77,6 @@ export default function EventMap() {
     tabRefs.current[next]?.focus()
   }
 
-  // Resolved against ALL pois, not just published ones: a confirmed schedule entry
-  // can point at a location that isn't pinned down yet, and the visitor should be
-  // told the event exists with its location pending, not have the link vanish.
-  const scheduleWithPois = useMemo(
-    () =>
-      schedule.map((entry) => {
-        const poi = entry.poiId ? POIS.find((p) => p.id === entry.poiId) ?? null : null
-        return {
-          ...entry,
-          poi: poi?.confirmed ? poi : null,
-          locationPending: !!poi && !poi.confirmed,
-        }
-      }),
-    [schedule],
-  )
-
   const visible = pois.filter((p) => active.includes(p.category))
   const allOn = active.length === categories.length
 
@@ -106,28 +92,48 @@ export default function EventMap() {
         <h1 className="font-display text-4xl uppercase tracking-wide text-ink mb-2">
           PorchFest <span className="text-flag">Day Of</span>
         </h1>
-        <p className="font-script text-flag text-2xl mb-6">
+        <p className="font-script text-flag text-2xl mb-4">
           Sunday, September 6, 2026
         </p>
-        <p className="text-stone-700 mb-8 leading-relaxed">
+        <p className="text-stone-700 mb-6 leading-relaxed">
           Every numbered pin is a porch stage — tap one to see who plays there
           and when. Admission is <strong>free</strong>; music runs 3:00 to
           10:00pm with the closing act at 8:00.
         </p>
 
+        {/* Hourly / Playing Now Filter Bar */}
+        <div className="mb-3 print:hidden">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+            {TIME_SLOT_OPTIONS.map((slot) => {
+              const isSelected = timeSlot === slot.id
+              return (
+                <button
+                  key={slot.id}
+                  type="button"
+                  onClick={() => setTimeSlot(slot.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-display uppercase tracking-wide whitespace-nowrap transition-colors shrink-0 ${
+                    isSelected
+                      ? 'bg-flag text-cream font-bold shadow-sm'
+                      : 'bg-white text-ink border border-stone-300 hover:border-ink'
+                  }`}
+                >
+                  {slot.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
         <MapCanvas
           pois={pois}
           categories={categories}
-          // On the Schedule tab the filter chips are inside the hidden panel, so a
-          // filtered-down map would have no reachable control to restore it. Show
-          // everything there instead.
           activeCategories={view === 'schedule' ? categories.map((c) => c.id) : active}
           selectedId={selectedId}
           onSelect={selectPoi}
+          activeTimeSlot={timeSlot}
         />
 
-        {/* Two intents, one page: "where is it" and "when is it". The map stays above
-            both because schedule entries link to their pin. */}
+        {/* Two intents, one page: "where is it" and "when is it". */}
         <div
           role="tablist"
           aria-label="Day-of guide"
@@ -135,13 +141,15 @@ export default function EventMap() {
         >
           {[
             { id: 'locations', label: 'Find Your Way' },
-            { id: 'schedule', label: 'Schedule' },
+            { id: 'schedule', label: 'Lineup & Schedule' },
           ].map((t) => {
             const on = view === t.id
             return (
               <button
                 key={t.id}
-                ref={(el) => { tabRefs.current[t.id] = el }}
+                ref={(el) => {
+                  tabRefs.current[t.id] = el
+                }}
                 role="tab"
                 id={`tab-${t.id}`}
                 aria-selected={on}
@@ -168,63 +176,72 @@ export default function EventMap() {
           tabIndex={0}
           className={view === 'locations' ? '' : 'hidden print:block'}
         >
-        <div className="mb-6 print:hidden">
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter locations by type">
-            {categories.map((c) => {
-              const on = active.includes(c.id)
-              return (
-                // The chips double as the map's legend, so an active chip is filled
-                // with the same hue its pins use.
+          {/* Single-Row Horizontal Category Scroll Strip (reclaims ~150px height) */}
+          <div className="mb-6 print:hidden">
+            <div
+              className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap"
+              role="group"
+              aria-label="Filter locations by type"
+            >
+              {categories.map((c) => {
+                const on = active.includes(c.id)
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => toggle(c.id)}
+                    aria-pressed={on}
+                    style={
+                      on
+                        ? {
+                            backgroundColor: `var(--color-cat-${c.id})`,
+                            borderColor: `var(--color-cat-${c.id})`,
+                            color: 'var(--color-cream)',
+                          }
+                        : { color: `var(--color-cat-${c.id})` }
+                    }
+                    className={`inline-flex items-center gap-1.5 min-h-10 px-3.5 rounded-full border font-display uppercase tracking-wide text-xs whitespace-nowrap shrink-0 transition-colors ${
+                      on ? 'shadow-sm' : 'bg-white border-stone-300 hover:border-stone-500'
+                    }`}
+                  >
+                    <CategoryIcon category={c.id} className="w-3.5 h-3.5" />
+                    {c.label}
+                  </button>
+                )
+              })}
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setActive(categories.map((c) => c.id))}
+                disabled={allOn}
+                className="min-h-9 text-xs font-semibold text-ink underline underline-offset-2 hover:text-flag disabled:no-underline disabled:text-stone-400 disabled:hover:text-stone-400"
+              >
+                Show all categories
+              </button>
+              {timeSlot !== 'all' && (
                 <button
-                  key={c.id}
                   type="button"
-                  onClick={() => toggle(c.id)}
-                  aria-pressed={on}
-                  style={
-                    on
-                      ? {
-                          backgroundColor: `var(--color-cat-${c.id})`,
-                          borderColor: `var(--color-cat-${c.id})`,
-                          color: 'var(--color-cream)',
-                        }
-                      : { color: `var(--color-cat-${c.id})` }
-                  }
-                  className={`inline-flex items-center gap-2 min-h-11 px-4 rounded-full border font-display uppercase tracking-wide text-sm transition-colors ${
-                    on ? '' : 'bg-white border-stone-300 hover:border-stone-500'
-                  }`}
+                  onClick={() => setTimeSlot('all')}
+                  className="min-h-9 text-xs font-semibold text-flag underline underline-offset-2 hover:text-flag-deep"
                 >
-                  <CategoryIcon category={c.id} className="w-4 h-4" />
-                  {c.label}
+                  Reset time filter
                 </button>
-              )
-            })}
+              )}
+            </div>
           </div>
-          {/* Always rendered, disabled rather than removed: unmounting the control that
-              was just activated drops keyboard and screen-reader focus to <body>. */}
-          <button
-            type="button"
-            onClick={() => setActive(categories.map((c) => c.id))}
-            disabled={allOn}
-            className="mt-3 min-h-11 text-sm font-semibold text-ink underline underline-offset-2 hover:text-flag disabled:no-underline disabled:text-stone-400 disabled:hover:text-stone-400"
-          >
-            Show everything
-          </button>
-        </div>
 
-        {/* The filtered view is for screen; print always gets the complete list,
-            because a handout that silently omits half the venue is worse than none. */}
-        <div className="print:hidden">
-          <PoiList
-            categories={categories}
-            pois={visible}
-            selectedId={selectedId}
-            onSelect={selectPoi}
-          />
-        </div>
-        <div className="hidden print:block">
-          <PoiList categories={categories} pois={pois} idPrefix="poi-print" />
-        </div>
-
+          <div className="print:hidden">
+            <PoiList
+              categories={categories}
+              pois={visible}
+              selectedId={selectedId}
+              onSelect={selectPoi}
+            />
+          </div>
+          <div className="hidden print:block">
+            <PoiList categories={categories} pois={pois} idPrefix="poi-print" />
+          </div>
         </div>
 
         <div
@@ -237,7 +254,7 @@ export default function EventMap() {
           <h2 className="hidden print:block font-display text-2xl uppercase tracking-wide text-ink border-b-2 border-flag pb-2 mb-4 mt-10">
             PorchFest Day Schedule
           </h2>
-          <ScheduleList schedule={scheduleWithPois} onSelectPoi={selectPoi} />
+          <ScheduleList onSelectPoi={selectPoi} />
         </div>
 
         <div className="bg-ink rounded-xl p-6 text-center mt-10 print:hidden">

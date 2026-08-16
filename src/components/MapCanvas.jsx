@@ -2,31 +2,43 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { flushSync } from 'react-dom'
 import Panzoom from '@panzoom/panzoom'
 import CategoryIcon from './CategoryIcon.jsx'
+import PinPeekCard from './PinPeekCard.jsx'
 import { toPercent, isWithinMap, ATTRIBUTION } from '../lib/venueGeo.js'
+import { isPoiActiveInSlot } from '../lib/showTime.js'
 
 const BASE_MAP = '/venue-base-2026-web.webp'
 const MIN_SCALE = 1
 const MAX_SCALE = 6
 
-export default function MapCanvas({ pois, categories, activeCategories, selectedId, onSelect }) {
+export default function MapCanvas({
+  pois,
+  categories,
+  activeCategories,
+  selectedId,
+  onSelect,
+  activeTimeSlot = 'all',
+}) {
   const containerRef = useRef(null)
   const stageRef = useRef(null)
   const panzoomRef = useRef(null)
   const pinRefs = useRef({})
   const [scale, setScale] = useState(1)
 
-  // Gate on isWithinMap, not merely on having coordinates: anything with real
-  // coordinates outside the frame would otherwise render at e.g. left:188% —
-  // invisible behind overflow-hidden, yet still focusable.
+  // Geolocation state
+  const [userPos, setUserPos] = useState(null)
+  const [locating, setLocating] = useState(false)
+  const [locationToast, setLocationToast] = useState(null)
+  const [showTouchHint, setShowTouchHint] = useState(false)
+  const touchHintTimer = useRef(null)
+
+  const selectedPoi = pois.find((p) => p.id === selectedId) || null
+
+  // Gate on isWithinMap, not merely on having coordinates
   const placed = pois
     .filter((p) => isWithinMap(p.lat, p.lon))
     .map((p) => ({ poi: p, pos: toPercent(p.lat, p.lon) }))
 
-  // Some things genuinely share a spot — first aid and the merch tent are both
-  // at Pylant & Gin. Their coordinates are correct and stay untouched; instead
-  // the pins fan out around the shared point so each stays visible and tappable.
-  // Offsets are applied in screen pixels (see the transform below), so the
-  // cluster keeps its shape at any zoom.
+  // Pin fan-out for items sharing exact coordinates (e.g. first aid and merch tent at Pylant & Gin)
   const FAN_RADIUS_PX = 11
   const groups = new Map()
   placed.forEach((p) => {
@@ -53,11 +65,8 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
       minScale: MIN_SCALE,
       maxScale: MAX_SCALE,
       contain: 'outside',
-      // Buttons inside the stage must stay clickable rather than starting a pan.
       excludeClass: 'map-pin',
-      // Own the DOM write explicitly. Relying on panzoom's default write plus its
-      // panzoomchange event left the transform unpainted and `scale` stale after
-      // StrictMode's mount/unmount/mount cycle, which broke the pin counter-scaling.
+      touchAction: 'pan-y', // Lets the browser handle natural vertical page scrolling
       setTransform: (elem, { scale: s, x, y }) => {
         elem.style.transform = `scale(${s}) translate(${x}px, ${y}px)`
         setScale(s)
@@ -67,11 +76,10 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
     const parent = stage.parentElement
     const onWheel = (e) => pz.zoomWithWheel(e)
     parent.addEventListener('wheel', onWheel)
-    // The container clips to its bounds, so printing while zoomed would crop the
-    // handout to whatever the user was looking at. Reset before the print runs;
-    // flushSync so the pins' counter-scale state is committed before the snapshot.
+
     const onBeforePrint = () => flushSync(() => pz.reset({ animate: false }))
     window.addEventListener('beforeprint', onBeforePrint)
+
     return () => {
       parent.removeEventListener('wheel', onWheel)
       window.removeEventListener('beforeprint', onBeforePrint)
@@ -79,8 +87,6 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
     }
   }, [])
 
-  // Measure-and-correct rather than modelling panzoom's transform: read where the
-  // pin actually is on screen and pan by that delta. Pan units are pre-scale, hence /scale.
   const centerOn = useCallback((id) => {
     const pz = panzoomRef.current
     const pin = pinRefs.current[id]
@@ -88,21 +94,16 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
     if (!pz || !pin || !container) return
     const c = container.getBoundingClientRect()
     const p = pin.getBoundingClientRect()
-    // A hidden (filtered-out) pin measures as all zeros, which would pan the map
-    // to a meaningless spot. Its ref is still live, so a null check can't catch it.
     if (!p.width || !p.height) return
     const dx = c.left + c.width / 2 - (p.left + p.width / 2)
     const dy = c.top + c.height / 2 - (p.top + p.height / 2)
     const cur = pz.getPan()
     const s = pz.getScale()
-    // Not animated on purpose: panzoom reports the settled pan immediately while
-    // the element is still easing, so measuring mid-animation overshoots.
     pz.pan(cur.x + dx / s, cur.y + dy / s, { animate: false })
   }, [])
 
   useEffect(() => {
     if (!selectedId) return
-    // Wait a frame so the pin is laid out before measuring it.
     const raf = requestAnimationFrame(() => centerOn(selectedId))
     return () => cancelAnimationFrame(raf)
   }, [selectedId, centerOn])
@@ -113,6 +114,63 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
   }
   const reset = () => panzoomRef.current?.reset({ animate: true })
 
+  // GPS "Locate Me" handler
+  const locateUser = () => {
+    if (!navigator.geolocation) {
+      setLocationToast('Geolocation is not supported by your browser.')
+      setTimeout(() => setLocationToast(null), 3500)
+      return
+    }
+
+    setLocating(true)
+    setLocationToast(null)
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setLocating(false)
+        const { latitude, longitude } = pos.coords
+        if (isWithinMap(latitude, longitude)) {
+          const coords = toPercent(latitude, longitude)
+          setUserPos(coords)
+          setLocationToast('Location found inside festival area!')
+          setTimeout(() => setLocationToast(null), 3000)
+
+          // Pan to user
+          const pz = panzoomRef.current
+          const container = containerRef.current
+          if (pz && container) {
+            const c = container.getBoundingClientRect()
+            const cur = pz.getPan()
+            const s = pz.getScale()
+            const targetX = (coords.x / 100) * c.width
+            const targetY = (coords.y / 100) * c.height
+            const dx = c.width / 2 - targetX
+            const dy = c.height / 2 - targetY
+            pz.pan(cur.x + dx / s, cur.y + dy / s, { animate: true })
+          }
+        } else {
+          setLocationToast('You appear to be outside the historic Senoia festival area.')
+          setTimeout(() => setLocationToast(null), 4000)
+        }
+      },
+      () => {
+        setLocating(false)
+        setLocationToast('Unable to retrieve your location. Check location permissions.')
+        setTimeout(() => setLocationToast(null), 4000)
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 },
+    )
+  }
+
+  // Handle single finger touch gesture hint on mobile
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1 && scale === 1) {
+      if (touchHintTimer.current) clearTimeout(touchHintTimer.current)
+      setShowTouchHint(true)
+      touchHintTimer.current = setTimeout(() => setShowTouchHint(false), 2200)
+    }
+  }
+
   const labelFor = (poi) => {
     const cat = categories.find((c) => c.id === poi.category)
     return `${poi.name}${poi.where ? `, ${poi.where}` : ''}${cat ? ` — ${cat.label}` : ''}`
@@ -122,9 +180,8 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
     <figure className="mb-4">
       <div
         ref={containerRef}
-        // Must match the exported image's aspect exactly, or object-cover crops it
-        // and every pin drifts off its street. Keep in step with BBOX in venueGeo.js.
-        className="relative overflow-hidden rounded-xl border border-stone-200 bg-white aspect-[1478/1339]"
+        onTouchStart={handleTouchStart}
+        className="relative overflow-hidden rounded-xl border border-stone-200 bg-white aspect-[1478/1339] select-none"
       >
         <div ref={stageRef} className="relative w-full h-full origin-center">
           <img
@@ -133,39 +190,55 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
             className="w-full h-full object-cover select-none pointer-events-none"
             draggable="false"
           />
+
+          {/* User Location Pulsing Dot */}
+          {userPos && (
+            <div
+              className="absolute z-25 pointer-events-none -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${userPos.x}%`, top: `${userPos.y}%` }}
+              aria-label="Your location"
+            >
+              <span className="relative flex h-6 w-6">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-6 w-6 bg-sky-600 border-2 border-white shadow-xl items-center justify-center">
+                  <span className="w-2 h-2 rounded-full bg-white"></span>
+                </span>
+              </span>
+            </div>
+          )}
+
           {placed.map(({ poi, pos, fan }) => {
             const isSelected = poi.id === selectedId
-            // Filtered-out pins are hidden on screen but always printed, so the
-            // handout can never show fewer locations than the list beside it.
-            const isActive = activeCategories.includes(poi.category)
+            const isActiveCategory = activeCategories.includes(poi.category)
+            const isSlotActive = isPoiActiveInSlot(poi, activeTimeSlot)
+            const isDimmed = activeTimeSlot !== 'all' && !isSlotActive
+
             return (
               <button
                 key={poi.id}
-                ref={(el) => { pinRefs.current[poi.id] = el }}
+                ref={(el) => {
+                  pinRefs.current[poi.id] = el
+                }}
                 type="button"
                 onClick={() => onSelect?.(poi.id)}
                 aria-label={labelFor(poi)}
                 aria-current={isSelected ? 'true' : undefined}
-                aria-hidden={!isActive}
-                tabIndex={isActive ? undefined : -1}
-                // 36px on phones so pins in tight blocks don't overlap into a
-                // blob; 44px from sm up. Both clear WCAG 2.5.8's 24px minimum.
-                className={`map-pin absolute items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 shadow-md transition-colors print:flex ${
-                  isActive ? 'flex' : 'hidden'
+                aria-hidden={!isActiveCategory}
+                tabIndex={isActiveCategory ? undefined : -1}
+                className={`map-pin absolute items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 shadow-md transition-all print:flex ${
+                  isActiveCategory ? 'flex' : 'hidden'
+                } ${isDimmed ? 'opacity-35 scale-90' : 'opacity-100'} ${
+                  isSlotActive && activeTimeSlot !== 'all' && poi.category === 'porch'
+                    ? 'ring-2 ring-flag ring-offset-1'
+                    : ''
                 }`}
                 style={{
                   left: `${pos.x}%`,
                   top: `${pos.y}%`,
-                  // Counter-scale so the pin stays a constant touch target at any
-                  // zoom. The fan offset is divided by scale because it lives in
-                  // stage coordinates, which the stage's own scale(s) multiplies
-                  // back up — net effect is a constant offset in screen pixels.
                   transform: `translate(-50%, -50%) translate(${(fan?.dx ?? 0) / scale}px, ${
                     (fan?.dy ?? 0) / scale
                   }px) scale(${1 / scale})`,
-                  zIndex: isSelected ? 20 : 10,
-                  // The gold star hue is reserved for the selected pin so it can
-                  // never be mistaken for a category (see index.css).
+                  zIndex: isSelected ? 25 : isSlotActive ? 15 : 10,
                   backgroundColor: isSelected
                     ? 'var(--color-star)'
                     : `var(--color-cat-${poi.category}, var(--color-ink))`,
@@ -174,8 +247,6 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
                 }}
               >
                 {poi.category === 'porch' && poi.stage != null ? (
-                  // Porch pins carry their official stage number — it matches the
-                  // printed schedule card and the signs at each porch.
                   <span className="font-display font-semibold text-sm sm:text-base leading-none">
                     {poi.stage}
                   </span>
@@ -187,14 +258,67 @@ export default function MapCanvas({ pois, categories, activeCategories, selected
           })}
         </div>
 
-        <div className="absolute top-2 right-2 flex flex-col gap-1 print:hidden">
-          <button type="button" onClick={() => zoomBy(1.5)} aria-label="Zoom in"
-            className="w-11 h-11 rounded-md bg-ink text-cream font-display text-xl leading-none shadow">+</button>
-          <button type="button" onClick={() => zoomBy(1 / 1.5)} aria-label="Zoom out"
-            className="w-11 h-11 rounded-md bg-ink text-cream font-display text-xl leading-none shadow">−</button>
-          <button type="button" onClick={reset} aria-label="Reset map view"
-            className="w-11 h-11 rounded-md bg-ink text-cream font-display text-[10px] uppercase tracking-wide shadow">Reset</button>
+        {/* Floating Pin Peek Sheet (Eliminates Pogo-Sticking) */}
+        {selectedPoi && (
+          <PinPeekCard
+            poi={selectedPoi}
+            onClose={() => onSelect(null)}
+            activeTimeSlot={activeTimeSlot}
+          />
+        )}
+
+        {/* Relocated Map Controls (Top Left to keep Seavy St East porches clear) */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5 print:hidden z-20">
+          <button
+            type="button"
+            onClick={() => zoomBy(1.5)}
+            aria-label="Zoom in"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-ink/90 hover:bg-ink text-cream font-display text-xl leading-none shadow-md backdrop-blur flex items-center justify-center transition-colors"
+          >
+            +
+          </button>
+          <button
+            type="button"
+            onClick={() => zoomBy(1 / 1.5)}
+            aria-label="Zoom out"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-ink/90 hover:bg-ink text-cream font-display text-xl leading-none shadow-md backdrop-blur flex items-center justify-center transition-colors"
+          >
+            −
+          </button>
+          <button
+            type="button"
+            onClick={reset}
+            aria-label="Reset map view"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-ink/90 hover:bg-ink text-cream font-display text-[10px] uppercase tracking-wider shadow-md backdrop-blur flex items-center justify-center transition-colors"
+          >
+            Reset
+          </button>
+          <button
+            type="button"
+            onClick={locateUser}
+            disabled={locating}
+            aria-label="Find my location"
+            title="Find my location"
+            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-lg font-display text-xs uppercase shadow-md backdrop-blur flex items-center justify-center transition-colors ${
+              userPos
+                ? 'bg-sky-600 text-white'
+                : locating
+                  ? 'bg-amber-600 text-white animate-pulse'
+                  : 'bg-ink/90 hover:bg-ink text-cream'
+            }`}
+          >
+            {locating ? '...' : '📍'}
+          </button>
         </div>
+
+        {/* Geolocation & Touch Hints Toast */}
+        {(locationToast || showTouchHint) && (
+          <div className="absolute top-3 right-3 left-16 sm:left-20 pointer-events-none z-20 transition-all">
+            <div className="bg-ink/90 text-cream text-xs px-3 py-2 rounded-lg shadow-lg border border-pale/20 backdrop-blur text-center animate-in fade-in">
+              {locationToast || '💡 Tip: Use two fingers to pinch & zoom map'}
+            </div>
+          </div>
+        )}
       </div>
 
       <figcaption className="mt-2 flex flex-wrap justify-between gap-x-4 gap-y-1 text-xs text-stone-600">
