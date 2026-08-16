@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import TicketTailorWidget from '../components/TicketTailorWidget.jsx'
+import usePageMeta from '../lib/usePageMeta.js'
 
 // Recovered from the DDA's enjoysenoia.com PorchFest page before it was
 // redirected here — the same Ticket Tailor events, still live: "Senoia
@@ -31,6 +32,13 @@ const SPONSOR_TIERS = [
 ]
 
 export default function Vip() {
+  usePageMeta({
+    title: 'VIP Luxury Lounge Tickets — $100 | Senoia PorchFest 2026',
+    description:
+      "VIP tickets for Senoia PorchFest 2026: the VIP Luxury Lounge presented by BMW of South Atlanta at the Senoia Farmers' Market — Southern table, drink tickets, reserved parking, PorchFest tee. $100, limited.",
+    path: '/vip',
+  })
+
   return (
     <div className="min-h-screen bg-cream flex flex-col">
       <SiteHeader />
