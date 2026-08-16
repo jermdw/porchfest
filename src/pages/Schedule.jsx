@@ -50,12 +50,12 @@ export default function Schedule() {
               <span>→</span>
             </Link>
             <a
-              href="/schedule-poster-2026.jpg"
+              href="/lineup-poster-2026.png"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 border border-pale/40 hover:border-cream text-pale hover:text-cream font-display uppercase tracking-wider px-4 py-2.5 rounded-lg text-xs transition-colors"
             >
-              <span>📄 Official Schedule Card (JPG)</span>
+              <span>🖼️ Lineup Poster (PNG)</span>
             </a>
           </div>
         </div>
@@ -226,15 +226,6 @@ export default function Schedule() {
             .
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold text-stone-500">
-            <a
-              href="/schedule-poster-2026.jpg"
-              target="_blank"
-              rel="noreferrer"
-              className="text-flag hover:underline"
-            >
-              📥 Download Official 2026 Schedule Card (JPG)
-            </a>
-            <span>•</span>
             <a
               href="/lineup-poster-2026.png"
               target="_blank"

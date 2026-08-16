@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import CategoryIcon from '../components/CategoryIcon.jsx'
@@ -22,6 +22,7 @@ export default function EventMap() {
   })
 
   const pois = useMemo(publishedPois, [])
+  const mapCanvasRef = useRef(null)
 
   // Categories that actually have published locations
   const categories = useMemo(
@@ -40,14 +41,15 @@ export default function EventMap() {
     const next = new URLSearchParams(searchParams)
     if (id && id !== selectedId) {
       next.set('poi', id)
-      // If triggered from the schedule tab, switch to map view so the user sees the pin & peek sheet
-      if (view === 'schedule') {
-        next.delete('view')
-      }
-    } else {
+    } else if (!id) {
       next.delete('poi')
     }
     setSearchParams(next, { replace: true })
+
+    if (id) {
+      // Smoothly scroll the map container into view so the user can see the highlighted pin & peek sheet
+      mapCanvasRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
   }
 
   // Which tab is showing also lives in the URL
@@ -124,14 +126,16 @@ export default function EventMap() {
           </div>
         </div>
 
-        <MapCanvas
-          pois={pois}
-          categories={categories}
-          activeCategories={view === 'schedule' ? categories.map((c) => c.id) : active}
-          selectedId={selectedId}
-          onSelect={selectPoi}
-          activeTimeSlot={timeSlot}
-        />
+        <div ref={mapCanvasRef} className="scroll-mt-4">
+          <MapCanvas
+            pois={pois}
+            categories={categories}
+            activeCategories={view === 'schedule' ? categories.map((c) => c.id) : active}
+            selectedId={selectedId}
+            onSelect={selectPoi}
+            activeTimeSlot={timeSlot}
+          />
+        </div>
 
         {/* Two intents, one page: "where is it" and "when is it". */}
         <div
@@ -262,14 +266,12 @@ export default function EventMap() {
             Planning your porch route?
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a
-              href="/schedule-poster-2026.jpg"
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/schedule"
               className="inline-block bg-flag hover:bg-flag-deep text-cream font-display font-semibold uppercase tracking-wider px-6 py-3 rounded-md transition-colors"
             >
-              Official Schedule Card
-            </a>
+              Full Lineup Card
+            </Link>
             <a
               href="/lineup-poster-2026.png"
               target="_blank"

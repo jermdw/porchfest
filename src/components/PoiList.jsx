@@ -1,16 +1,20 @@
 import CategoryIcon from './CategoryIcon.jsx'
 import { isWithinMap } from '../lib/venueGeo.js'
 
-// The text alternative to the map (WCAG 1.1.1) — and on a phone, usually the
-// faster way to answer "where's the nearest restroom". Not a fallback view.
-// `idPrefix` keeps the screen and print copies from emitting the same DOM ids —
-// both are in the DOM at once, only their `display` differs.
 export default function PoiList({ categories, pois, selectedId, onSelect, idPrefix = 'poi' }) {
-  const groups = categories
+  // Separate porch stages from other amenity/stage categories
+  const nonPorchCategories = categories.filter((c) => c.id !== 'porch')
+  const porchCategory = categories.find((c) => c.id === 'porch')
+
+  const nonPorchGroups = nonPorchCategories
     .map((c) => ({ category: c, items: pois.filter((p) => p.category === c.id) }))
     .filter((g) => g.items.length > 0)
 
-  if (groups.length === 0) {
+  const porchItems = pois
+    .filter((p) => p.category === 'porch')
+    .sort((a, b) => (a.stage ?? 0) - (b.stage ?? 0))
+
+  if (nonPorchGroups.length === 0 && porchItems.length === 0) {
     return (
       <p className="text-stone-600 bg-white border border-stone-200 rounded-lg p-6">
         No locations match the filters you have selected.
@@ -20,7 +24,8 @@ export default function PoiList({ categories, pois, selectedId, onSelect, idPref
 
   return (
     <div className="space-y-6">
-      {groups.map(({ category, items }) => (
+      {/* 1. Amenities, Main Stage, VIP, Food, Parking, Restrooms, etc. */}
+      {nonPorchGroups.map(({ category, items }) => (
         <section key={category.id} aria-labelledby={`${idPrefix}-group-${category.id}`}>
           <h3
             id={`${idPrefix}-group-${category.id}`}
@@ -67,9 +72,6 @@ export default function PoiList({ categories, pois, selectedId, onSelect, idPref
                       {body}
                     </button>
                   ) : (
-                    // Not a button: with no pin there is nothing to select or centre.
-                    // An <a> also cannot live inside a <button>, which is what the
-                    // directions link needs to be.
                     <div className="rounded-lg border border-stone-200 bg-white p-4">
                       {body}
                       {poi.directions && (
@@ -90,6 +92,75 @@ export default function PoiList({ categories, pois, selectedId, onSelect, idPref
           </ul>
         </section>
       ))}
+
+      {/* 2. Collapsible Porch Stages Section (Sorted numerically, no band blurbs) */}
+      {porchCategory && porchItems.length > 0 && (
+        <details
+          className="group rounded-xl border border-stone-200 bg-white shadow-xs overflow-hidden print:open"
+          aria-labelledby={`${idPrefix}-group-porch`}
+        >
+          <summary
+            id={`${idPrefix}-group-porch`}
+            className="flex items-center justify-between p-4 cursor-pointer hover:bg-stone-50 transition-colors select-none"
+          >
+            <div className="flex items-center gap-2.5 font-display uppercase tracking-wide text-ink font-bold text-base sm:text-lg">
+              <CategoryIcon
+                category="porch"
+                className="w-5 h-5"
+                style={{ color: 'var(--color-cat-porch)' }}
+              />
+              <span>Porch Stages ({porchItems.length})</span>
+            </div>
+            <div className="flex items-center gap-2 text-stone-500 text-xs font-semibold">
+              <span className="group-open:hidden">Tap to view stages</span>
+              <span className="hidden group-open:inline">Tap to collapse</span>
+              <span className="transform transition-transform duration-200 group-open:rotate-180 text-sm">
+                ▼
+              </span>
+            </div>
+          </summary>
+
+          <div className="px-4 pb-4 pt-2 border-t border-stone-100">
+            <p className="text-xs text-stone-500 mb-3 italic">
+              Sorted numerically by stage number. Tap any stage to center and view details on the map.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {porchItems.map((poi) => {
+                const isSelected = selectedId === poi.id
+                return (
+                  <button
+                    key={poi.id}
+                    type="button"
+                    onClick={() => onSelect?.(poi.id)}
+                    aria-current={isSelected ? 'true' : undefined}
+                    className={`text-left rounded-lg border p-3 min-h-11 transition-colors flex items-center gap-3 ${
+                      isSelected
+                        ? 'bg-pale border-flag'
+                        : 'bg-stone-50/60 border-stone-200 hover:border-flag'
+                    }`}
+                  >
+                    {poi.stage != null && (
+                      <span className="shrink-0 w-7 h-7 rounded-full bg-flag text-cream font-display font-bold text-xs flex items-center justify-center shadow-xs">
+                        {poi.stage}
+                      </span>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <span className="block font-semibold text-ink text-sm truncate">
+                        {poi.address || poi.name}
+                      </span>
+                      {poi.where && (
+                        <span className="block text-stone-600 text-xs truncate">
+                          {poi.where}
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </details>
+      )}
     </div>
   )
 }
