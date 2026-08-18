@@ -72,8 +72,16 @@ npx firebase-tools deploy --only hosting --project senoiaporchfest
 npx firebase-tools deploy --only functions,hosting --project senoiaporchfest
 ```
 
-**There is no CI/CD here** (unlike the car show's GitHub Actions) — deploys are
-manual with the commands above; `git push` does not deploy.
+**Merging to `main` deploys** via `.github/workflows/deploy.yml` (same setup as
+the car show): lint → build → Firestore rules (only when `firestore.rules`
+changed) → Hosting, then a smoke check of the live site. Functions deploy only
+when the push touched `functions/` or `firebase.json`, or via the manual
+"Also deploy Cloud Functions" run — so setting the real `RESEND_API_KEY` needs
+that manual run to take effect. Auth is keyless (Workload Identity Federation,
+no service-account key in the repo); one-time GCP setup lives in
+`scripts/setup-ci-deploy.sh` and is idempotent — re-run it after adding a role.
+Pushing a branch does not deploy; only `main` does. The commands above still
+work for deploying by hand.
 
 Prod seed (idempotent — updates shift text/spotsTotal, never clobbers
 `spotsFilled`, creates only new pre-registered volunteers):
