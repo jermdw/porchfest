@@ -3,14 +3,15 @@ import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import TicketTailorWidget from '../components/TicketTailorWidget.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
+// Tiers and the sponsorship checkout live with the rest of the sponsor data so
+// /vip and /sponsors can never drift apart on price or tier list.
+import { SPONSOR_CHECKOUT, TIERS } from '../data/sponsors.js'
 
 // Recovered from the DDA's enjoysenoia.com PorchFest page before it was
-// redirected here — the same Ticket Tailor events, still live: "Senoia
-// Porchfest VIP Luxury Lounge" ($100) and "Senoia PorchFest 2026 Sponsorships".
+// redirected here — the same Ticket Tailor event, still live: "Senoia
+// Porchfest VIP Luxury Lounge" ($100).
 export const VIP_CHECKOUT =
   'https://www.tickettailor.com/checkout/new-session/id/8805677/chk/b7e1318d779600a036aff27d81dd3e09/?ref=website_widget&show_event_filter=false'
-export const SPONSOR_CHECKOUT =
-  'https://www.tickettailor.com/checkout/new-session/id/8121226/chk/a9f6/?ref=website_widget&show_event_filter=false'
 
 // Perks as printed on the official VIP flyer.
 const PERKS = [
@@ -21,14 +22,6 @@ const PERKS = [
   ['Private restroom access', 'Inside the market, 2:00–8:00pm'],
   ['PorchFest t-shirt', 'Plus a VIP commemorative badge'],
   ['Gift basket drawing', 'Each ticket has a chance to win a basket valued over $750'],
-]
-
-const SPONSOR_TIERS = [
-  ['Title', '$2,000'],
-  ['Gold', '$1,000'],
-  ['Silver', '$500'],
-  ['Porch', '$200'],
-  ["Kid's Corner", '$200'],
 ]
 
 export default function Vip() {
@@ -93,21 +86,31 @@ export default function Vip() {
             are handled through the same secure checkout:
           </p>
           <ul className="flex flex-wrap gap-2 mb-5">
-            {SPONSOR_TIERS.map(([tier, price]) => (
-              <li key={tier} className="bg-white border border-stone-200 rounded-full px-4 py-1.5 text-sm">
-                <span className="font-semibold text-ink">{tier}</span>{' '}
+            {TIERS.map(({ name, price }) => (
+              <li key={name} className="bg-white border border-stone-200 rounded-full px-4 py-1.5 text-sm">
+                {/* The chips are a glance-able price list; the full benefits for
+                    each tier live on /sponsors. */}
+                <span className="font-semibold text-ink">{name.replace(/ Sponsor$/, '')}</span>{' '}
                 <span className="text-stone-600">{price}</span>
               </li>
             ))}
           </ul>
-          <a
-            href={SPONSOR_CHECKOUT}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-block bg-ink hover:bg-flag text-cream font-display font-semibold uppercase tracking-wider px-8 py-3 rounded-md transition-colors"
-          >
-            Sponsor PorchFest →
-          </a>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href={SPONSOR_CHECKOUT}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block bg-ink hover:bg-flag text-cream font-display font-semibold uppercase tracking-wider px-8 py-3 rounded-md transition-colors"
+            >
+              Sponsor PorchFest →
+            </a>
+            <Link
+              to="/sponsors"
+              className="font-display uppercase tracking-wider text-flag hover:text-flag-deep underline"
+            >
+              See tier benefits & our 2026 sponsors
+            </Link>
+          </div>
           <p className="text-stone-500 text-sm mt-4">
             Questions about sponsorship? Email{' '}
             <a className="underline" href="mailto:info@enjoysenoia.com">info@enjoysenoia.com</a>{' '}
