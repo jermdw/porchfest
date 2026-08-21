@@ -10,6 +10,13 @@
 // share your business info on our event website?" appear here — that consent
 // question is the whole reason the column exists, so a sponsor who declines is
 // silently omitted rather than listed without a link.
+//
+// Not every sponsor comes through that checkout. Some are relayed by the
+// organizers after paying another way — BMW of South Atlanta, and (Aug 2026)
+// Kim Peacock, Senoia Family Dentistry and Bella Medical, plus Bragassa's
+// upgrade to Silver. Those have no Ticket Tailor row to reconcile against, so
+// when a name here is missing from the export, check with the DDA rather than
+// assuming it is stale and deleting it.
 import bmwLogo from '../assets/sponsor-bmw-south-atlanta.webp'
 import progressiveLogo from '../assets/sponsor-progressive-heating-air.webp'
 import trunorthLogo from '../assets/sponsor-trunorth-pest.webp'
@@ -19,6 +26,7 @@ import turinLogo from '../assets/sponsor-turin-pest.webp'
 import roofKingLogo from '../assets/sponsor-roof-king-exteriors.webp'
 import rbaLogo from '../assets/sponsor-renewal-by-andersen.webp'
 import farmersMarketLogo from '../assets/sponsor-senoia-farmers-market.webp'
+import senoiaDentistryLogo from '../assets/sponsor-senoia-family-dentistry.webp'
 import andreoneLogo from '../assets/sponsor-andreone-chiropractic.webp'
 import borgoLogo from '../assets/sponsor-borgo-italia.webp'
 import aAbbyLogo from '../assets/sponsor-a-abby-group.webp'
@@ -179,6 +187,21 @@ export const SPONSORS_2026 = [
         h: 137,
         url: 'https://www.renewalbyandersen.com/locations/atlanta-ga',
       },
+      // Upgraded from the $200 Kid's Corner tier to a $500 Silver sponsorship.
+      // Listed once, at the tier they now hold — the Kid's Corner signage they
+      // also asked about is physical signage at the event, not a second web
+      // listing, and the same business appearing twice on a thank-you page
+      // reads as a bug.
+      {
+        name: 'Bragassa Orthodontics',
+        logo: bragassaLogo,
+        w: 400,
+        h: 117,
+        url: 'https://www.bragassaorthodontics.com/',
+      },
+      // An individual sponsor rather than a business, so there is no logo or
+      // site to link — the name-only fallback is exactly this case.
+      { name: 'Kim Peacock' },
       // The sponsor is the Newnan office (8 Savannah St — Coweta County, and
       // registered federally as "Guiding Light Hospice SW, LLC"). Neither
       // findable site is confirmably that entity: guidinglighthospicega.com is
@@ -229,6 +252,19 @@ export const SPONSORS_2026 = [
         url: 'https://www.senoiabicycle.com/',
         dark: true,
       },
+      {
+        name: 'Senoia Family Dentistry',
+        logo: senoiaDentistryLogo,
+        w: 400,
+        h: 352,
+        url: 'https://www.senoiadental.com/',
+      },
+      // "Bella Medical" matches two different practices and neither mentions
+      // Senoia: Bella Medical Aesthetics, PC (Fayetteville / Peachtree City,
+      // trading on both bellamedical.us and bellamedical.biz) and Ciao Bella
+      // Medical Center and Spa (Newnan). Name-only until the organizers say
+      // which one sponsored.
+      { name: 'Bella Medical' },
       // Signed up as "Miss Dottie's" and asked whether we could feature their
       // Facebook page, so no website was supplied. The only "Miss Dottie's"
       // findable online is a gift shop in Gray, GA — ~90 miles from Senoia and
@@ -237,17 +273,8 @@ export const SPONSORS_2026 = [
       { name: "Miss Dottie's" },
     ],
   },
-  {
-    tier: "Kid's Corner Sponsor",
-    cell: 'h-28',
-    sponsors: [
-      {
-        name: 'Bragassa Orthodontics',
-        logo: bragassaLogo,
-        w: 400,
-        h: 117,
-        url: 'https://www.bragassaorthodontics.com/',
-      },
-    ],
-  },
+  // No Kid's Corner group: Bragassa moved up to Silver and nobody else holds
+  // that tier yet. A group with an empty `sponsors` array would render a bare
+  // heading over an empty grid, so the tier is omitted here entirely — it is
+  // still offered for sale, and still listed in TIERS above.
 ]
