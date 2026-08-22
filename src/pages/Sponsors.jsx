@@ -28,12 +28,22 @@ export default function Sponsors() {
       </header>
 
       <main className="flex-1 max-w-4xl mx-auto px-4 py-10 w-full">
-        {SPONSORS_2026.map(({ tier, cell, sponsors }) => (
-          <section key={tier} className="mb-8">
-            <h2 className="font-display text-xl uppercase tracking-wide text-flag border-b-2 border-flag/30 pb-1.5 mb-3">
+        {/* Tier rank is carried by scale, not by colour. Each tier gets a
+            smaller heading, a fainter rule, and — the part that actually reads
+            from across the page — a shorter cell in a denser grid, so a
+            Presenting sponsor's logo is physically several times the size of a
+            Porch sponsor's. Giving each tier its own colour was the obvious
+            alternative and the wrong one: it would drag gold and silver into a
+            navy/red/cream palette, and "Presenting" and "Porch" have no colour
+            anyone would recognise anyway. One accent, varied in weight. */}
+        {SPONSORS_2026.map(({ tier, cell, cols, heading, rule, sponsors }) => (
+          <section key={tier} className="mb-10">
+            <h2
+              className={`font-display ${heading} uppercase tracking-wide text-flag border-b-2 ${rule} pb-1.5 mb-3`}
+            >
               {tier}
             </h2>
-            <ul className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+            <ul className={`grid gap-4 ${cols}`}>
               {sponsors.map(({ name, logo, w, h, url, dark }) => (
                 <li
                   key={name}

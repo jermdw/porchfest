@@ -122,7 +122,10 @@ export const TIERS = [
 export const SPONSORS_2026 = [
   {
     tier: 'Presenting Sponsor',
-    cell: 'h-32',
+    cell: 'h-40',
+    cols: 'grid-cols-1 sm:grid-cols-2',
+    heading: 'text-3xl',
+    rule: 'border-flag',
     sponsors: [
       {
         name: 'Peachtree Oral & Facial Surgery',
@@ -136,6 +139,9 @@ export const SPONSORS_2026 = [
   {
     tier: 'Title Sponsors',
     cell: 'h-32',
+    cols: 'grid-cols-2 sm:grid-cols-3',
+    heading: 'text-2xl',
+    rule: 'border-flag',
     sponsors: [
       {
         name: 'BMW of South Atlanta',
@@ -163,6 +169,9 @@ export const SPONSORS_2026 = [
   {
     tier: 'Gold Sponsors',
     cell: 'h-28',
+    cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+    heading: 'text-xl',
+    rule: 'border-flag/50',
     sponsors: [
       {
         name: 'Inspired Wealth Planning',
@@ -191,6 +200,9 @@ export const SPONSORS_2026 = [
   {
     tier: 'Silver Sponsors',
     cell: 'h-28',
+    cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+    heading: 'text-lg',
+    rule: 'border-flag/40',
     sponsors: [
       {
         name: 'Renewal by Andersen',
@@ -240,6 +252,9 @@ export const SPONSORS_2026 = [
   {
     tier: 'Porch Sponsors',
     cell: 'h-28',
+    cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+    heading: 'text-lg',
+    rule: 'border-flag/30',
     sponsors: [
       {
         name: "Senoia Farmers' Market",
