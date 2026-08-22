@@ -28,7 +28,7 @@ export default function Vip() {
   usePageMeta({
     title: 'VIP Luxury Lounge Tickets — $100 | Senoia PorchFest 2026',
     description:
-      "VIP tickets for Senoia PorchFest 2026: the VIP Luxury Lounge presented by BMW of South Atlanta at the Senoia Farmers' Market — Southern table, drink tickets, reserved parking, PorchFest tee. $100, limited.",
+      "VIP tickets for Senoia PorchFest 2026: the VIP Luxury Lounge sponsored by BMW of South Atlanta at the Senoia Farmers' Market — Southern table, drink tickets, reserved parking, PorchFest tee. $100, limited.",
     path: '/vip',
   })
 
@@ -41,7 +41,7 @@ export default function Vip() {
           VIP Luxury Lounge
         </h1>
         <p className="font-display uppercase tracking-widest text-pale/80 mt-2">
-          Presented by BMW of South Atlanta
+          Sponsored by BMW of South Atlanta
         </p>
         <p className="text-pale/90 mt-5 max-w-xl mx-auto">
           Sunday, September 6 &middot; doors at 2:00pm &middot; the Senoia Farmers&rsquo;
