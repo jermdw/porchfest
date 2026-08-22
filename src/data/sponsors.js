@@ -28,6 +28,12 @@ import rbaLogo from '../assets/sponsor-renewal-by-andersen.webp'
 import farmersMarketLogo from '../assets/sponsor-senoia-farmers-market.webp'
 import senoiaDentistryLogo from '../assets/sponsor-senoia-family-dentistry.webp'
 import bellaMedicalLogo from '../assets/sponsor-bella-medical-aesthetics.webp'
+import fourRiversLogo from '../assets/sponsor-4-rivers-antiques.webp'
+import knifeStoneLogo from '../assets/sponsor-knife-and-stone.webp'
+import mahaffeyLinkousLogo from '../assets/sponsor-mahaffey-linkous-orthodontics.webp'
+import pollardLogo from '../assets/sponsor-pollard-waste.webp'
+import senoiaCoffeeLogo from '../assets/sponsor-senoia-coffee.webp'
+import vaultedVintageLogo from '../assets/sponsor-vaulted-vintage.webp'
 import andreoneLogo from '../assets/sponsor-andreone-chiropractic.webp'
 import borgoLogo from '../assets/sponsor-borgo-italia.webp'
 import aAbbyLogo from '../assets/sponsor-a-abby-group.webp'
@@ -267,12 +273,66 @@ export const SPONSORS_2026 = [
       // (Peachtree City), same phone and same social accounts. Linking .us:
       // it is the better-maintained of the two, where .biz still carries a
       // (999) 999-9999 placeholder.
+      //
+      // Artwork is the wordmark from their printed porch sign, not the one on
+      // their website: the web version carries a long tagline that makes it
+      // ~4.4:1, which shrinks to near-unreadable inside a fixed-height cell.
+      // The sign lockup is ~2:1 and renders about three times larger.
       {
         name: 'Bella Medical Aesthetics',
         logo: bellaMedicalLogo,
         w: 400,
-        h: 91,
+        h: 199,
         url: 'https://bellamedical.us/',
+      },
+      // The six below were found in the printed porch signs
+      // (~/Downloads/PorchFest_Sponsor_Signs, Aug 2026) rather than in any
+      // Ticket Tailor row — every one of those signs reads "This Stage
+      // Sponsored by:", which is the Porch tier by definition. Artwork is
+      // lifted from the signs themselves, so it matches what stands at the
+      // porch on the day.
+      //
+      // Four of them have no linkable website: knifeandstone.com and
+      // vaultedvintage.com are both GoDaddy "Launching Soon" parking pages,
+      // and 4 Rivers Antiques and Pollard trade through Facebook and phone.
+      // They keep their logo but get no anchor rather than a guessed link.
+      {
+        name: '4 Rivers Antiques',
+        logo: fourRiversLogo,
+        w: 400,
+        h: 254,
+      },
+      {
+        name: 'Knife & Stone',
+        logo: knifeStoneLogo,
+        w: 400,
+        h: 229,
+      },
+      {
+        name: 'Mahaffey Linkous Orthodontics',
+        logo: mahaffeyLinkousLogo,
+        w: 400,
+        h: 55,
+        url: 'https://peachtreecitybraces.com/',
+      },
+      {
+        name: 'Pollard Residential Waste Services',
+        logo: pollardLogo,
+        w: 400,
+        h: 174,
+      },
+      {
+        name: 'Senoia Coffee',
+        logo: senoiaCoffeeLogo,
+        w: 400,
+        h: 400,
+        url: 'https://senoiacoffeecafe.com/',
+      },
+      {
+        name: 'Vaulted Vintage',
+        logo: vaultedVintageLogo,
+        w: 400,
+        h: 399,
       },
       // Signed up as "Miss Dottie's" and asked whether we could feature their
       // Facebook page, so no website was supplied. The only "Miss Dottie's"

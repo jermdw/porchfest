@@ -41,34 +41,44 @@ export default function Sponsors() {
                     dark ? 'bg-ink border-ink hover:border-flag' : 'bg-white border-stone-200 hover:border-flag'
                   }`}
                 >
-                  {/* The whole cell is the link, not just the logo pixels — a
-                      wordmark with whitespace around it is a frustrating target
-                      otherwise. The img alt is the link's accessible name.
-                      Sponsors with no artwork yet (no `logo`/`url`) fall back to
-                      a plain name so the tier list stays accurate before the
-                      logo exists — not wrapped in a link, since there is nowhere
-                      confirmed to send visitors. */}
+                  {/* Three cases, because artwork and a confirmed website don't
+                      always arrive together:
+                        logo + url — the whole cell is the link, not just the
+                          logo pixels; a wordmark with whitespace around it is a
+                          frustrating target otherwise. The img alt is the
+                          link's accessible name.
+                        logo, no url — the same cell without the anchor. Some
+                          sponsors have artwork but only a parked domain or a
+                          social page we haven't been told to link, and an <a>
+                          with no href is a link that does nothing.
+                        neither — a plain name, so the tier list stays accurate
+                          before the logo exists. */}
                   {logo ? (
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="w-full h-full flex items-center justify-center p-4"
-                    >
+                    (() => {
                       {/* Logos vary widely in aspect ratio; contain them in a
                           fixed-height cell so the rows stay tidy. width/height
                           carry the intrinsic ratio so the grid doesn't shift as
                           they load. Deliberately not lazy: these are the whole
-                          point of the page and ~270 kB in total, and a lazy
+                          point of the page and ~400 kB in total, and a lazy
                           image that never intersects stays invisible. */}
-                      <img
-                        src={logo}
-                        alt={name}
-                        width={w}
-                        height={h}
-                        className="max-h-full max-w-full w-auto h-auto object-contain"
-                      />
-                    </a>
+                      const art = (
+                        <img
+                          src={logo}
+                          alt={name}
+                          width={w}
+                          height={h}
+                          className="max-h-full max-w-full w-auto h-auto object-contain"
+                        />
+                      )
+                      const box = 'w-full h-full flex items-center justify-center p-4'
+                      return url ? (
+                        <a href={url} target="_blank" rel="noreferrer" className={box}>
+                          {art}
+                        </a>
+                      ) : (
+                        <div className={box}>{art}</div>
+                      )
+                    })()
                   ) : (
                     <div className="w-full h-full flex items-center justify-center p-4 text-center">
                       <span className="font-display uppercase tracking-wide text-ink">{name}</span>
