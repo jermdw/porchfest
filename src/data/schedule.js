@@ -14,7 +14,7 @@
 export const PERFORMANCES = [
   // ---- 2:00 PM — VIP kickoff ----
   {
-    act: 'Kellar McCoy', genre: 'VIP Luxury Lounge — presented by BMW of South Atlanta',
+    act: 'Kellar McCoy', genre: 'VIP Luxury Lounge — sponsored by BMW of South Atlanta',
     stage: 1, address: '40 Travis Street', venue: "Senoia Farmers' Market",
     start: '14:00', time: '2:00 PM', confirmed: true,
   },

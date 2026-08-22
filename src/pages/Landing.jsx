@@ -24,7 +24,7 @@ const SECTIONS = [
   {
     to: '/vip',
     title: 'VIP Tickets',
-    text: 'The VIP Luxury Lounge presented by BMW of South Atlanta — $100, limited.',
+    text: 'The VIP Luxury Lounge sponsored by BMW of South Atlanta — $100, limited.',
   },
   {
     to: '/volunteer',

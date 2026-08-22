@@ -127,7 +127,7 @@ export const POIS = [
     where: "40 Travis Street — Senoia Farmers' Market",
     directions: '40 Travis Street, Senoia, GA 30276',
     blurb:
-      'Presented by BMW of South Atlanta. Doors at 2:00pm with Kellar McCoy; porch sets here at 4:00 (Tim McGee) and 7:00 (Ashton Dooley Band). VIP ticket required — $100, limited. Buy at senoiaporchfest.org/vip.',
+      'Sponsored by BMW of South Atlanta. Doors at 2:00pm with Kellar McCoy; porch sets here at 4:00 (Tim McGee) and 7:00 (Ashton Dooley Band). VIP ticket required — $100, limited. Buy at senoiaporchfest.org/vip.',
     performances: [
       {
         act: 'Kellar McCoy',
@@ -297,7 +297,7 @@ export const SCHEDULE = [
     label: 'VIP Luxury Lounge opens — Kellar McCoy',
     poiId: 'vip',
     detail:
-      "Presented by BMW of South Atlanta at the Senoia Farmers' Market. VIP ticket required ($100, limited) — on sale at senoiaporchfest.org/vip.",
+      "Sponsored by BMW of South Atlanta at the Senoia Farmers' Market. VIP ticket required ($100, limited) — on sale at senoiaporchfest.org/vip.",
     confirmed: true,
   },
   {
