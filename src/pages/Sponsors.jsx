@@ -41,49 +41,47 @@ export default function Sponsors() {
                     dark ? 'bg-ink border-ink hover:border-flag' : 'bg-white border-stone-200 hover:border-flag'
                   }`}
                 >
-                  {/* Three cases, because artwork and a confirmed website don't
-                      always arrive together:
-                        logo + url — the whole cell is the link, not just the
-                          logo pixels; a wordmark with whitespace around it is a
-                          frustrating target otherwise. The img alt is the
-                          link's accessible name.
-                        logo, no url — the same cell without the anchor. Some
-                          sponsors have artwork but only a parked domain or a
-                          social page we haven't been told to link, and an <a>
-                          with no href is a link that does nothing.
-                        neither — a plain name, so the tier list stays accurate
-                          before the logo exists. */}
-                  {logo ? (
-                    (() => {
-                      {/* Logos vary widely in aspect ratio; contain them in a
-                          fixed-height cell so the rows stay tidy. width/height
-                          carry the intrinsic ratio so the grid doesn't shift as
-                          they load. Deliberately not lazy: these are the whole
-                          point of the page and ~400 kB in total, and a lazy
-                          image that never intersects stays invisible. */}
-                      const art = (
-                        <img
-                          src={logo}
-                          alt={name}
-                          width={w}
-                          height={h}
-                          className="max-h-full max-w-full w-auto h-auto object-contain"
-                        />
-                      )
-                      const box = 'w-full h-full flex items-center justify-center p-4'
-                      return url ? (
-                        <a href={url} target="_blank" rel="noreferrer" className={box}>
-                          {art}
-                        </a>
-                      ) : (
-                        <div className={box}>{art}</div>
-                      )
-                    })()
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center p-4 text-center">
-                      <span className="font-display uppercase tracking-wide text-ink">{name}</span>
-                    </div>
-                  )}
+                  {/* Artwork and a confirmed link arrive independently, so the
+                      two choices below are kept independent too: what fills the
+                      cell, and whether the cell is a link. Deciding them
+                      together previously meant a sponsor with a `url` but no
+                      logo silently lost their link. */}
+                  {(() => {
+                    const inner = logo ? (
+                      // Logos vary widely in aspect ratio; contain them in a
+                      // fixed-height cell so the rows stay tidy. width/height
+                      // carry the intrinsic ratio so the grid doesn't shift as
+                      // they load. Deliberately not lazy: these are the whole
+                      // point of the page and ~400 kB in total, and a lazy image
+                      // that never intersects stays invisible.
+                      <img
+                        src={logo}
+                        alt={name}
+                        width={w}
+                        height={h}
+                        className="max-h-full max-w-full w-auto h-auto object-contain"
+                      />
+                    ) : (
+                      // No artwork yet — the name keeps the tier list accurate.
+                      <span
+                        className={`font-display uppercase tracking-wide ${dark ? 'text-cream' : 'text-ink'}`}
+                      >
+                        {name}
+                      </span>
+                    )
+                    // The whole cell is the target, not just the logo pixels — a
+                    // wordmark with whitespace around it is frustrating to hit
+                    // otherwise. Without a url there is no anchor at all, rather
+                    // than an <a> with no href, which is a link that goes nowhere.
+                    const box = `w-full h-full flex items-center justify-center p-4${logo ? '' : ' text-center'}`
+                    return url ? (
+                      <a href={url} target="_blank" rel="noreferrer" className={box}>
+                        {inner}
+                      </a>
+                    ) : (
+                      <div className={box}>{inner}</div>
+                    )
+                  })()}
                 </li>
               ))}
             </ul>

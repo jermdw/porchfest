@@ -210,9 +210,11 @@ export const SPONSORS_2026 = [
         h: 117,
         url: 'https://www.bragassaorthodontics.com/',
       },
-      // An individual sponsor rather than a business, so there is no logo or
-      // site to link — the name-only fallback is exactly this case.
-      { name: 'Kim Peacock' },
+      // Signed up as "Kim Peacock"; her own page and artwork both brand her as
+      // Kimberly Peacock, a realtor with Southern Real Estate Connections. No
+      // standalone website, so this points at her managed Facebook page (1.3k
+      // followers) rather than the brokerage's — she is the sponsor, not them.
+      { name: 'Kimberly Peacock', url: 'https://www.facebook.com/KimberlyPeacockRealtor/' },
       // The sponsor is the Newnan office (8 Savannah St — Coweta County, and
       // registered federally as "Guiding Light Hospice SW, LLC"). Neither
       // findable site is confirmably that entity: guidinglighthospicega.com is
