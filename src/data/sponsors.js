@@ -13,7 +13,7 @@
 //
 // Not every sponsor comes through that checkout. Some are relayed by the
 // organizers after paying another way — BMW of South Atlanta, and (Aug 2026)
-// Kim Peacock, Senoia Family Dentistry and Bella Medical, plus Bragassa's
+// Kim Peacock, Senoia Family Dentistry and Bella Medical Aesthetics, plus Bragassa's
 // upgrade to Silver. Those have no Ticket Tailor row to reconcile against, so
 // when a name here is missing from the export, check with the DDA rather than
 // assuming it is stale and deleting it.
@@ -27,6 +27,7 @@ import roofKingLogo from '../assets/sponsor-roof-king-exteriors.webp'
 import rbaLogo from '../assets/sponsor-renewal-by-andersen.webp'
 import farmersMarketLogo from '../assets/sponsor-senoia-farmers-market.webp'
 import senoiaDentistryLogo from '../assets/sponsor-senoia-family-dentistry.webp'
+import bellaMedicalLogo from '../assets/sponsor-bella-medical-aesthetics.webp'
 import andreoneLogo from '../assets/sponsor-andreone-chiropractic.webp'
 import borgoLogo from '../assets/sponsor-borgo-italia.webp'
 import aAbbyLogo from '../assets/sponsor-a-abby-group.webp'
@@ -259,12 +260,20 @@ export const SPONSORS_2026 = [
         h: 352,
         url: 'https://www.senoiadental.com/',
       },
-      // "Bella Medical" matches two different practices and neither mentions
-      // Senoia: Bella Medical Aesthetics, PC (Fayetteville / Peachtree City,
-      // trading on both bellamedical.us and bellamedical.biz) and Ciao Bella
-      // Medical Center and Spa (Newnan). Name-only until the organizers say
-      // which one sponsored.
-      { name: 'Bella Medical' },
+      // Signed up as "Bella Medical"; the organizers confirmed this is Bella
+      // Medical Aesthetics, PC (not the similarly named Ciao Bella Medical
+      // Center and Spa in Newnan). They run two live sites for the same
+      // practice — bellamedical.us (Fayetteville) and bellamedical.biz
+      // (Peachtree City), same phone and same social accounts. Linking .us:
+      // it is the better-maintained of the two, where .biz still carries a
+      // (999) 999-9999 placeholder.
+      {
+        name: 'Bella Medical Aesthetics',
+        logo: bellaMedicalLogo,
+        w: 400,
+        h: 91,
+        url: 'https://bellamedical.us/',
+      },
       // Signed up as "Miss Dottie's" and asked whether we could feature their
       // Facebook page, so no website was supplied. The only "Miss Dottie's"
       // findable online is a gift shop in Gray, GA — ~90 miles from Senoia and
