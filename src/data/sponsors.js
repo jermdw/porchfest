@@ -104,10 +104,14 @@ export const TIERS = [
   },
 ]
 
-// `url` is each sponsor's own site. Every link here was loaded and confirmed to
-// be the right business (Aug 2026) — a wrong link on a page thanking a paying
-// sponsor is worse than no link, so a business whose site could not be pinned
-// down gets a name-only entry instead of a plausible guess.
+// `url` is wherever that sponsor actually lives online — their own site where
+// they have one, otherwise the social account they run (several of these
+// businesses own a domain that is only a parked "Launching Soon" page, which is
+// worse than no link). Every link here was opened and confirmed to be the right
+// business, not just a name match (Aug 2026): a wrong link on a page thanking a
+// paying sponsor is worse than no link, so a business that could not be pinned
+// down keeps its name — and its logo, if we have one — but gets no anchor
+// rather than a plausible guess.
 //
 // `dark: true` marks artwork that only exists as a reverse (light-ink) lockup,
 // which its owner designed for a dark header and which would be invisible in a
@@ -292,21 +296,30 @@ export const SPONSORS_2026 = [
       // lifted from the signs themselves, so it matches what stands at the
       // porch on the day.
       //
-      // Four of them have no linkable website: knifeandstone.com and
-      // vaultedvintage.com are both GoDaddy "Launching Soon" parking pages,
-      // and 4 Rivers Antiques and Pollard trade through Facebook and phone.
-      // They keep their logo but get no anchor rather than a guessed link.
+      // Three of them have no website to link, so they point at the social
+      // account they actually run instead. Each was opened and confirmed to be
+      // the right business, not just a name match:
+      //   4 Rivers Antiques — @4riversantiques, the brand account (2.5k
+      //     followers, bio address is their Fayetteville store). They also have
+      //     a Senoia-location page at facebook.com/p/4-Rivers-Senoia-61576654692937
+      //     if the organizers would rather point at the local shop.
+      //   Knife & Stone — a managed Facebook Page, 4.7k followers, 30 Perry St.
+      //     Their knifeandstone.com is a GoDaddy "Launching Soon" parking page.
+      //   Vaulted Vintage — @vaulted_vtg; the bio's Wed–Sat 10–6 matches the
+      //     28 Main St shop. vaultedvintage.com is also parked.
       {
         name: '4 Rivers Antiques',
         logo: fourRiversLogo,
         w: 400,
         h: 254,
+        url: 'https://www.instagram.com/4riversantiques/',
       },
       {
         name: 'Knife & Stone',
         logo: knifeStoneLogo,
         w: 400,
         h: 229,
+        url: 'https://www.facebook.com/knifeandstonenewnan/',
       },
       {
         name: 'Mahaffey Linkous Orthodontics',
@@ -315,11 +328,16 @@ export const SPONSORS_2026 = [
         h: 55,
         url: 'https://peachtreecitybraces.com/',
       },
+      // Sponsored under "Pollard Residential Waste Services" (the name on their
+      // porch sign); the business trades online as Pollard Disposal. Their only
+      // Facebook presence is an auto-generated "Unofficial Page" with zero
+      // followers — that page is what surfaced the real site.
       {
         name: 'Pollard Residential Waste Services',
         logo: pollardLogo,
         w: 400,
         h: 174,
+        url: 'https://www.pollarddisposal.com/',
       },
       {
         name: 'Senoia Coffee',
@@ -333,6 +351,7 @@ export const SPONSORS_2026 = [
         logo: vaultedVintageLogo,
         w: 400,
         h: 399,
+        url: 'https://www.instagram.com/vaulted_vtg/',
       },
       // Signed up as "Miss Dottie's" and asked whether we could feature their
       // Facebook page, so no website was supplied. The only "Miss Dottie's"
