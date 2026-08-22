@@ -25,6 +25,7 @@ import inspiredLogo from '../assets/sponsor-inspired-wealth-planning.webp'
 import turinLogo from '../assets/sponsor-turin-pest.webp'
 import roofKingLogo from '../assets/sponsor-roof-king-exteriors.webp'
 import rbaLogo from '../assets/sponsor-renewal-by-andersen.webp'
+import kimPeacockLogo from '../assets/sponsor-kimberly-peacock.webp'
 import farmersMarketLogo from '../assets/sponsor-senoia-farmers-market.webp'
 import senoiaDentistryLogo from '../assets/sponsor-senoia-family-dentistry.webp'
 import bellaMedicalLogo from '../assets/sponsor-bella-medical-aesthetics.webp'
@@ -210,9 +211,23 @@ export const SPONSORS_2026 = [
         h: 117,
         url: 'https://www.bragassaorthodontics.com/',
       },
-      // An individual sponsor rather than a business, so there is no logo or
-      // site to link — the name-only fallback is exactly this case.
-      { name: 'Kim Peacock' },
+      // Signed up as "Kim Peacock"; her own page and artwork both brand her as
+      // Kimberly Peacock, a realtor with Southern Real Estate Connections. No
+      // standalone website, so this points at her managed Facebook page (1.3k
+      // followers) rather than the brokerage's — she is the sponsor, not them.
+      //
+      // The artwork she supplied is her full Facebook cover banner: headshot,
+      // brokerage panel, and her mobile number and personal Gmail. Cropped to
+      // just the Southern Real Estate Connections panel — at this cell size the
+      // contact details would be illegible anyway, so publishing them on an
+      // indexable page would be risk with no upside.
+      {
+        name: 'Kimberly Peacock',
+        logo: kimPeacockLogo,
+        w: 400,
+        h: 204,
+        url: 'https://www.facebook.com/KimberlyPeacockRealtor/',
+      },
       // The sponsor is the Newnan office (8 Savannah St — Coweta County, and
       // registered federally as "Guiding Light Hospice SW, LLC"). Neither
       // findable site is confirmably that entity: guidinglighthospicega.com is
