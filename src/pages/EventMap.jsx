@@ -273,6 +273,14 @@ export default function EventMap() {
               Full Lineup Card
             </Link>
             <a
+              href="/senoia-porchfest-2026-map.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block border border-pale/40 text-pale hover:text-cream hover:border-cream font-display font-semibold uppercase tracking-wider px-6 py-3 rounded-md transition-colors"
+            >
+              Download Map PDF
+            </a>
+            <a
               href="/senoia-porchfest-2026-lineup-card.pdf"
               target="_blank"
               rel="noreferrer"
