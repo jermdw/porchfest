@@ -46,6 +46,7 @@ import bragassaLogo from '../assets/sponsor-bragassa-orthodontics.webp'
 import guidingLightLogo from '../assets/sponsor-guiding-light-hospice.webp'
 import serranoLogo from '../assets/sponsor-serrano-fine-tacos.webp'
 import missDottiesLogo from '../assets/sponsor-miss-dotties.webp'
+import cowetaCharterLogo from '../assets/sponsor-coweta-charter-academy.webp'
 
 export const SPONSOR_CHECKOUT =
   'https://www.tickettailor.com/checkout/new-session/id/8121226/chk/a9f6/?ref=website_widget&show_event_filter=false'
@@ -258,16 +259,17 @@ export const SPONSORS_2026 = [
       // service-area list omits Coweta, but that is a stale marketing page
       // rather than counter-evidence (it lists adjacent Fayette).
       //
-      // Artwork is the transparent stacked lockup the DDA already holds for
-      // them, lifted from their partner listing on enjoysenoia.com. It is the
-      // squarest of their lockups (1.2:1), so it renders smaller in a
-      // fixed-height cell than the wide version in their own site header — if
-      // they send that one it is worth swapping in.
+      // Artwork is the horizontal transparent lockup from their own site
+      // header, in preference to the stacked one the DDA holds on
+      // enjoysenoia.com. At 3.1:1 it fills the full width of the cell, where
+      // the 1.2:1 stacked version was held to 95px by its height — so the
+      // wordmark reads at nearly twice the size, and the yellow "Hospice"
+      // script (the weakest part of the mark against white) comes with it.
       {
         name: 'Guiding Light Hospice',
         logo: guidingLightLogo,
         w: 400,
-        h: 329,
+        h: 130,
         url: 'https://www.guidinglighthospicega.com/',
       },
     ],
@@ -479,8 +481,18 @@ export const SPONSORS_2026 = [
       // from the buyer's own staff email —
       // hannah.anderson@cowetacharteracademy.org — so the domain is the
       // school's rather than a name match. No artwork yet.
+      //
+      // Two lockups were supplied: this horizontal one and a circular seal.
+      // The horizontal wins on the same grounds as everything else here — at
+      // 1.9:1 trimmed it renders about 149px wide against the seal's 80px, and
+      // the seal sets its wordmark in a curve that would be illegible at that
+      // size. Their website carries only a third mark, a 256px round crest,
+      // which is both too small and a different lockup again.
       {
         name: 'Coweta Charter Academy',
+        logo: cowetaCharterLogo,
+        w: 400,
+        h: 215,
         url: 'https://www.cowetacharteracademy.org/',
       },
     ],
