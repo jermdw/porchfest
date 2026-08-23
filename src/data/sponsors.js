@@ -6,15 +6,18 @@
 // array order and the roster is grouped the same way.
 //
 // The roster is reconciled against the Ticket Tailor "2026 Sponsorships" export
-// (event 8121226). Only sponsors who answered **Yes** to "Would you like us to
-// share your business info on our event website?" appear here — that consent
-// question is the whole reason the column exists, so a sponsor who declines is
-// silently omitted rather than listed without a link.
+// (event 8121226) — last pulled 2026-08-22: 23 orders, 21 named businesses, all
+// of them listed below. Only sponsors who answered **Yes** to "Would you like
+// us to share your business info on our event website?" appear here — that
+// consent question is the whole reason the column exists, so a sponsor who
+// declines is silently omitted rather than listed without a link. Every one of
+// the 21 answered Yes.
 //
-// Not every sponsor comes through that checkout. Some are relayed by the
-// organizers after paying another way — BMW of South Atlanta, and (Aug 2026)
-// Kim Peacock, Senoia Family Dentistry and Bella Medical Aesthetics, plus Bragassa's
-// upgrade to Silver. Those have no Ticket Tailor row to reconcile against, so
+// Six names here have NO Ticket Tailor row at all — 4 Rivers Antiques, Knife &
+// Stone, Mahaffey Linkous Orthodontics, Pollard, Senoia Coffee and Vaulted
+// Vintage — and come from the printed porch signs instead. Read that as a gap
+// in the record, not as evidence they did not pay: the DDA keys walk-in checks
+// into Ticket Tailor by hand, and a check nobody keyed leaves no row behind. So
 // when a name here is missing from the export, check with the DDA rather than
 // assuming it is stale and deleting it.
 import bmwLogo from '../assets/sponsor-bmw-south-atlanta.webp'
@@ -211,11 +214,13 @@ export const SPONSORS_2026 = [
         h: 137,
         url: 'https://www.renewalbyandersen.com/locations/atlanta-ga',
       },
-      // Upgraded from the $200 Kid's Corner tier to a $500 Silver sponsorship.
-      // Listed once, at the tier they now hold — the Kid's Corner signage they
-      // also asked about is physical signage at the event, not a second web
-      // listing, and the same business appearing twice on a thank-you page
-      // reads as a bug.
+      // Bragassa hold BOTH tiers; this was never an upgrade. The export shows
+      // two separate Stripe orders — $200 Kid's Corner on Aug 17 (81317335) and
+      // $500 Silver on Aug 20 (81485082) — and Melissa Quinn confirmed it on
+      // 2026-08-22: "They paid for both." So they appear twice, once under each
+      // tier they bought. An earlier version of this file listed them at Silver
+      // only, on the theory that Silver superseded the Kid's Corner purchase;
+      // the export disproves that, so don't collapse them back to one entry.
       {
         name: 'Bragassa Orthodontics',
         logo: bragassaLogo,
@@ -240,13 +245,21 @@ export const SPONSORS_2026 = [
         h: 204,
         url: 'https://www.facebook.com/KimberlyPeacockRealtor/',
       },
-      // The sponsor is the Newnan office (8 Savannah St — Coweta County, and
-      // registered federally as "Guiding Light Hospice SW, LLC"). Neither
-      // findable site is confirmably that entity: guidinglighthospicega.com is
-      // a Stockbridge practice ~45 miles away with a different phone number,
-      // and glhospice.com is an unfinished starter template. Name-only until
-      // the organizers confirm the right site and artwork.
-      { name: 'Guiding Light Hospice' },
+      // The sponsor is the Newnan office (8 Savannah St — Coweta County,
+      // registered federally as "Guiding Light Hospice SW, LLC"), and the
+      // export settles which site is theirs: the buyer on order 77227556 is
+      // lisa.mansfield@guidinglighthospicega.com — the sponsor's own staff
+      // email, on that exact domain. An earlier note here dismissed
+      // guidinglighthospicega.com as an unrelated Stockbridge practice and left
+      // the entry unlinked; the domain match disproves that. The site's
+      // service-area list omits Coweta, but that is a stale marketing page
+      // rather than counter-evidence (it lists adjacent Fayette).
+      //
+      // Still no artwork, so this stays name-and-link until a logo arrives.
+      {
+        name: 'Guiding Light Hospice',
+        url: 'https://www.guidinglighthospicega.com/',
+      },
     ],
   },
   {
@@ -319,6 +332,13 @@ export const SPONSORS_2026 = [
         h: 199,
         url: 'https://bellamedical.us/',
       },
+      // Paid Aug 21 (operator order 81536626, $200 Porch), after this page
+      // first went up. Ticket Tailor records the company as "Serrano Taco";
+      // Stacey Van Pelt calls them Serrano's Fine Tacos, which reads as the
+      // trading name, so that is what is shown pending confirmation. The buyer
+      // contact is a personal Gmail with no business domain behind it and no
+      // artwork has arrived, so this is name-only for now.
+      { name: "Serrano's Fine Tacos" },
       // The six below were found in the printed porch signs
       // (~/Downloads/PorchFest_Sponsor_Signs, Aug 2026) rather than in any
       // Ticket Tailor row — every one of those signs reads "This Stage
@@ -391,8 +411,35 @@ export const SPONSORS_2026 = [
       { name: "Miss Dottie's" },
     ],
   },
-  // No Kid's Corner group: Bragassa moved up to Silver and nobody else holds
-  // that tier yet. A group with an empty `sponsors` array would render a bare
-  // heading over an empty grid, so the tier is omitted here entirely — it is
-  // still offered for sale, and still listed in TIERS above.
+  // Kid's Corner sells for $200, the same as a Porch sponsorship, so it carries
+  // exactly the same scale tokens. This page ranks tiers by how large the logo
+  // renders, and equal price has to mean equal size or the ranking lies.
+  {
+    tier: "Kid's Corner Sponsors",
+    cell: 'h-28',
+    cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+    heading: 'text-lg',
+    rule: 'border-flag/30',
+    sponsors: [
+      // Also listed under Silver above — see the note there for why both. React
+      // keys are scoped to each group's own `sponsors.map`, so the repeated
+      // name is not a key collision.
+      {
+        name: 'Bragassa Orthodontics',
+        logo: bragassaLogo,
+        w: 400,
+        h: 117,
+        url: 'https://www.bragassaorthodontics.com/',
+      },
+      // Flagged as missing by Melissa Quinn on 2026-08-22 and confirmed in the
+      // export: order 81469652, $200 Kid's Corner, Aug 20. The link is taken
+      // from the buyer's own staff email —
+      // hannah.anderson@cowetacharteracademy.org — so the domain is the
+      // school's rather than a name match. No artwork yet.
+      {
+        name: 'Coweta Charter Academy',
+        url: 'https://www.cowetacharteracademy.org/',
+      },
+    ],
+  },
 ]
