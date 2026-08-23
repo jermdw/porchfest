@@ -1,0 +1,51 @@
+import kettleworksLogo from '../assets/vendor-kettleworks.webp'
+import madGreekLogo from '../assets/vendor-mad-greek.webp'
+import littleMissJuicyLogo from '../assets/vendor-little-miss-juicy.webp'
+import bigDaddysLogo from '../assets/vendor-big-daddys-peanuts.webp'
+import southernLocalNutsLogo from '../assets/vendor-southern-local-nuts.webp'
+
+// The 2026 food, drink and snack vendors, reconciled from the "Senoia PorchFest
+// Food/Drink/Art 2026" registrations in Ticket Tailor (`ev_8472588`) on
+// 2026-08-23. Ordered by ticket type, then alphabetically.
+//
+// **This is the registered roster, not a closed list.** Unlike the car show, no
+// coordinator list exists to check it against, and we already know registrations
+// undercount: three car show vendors paid by check and never appeared in Ticket
+// Tailor at all. Treat a vendor missing from here as unconfirmed, not absent, and
+// re-check with the food truck coordinator before calling the list complete.
+//
+// Identifying who each buyer *is* takes work: the PorchFest checkout form asks
+// only for contact details and a text-message opt-in — no business name, and not
+// even the menu description the car show form collects. Every name below is read
+// off the buyer's own email address (e.g. `themadgreekfood@` → The Mad Greek). One
+// 2026 registrant, a Food Truck buyer whose address carries no business name, could
+// not be identified and is deliberately omitted rather than guessed — see the PR.
+//
+// Domain-guessing is a trap here and cost real time: `pinchosfactory.com` is a
+// restaurant in Puerto Rico and `socialsugar.com` is an unrelated Substack, so
+// neither is linked. A `url` appears only where the site was confirmed to be this
+// vendor. `logo` and `url` are independent, exactly as on /sponsors.
+export const FOOD_VENDORS_2026 = [
+  // ---- Food trucks ---------------------------------------------------------
+  { name: 'High on the Hog' },
+  { name: "Lisa's Creperie" },
+  { name: 'Little Miss Juicy', logo: littleMissJuicyLogo, w: 290, h: 290, url: 'https://linktr.ee/littlemissjuicy' },
+  { name: 'Mr. Perro ATL' },
+  { name: 'Oysters Co' },
+  { name: 'Pinchos Factory' },
+  { name: 'Senoia Pizza Company' },
+  { name: 'The Mad Greek', logo: madGreekLogo, w: 315, h: 315, url: 'https://www.themadgreekfood.com/' },
+
+  // ---- Food & drink stands -------------------------------------------------
+  { name: "Big Daddy's Peanuts", logo: bigDaddysLogo, w: 400, h: 273, url: 'https://bigdaddyspeanuts.com/' },
+  // The Newnan, GA business — its logo prints "NEWNAN, GA / EST. 2015". A
+  // same-named business trades in Brent, AL and the registrant's address reads
+  // `kettleworksal@`, so don't "correct" this to the Alabama one without asking.
+  { name: 'Kettleworks', logo: kettleworksLogo, w: 400, h: 363 },
+  { name: 'Social Sugar' },
+  // `dark`: the artwork is white type on a baked-in navy square, so it needs the
+  // ink cell the sponsor grid uses for the same problem — on white it reads as a
+  // floating block rather than a logo.
+  { name: 'Southern Local Nuts', logo: southernLocalNutsLogo, w: 250, h: 250, url: 'https://southernlocalnuts.com/', dark: true },
+  { name: 'The Local' },
+]

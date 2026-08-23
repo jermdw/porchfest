@@ -15,6 +15,7 @@ const LINKS = [
   { to: '/schedule', label: 'Schedule' },
   { to: '/map', label: 'Day Of' },
   { to: '/vip', label: 'VIP Tickets' },
+  { to: '/vendors', label: 'Food' },
   { to: '/sponsors', label: 'Sponsors' },
   { to: '/volunteer', label: 'Volunteer' },
 ]
