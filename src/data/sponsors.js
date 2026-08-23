@@ -6,15 +6,18 @@
 // array order and the roster is grouped the same way.
 //
 // The roster is reconciled against the Ticket Tailor "2026 Sponsorships" export
-// (event 8121226). Only sponsors who answered **Yes** to "Would you like us to
-// share your business info on our event website?" appear here — that consent
-// question is the whole reason the column exists, so a sponsor who declines is
-// silently omitted rather than listed without a link.
+// (event 8121226) — last pulled 2026-08-22: 23 orders, 21 named businesses, all
+// of them listed below. Only sponsors who answered **Yes** to "Would you like
+// us to share your business info on our event website?" appear here — that
+// consent question is the whole reason the column exists, so a sponsor who
+// declines is silently omitted rather than listed without a link. Every one of
+// the 21 answered Yes.
 //
-// Not every sponsor comes through that checkout. Some are relayed by the
-// organizers after paying another way — BMW of South Atlanta, and (Aug 2026)
-// Kim Peacock, Senoia Family Dentistry and Bella Medical Aesthetics, plus Bragassa's
-// upgrade to Silver. Those have no Ticket Tailor row to reconcile against, so
+// Six names here have NO Ticket Tailor row at all — 4 Rivers Antiques, Knife &
+// Stone, Mahaffey Linkous Orthodontics, Pollard, Senoia Coffee and Vaulted
+// Vintage — and come from the printed porch signs instead. Read that as a gap
+// in the record, not as evidence they did not pay: the DDA keys walk-in checks
+// into Ticket Tailor by hand, and a check nobody keyed leaves no row behind. So
 // when a name here is missing from the export, check with the DDA rather than
 // assuming it is stale and deleting it.
 import bmwLogo from '../assets/sponsor-bmw-south-atlanta.webp'
@@ -40,6 +43,10 @@ import borgoLogo from '../assets/sponsor-borgo-italia.webp'
 import aAbbyLogo from '../assets/sponsor-a-abby-group.webp'
 import senoiaBicycleLogo from '../assets/sponsor-senoia-bicycle.webp'
 import bragassaLogo from '../assets/sponsor-bragassa-orthodontics.webp'
+import guidingLightLogo from '../assets/sponsor-guiding-light-hospice.webp'
+import serranoLogo from '../assets/sponsor-serrano-fine-tacos.webp'
+import missDottiesLogo from '../assets/sponsor-miss-dotties.webp'
+import cowetaCharterLogo from '../assets/sponsor-coweta-charter-academy.webp'
 
 export const SPONSOR_CHECKOUT =
   'https://www.tickettailor.com/checkout/new-session/id/8121226/chk/a9f6/?ref=website_widget&show_event_filter=false'
@@ -211,11 +218,13 @@ export const SPONSORS_2026 = [
         h: 137,
         url: 'https://www.renewalbyandersen.com/locations/atlanta-ga',
       },
-      // Upgraded from the $200 Kid's Corner tier to a $500 Silver sponsorship.
-      // Listed once, at the tier they now hold — the Kid's Corner signage they
-      // also asked about is physical signage at the event, not a second web
-      // listing, and the same business appearing twice on a thank-you page
-      // reads as a bug.
+      // Bragassa hold BOTH tiers; this was never an upgrade. The export shows
+      // two separate Stripe orders — $200 Kid's Corner on Aug 17 (81317335) and
+      // $500 Silver on Aug 20 (81485082) — and Melissa Quinn confirmed it on
+      // 2026-08-22: "They paid for both." So they appear twice, once under each
+      // tier they bought. An earlier version of this file listed them at Silver
+      // only, on the theory that Silver superseded the Kid's Corner purchase;
+      // the export disproves that, so don't collapse them back to one entry.
       {
         name: 'Bragassa Orthodontics',
         logo: bragassaLogo,
@@ -240,13 +249,29 @@ export const SPONSORS_2026 = [
         h: 204,
         url: 'https://www.facebook.com/KimberlyPeacockRealtor/',
       },
-      // The sponsor is the Newnan office (8 Savannah St — Coweta County, and
-      // registered federally as "Guiding Light Hospice SW, LLC"). Neither
-      // findable site is confirmably that entity: guidinglighthospicega.com is
-      // a Stockbridge practice ~45 miles away with a different phone number,
-      // and glhospice.com is an unfinished starter template. Name-only until
-      // the organizers confirm the right site and artwork.
-      { name: 'Guiding Light Hospice' },
+      // The sponsor is the Newnan office (8 Savannah St — Coweta County,
+      // registered federally as "Guiding Light Hospice SW, LLC"), and the
+      // export settles which site is theirs: the buyer on order 77227556 is
+      // lisa.mansfield@guidinglighthospicega.com — the sponsor's own staff
+      // email, on that exact domain. An earlier note here dismissed
+      // guidinglighthospicega.com as an unrelated Stockbridge practice and left
+      // the entry unlinked; the domain match disproves that. The site's
+      // service-area list omits Coweta, but that is a stale marketing page
+      // rather than counter-evidence (it lists adjacent Fayette).
+      //
+      // Artwork is the horizontal transparent lockup from their own site
+      // header, in preference to the stacked one the DDA holds on
+      // enjoysenoia.com. At 3.1:1 it fills the full width of the cell, where
+      // the 1.2:1 stacked version was held to 95px by its height — so the
+      // wordmark reads at nearly twice the size, and the yellow "Hospice"
+      // script (the weakest part of the mark against white) comes with it.
+      {
+        name: 'Guiding Light Hospice',
+        logo: guidingLightLogo,
+        w: 400,
+        h: 130,
+        url: 'https://www.guidinglighthospicega.com/',
+      },
     ],
   },
   {
@@ -319,6 +344,32 @@ export const SPONSORS_2026 = [
         h: 199,
         url: 'https://bellamedical.us/',
       },
+      // Paid Aug 21 (operator order 81536626, $200 Porch), after this page
+      // first went up. Ticket Tailor records the company as "Serrano Taco" and
+      // Stacey Van Pelt calls them Serrano's Fine Tacos; the name here follows
+      // their own Instagram handle and the tagline on their artwork.
+      //
+      // No website — the buyer contact is a personal Gmail — so this points at
+      // the Instagram account they run. Confirmed to be the right business
+      // rather than a name match: @serranofinetacos posts as "Senoia Taco King"
+      // (2.9k followers) and its bio reads "we proudly bring Tijuana, BC style
+      // tacos to Atlanta, Ga", which is why their artwork carries a Tijuana
+      // line despite being a local business.
+      //
+      // Their artwork is a dark textured card that carries its own background,
+      // so it needs no `dark` flag — unlike the reverse lockups below, it is
+      // not transparent and was drawn to sit on anything. Cropped past the
+      // "Follow US on social media" block at the foot of the original: that
+      // text is illegible at this cell size anyway, and dropping it takes the
+      // lockup from 1.4:1 to 2.4:1, which renders the wordmark about twice as
+      // large. Same reasoning as the Bella Medical crop above.
+      {
+        name: 'Serrano Fine Tacos',
+        logo: serranoLogo,
+        w: 400,
+        h: 166,
+        url: 'https://www.instagram.com/serranofinetacos/',
+      },
       // The six below were found in the printed porch signs
       // (~/Downloads/PorchFest_Sponsor_Signs, Aug 2026) rather than in any
       // Ticket Tailor row — every one of those signs reads "This Stage
@@ -386,13 +437,64 @@ export const SPONSORS_2026 = [
       // Signed up as "Miss Dottie's" and asked whether we could feature their
       // Facebook page, so no website was supplied. The only "Miss Dottie's"
       // findable online is a gift shop in Gray, GA — ~90 miles from Senoia and
-      // almost certainly a different business — so this stays a name-only entry
-      // until the organizers confirm the right page and artwork.
-      { name: "Miss Dottie's" },
+      // almost certainly a different business — so this keeps its name and
+      // logo but gets no anchor until the organizers confirm the right page.
+      // The order was paid by Leigh Anne Skinner, who the organizers name as
+      // the owner, and Stacey Van Pelt is chasing the page from her.
+      //
+      // The artwork arrived as a Facebook profile picture: a white scalloped
+      // circle sitting on that avatar's near-black backing. Dropped into a
+      // white cell as supplied it would have rendered as a black square, so
+      // the backing is flood-filled out to transparency from the corners and
+      // the result trimmed to the circle. Only the surround is removed — the
+      // black scallop outline and lettering inside the circle are untouched.
+      {
+        name: "Miss Dottie's",
+        logo: missDottiesLogo,
+        w: 383,
+        h: 384,
+      },
     ],
   },
-  // No Kid's Corner group: Bragassa moved up to Silver and nobody else holds
-  // that tier yet. A group with an empty `sponsors` array would render a bare
-  // heading over an empty grid, so the tier is omitted here entirely — it is
-  // still offered for sale, and still listed in TIERS above.
+  // Kid's Corner sells for $200, the same as a Porch sponsorship, so it carries
+  // exactly the same scale tokens. This page ranks tiers by how large the logo
+  // renders, and equal price has to mean equal size or the ranking lies.
+  {
+    tier: "Kid's Corner Sponsors",
+    cell: 'h-28',
+    cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+    heading: 'text-lg',
+    rule: 'border-flag/30',
+    sponsors: [
+      // Also listed under Silver above — see the note there for why both. React
+      // keys are scoped to each group's own `sponsors.map`, so the repeated
+      // name is not a key collision.
+      {
+        name: 'Bragassa Orthodontics',
+        logo: bragassaLogo,
+        w: 400,
+        h: 117,
+        url: 'https://www.bragassaorthodontics.com/',
+      },
+      // Flagged as missing by Melissa Quinn on 2026-08-22 and confirmed in the
+      // export: order 81469652, $200 Kid's Corner, Aug 20. The link is taken
+      // from the buyer's own staff email —
+      // hannah.anderson@cowetacharteracademy.org — so the domain is the
+      // school's rather than a name match. No artwork yet.
+      //
+      // Two lockups were supplied: this horizontal one and a circular seal.
+      // The horizontal wins on the same grounds as everything else here — at
+      // 1.9:1 trimmed it renders about 149px wide against the seal's 80px, and
+      // the seal sets its wordmark in a curve that would be illegible at that
+      // size. Their website carries only a third mark, a 256px round crest,
+      // which is both too small and a different lockup again.
+      {
+        name: 'Coweta Charter Academy',
+        logo: cowetaCharterLogo,
+        w: 400,
+        h: 215,
+        url: 'https://www.cowetacharteracademy.org/',
+      },
+    ],
+  },
 ]
