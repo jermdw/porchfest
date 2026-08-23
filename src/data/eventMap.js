@@ -177,7 +177,7 @@ export const POIS = [
     category: 'food',
     name: 'Food Truck Alley',
     where: 'Gin Street',
-    blurb: 'Food trucks line Gin Street between Main and Pylant.',
+    blurb: 'Food trucks line Gin Street between Main and Pylant. See who\u2019s serving on the food & drink page.',
     lat: 33.30011, // midpoint of Gin Street between its end junctions
     lon: -84.5554,
     confirmed: true,
