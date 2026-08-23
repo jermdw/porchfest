@@ -22,22 +22,19 @@ deployed; Firestore rules deployed; custom domain claimed on the right project
 with correct DNS.
 
 **Not yet done (console clicks, owner-only):**
-1. Authentication → Sign-in method → enable **Google** and **Email link** — until
-   then no admin can log in.
-2. Once Hosting shows the domain "Connected": Authentication → Settings →
-   **Authorized domains** → add `senoiaporchfest.org` (else Google sign-in fails
-   from the custom domain with a generic error).
-3. Confirmation emails: verify `senoiaporchfest.org` in Resend, then
+1. Authentication → Sign-in method → enable **Google** (select project support email and save) — Identity Platform, email sign-in, and authorized domains (`senoiaporchfest.org`, `www.senoiaporchfest.org`, `localhost`) are already configured.
+2. Confirmation emails: verify `senoiaporchfest.org` in Resend, then
    `npx firebase-tools functions:secrets:set RESEND_API_KEY --project senoiaporchfest`
    with the real key and redeploy functions. Until then the secret is a
    `placeholder-*` value and sends are skipped (signups still succeed).
-4. Optional: `www.senoiaporchfest.org` has no DNS record — add in Hosting +
+3. Optional: `www.senoiaporchfest.org` has no DNS record — add in Hosting +
    Namecheap if wanted.
 
-**Admins allowlist** (`admins/{email}` docs, live in prod): stacey211328@gmail.com,
-buffalocreekmama@gmail.com (Melissa Quinn, DDA), georgiareeders@yahoo.com,
-jermdw@gmail.com, jeremywarren@senoiahistory.com. Non-Google addresses sign in
-via the email magic link.
+**Admins allowlist**: the organizers who can sign in to `/admin`. The live list is
+the `admins` collection in prod Firestore (one doc per organizer, doc ID = their
+lowercase email) — read it there rather than keeping a copy here, since it is
+data-only and changes without a deploy. Non-Google addresses sign in via the
+email magic link.
 
 **Open questions for the organizers** (assumptions currently baked in):
 - Stage number at 57 Morgan St: the official card prints "15" for it AND for
