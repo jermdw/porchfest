@@ -5,6 +5,7 @@ import Schedule from './pages/Schedule.jsx'
 import Vip from './pages/Vip.jsx'
 import Sponsors from './pages/Sponsors.jsx'
 import Vendors from './pages/Vendors.jsx'
+import Faq from './pages/Faq.jsx'
 import EventMap from './pages/EventMap.jsx'
 import NotFound from './pages/NotFound.jsx'
 import { ROUTE_LOADERS } from './lib/routeLoaders.js'
@@ -28,6 +29,7 @@ export default function AppRoutes() {
         <Route path="/vip" element={<Vip />} />
         <Route path="/sponsors" element={<Sponsors />} />
         <Route path="/vendors" element={<Vendors />} />
+        <Route path="/faq" element={<Faq />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/cancel" element={<Cancel />} />
         <Route path="/admin" element={<Admin />} />

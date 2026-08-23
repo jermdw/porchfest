@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function SiteFooter() {
   return (
     <footer className="bg-ink text-pale/70 text-sm">
@@ -13,6 +15,11 @@ export default function SiteFooter() {
             <a className="underline hover:text-pale" href="tel:+17707279173">(770) 727-9173</a>
           </p>
           <p className="mt-1">PO Box 310, Senoia, GA 30276</p>
+          <p className="mt-2">
+            <Link to="/faq" className="underline hover:text-pale">
+              Frequently Asked Questions (FAQ) &rarr;
+            </Link>
+          </p>
         </div>
         <div>
           <p className="font-display uppercase tracking-wide text-cream mb-2">The Festival</p>

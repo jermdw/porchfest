@@ -17,6 +17,7 @@ const LINKS = [
   { to: '/vip', label: 'VIP Tickets' },
   { to: '/vendors', label: 'Food' },
   { to: '/sponsors', label: 'Sponsors' },
+  { to: '/faq', label: 'FAQ' },
   { to: '/volunteer', label: 'Volunteer' },
 ]
 

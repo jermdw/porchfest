@@ -103,6 +103,14 @@ export default function Landing() {
               </Link>
             ))}
           </div>
+          <div className="max-w-4xl mx-auto mt-8 text-center">
+            <p className="text-stone-600 text-sm">
+              Questions about vending, playing music, or attending?{' '}
+              <Link to="/faq" className="underline text-flag font-semibold hover:text-flag-deep">
+                Read our Frequently Asked Questions (FAQ) &rarr;
+              </Link>
+            </p>
+          </div>
         </section>
       </main>
       <SiteFooter />

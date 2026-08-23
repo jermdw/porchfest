@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
@@ -89,16 +90,17 @@ export default function Vendors() {
           <p className="font-display text-xl uppercase tracking-wide text-ink mb-2">
             Want to vend at PorchFest?
           </p>
-          <p className="text-stone-700">
-            Food, drink and art vendor spots are handled by the DDA — email{' '}
+          <p className="text-stone-700 leading-relaxed">
+            Food, drink, and craft vendor spots are curated and handled through the Senoia DDA.
+            Learn more about the application and selection process in our{' '}
+            <Link to="/faq#food-truck-application" className="underline font-semibold text-flag hover:text-flag-deep">
+              Vendor FAQ
+            </Link>
+            , or contact the Senoia Welcome Center at{' '}
             <a className="underline font-semibold" href="mailto:info@enjoysenoia.com">
               info@enjoysenoia.com
             </a>{' '}
-            or call{' '}
-            <a className="underline font-semibold" href="tel:+17707279173">
-              (770) 727-9173
-            </a>
-            .
+            / <a className="underline font-semibold" href="tel:+17707279173">(770) 727-9173</a>.
           </p>
         </div>
       </main>
