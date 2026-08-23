@@ -3,6 +3,7 @@ import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
 import { publishedPerformances } from '../data/schedule.js'
+import { getActSlug } from '../data/bands.js'
 
 export default function Schedule() {
   usePageMeta({
@@ -42,6 +43,12 @@ export default function Schedule() {
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center items-center gap-3">
+            <Link
+              to="/bands"
+              className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-cream font-display uppercase tracking-wider px-4 py-2.5 rounded-lg text-xs transition-colors"
+            >
+              <span>🎸 Meet the Bands &amp; Bios</span>
+            </Link>
             <Link
               to="/map"
               className="inline-flex items-center gap-2 bg-flag hover:bg-flag-deep text-cream font-display font-semibold uppercase tracking-wider px-5 py-2.5 rounded-lg text-sm transition-colors shadow"
@@ -151,7 +158,13 @@ export default function Schedule() {
 
                               <div className="min-w-0 flex-1">
                                 <h3 className="font-bold text-ink text-sm sm:text-base leading-tight">
-                                  {p.act}
+                                  <Link
+                                    to={`/bands#${getActSlug(p.act)}`}
+                                    className="hover:text-flag hover:underline transition-colors"
+                                    title={`View ${p.act} bio & details`}
+                                  >
+                                    {p.act}
+                                  </Link>
                                 </h3>
                                 <p className="text-xs font-semibold text-flag uppercase tracking-wide mt-0.5">
                                   {p.genre}
@@ -196,19 +209,32 @@ export default function Schedule() {
                           </span>
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-display font-bold uppercase tracking-wider text-cream">
-                          {sets[0]?.act ?? 'Chuck X Nick'}
+                          <Link
+                            to={`/bands#${getActSlug(sets[0]?.act ?? 'Chuck X Nick')}`}
+                            className="hover:text-flag-bright hover:underline transition-colors"
+                          >
+                            {sets[0]?.act ?? 'Chuck X Nick'}
+                          </Link>
                         </h2>
                         <p className="text-pale text-sm mt-1">
                           Bottom of Main Street at Travis & Gin Street
                         </p>
                       </div>
 
-                      <Link
-                        to="/map?poi=stage-main"
-                        className="bg-flag hover:bg-flag-deep text-cream font-display font-semibold uppercase tracking-wider px-6 py-3 rounded-lg text-sm transition-colors whitespace-nowrap shadow shrink-0"
-                      >
-                        📍 View Main Stage on Map
-                      </Link>
+                      <div className="flex flex-wrap items-center gap-3 shrink-0">
+                        <Link
+                          to={`/bands#${getActSlug(sets[0]?.act ?? 'Chuck X Nick')}`}
+                          className="bg-white/10 hover:bg-white/20 border border-white/20 text-cream font-display font-semibold uppercase tracking-wider px-5 py-3 rounded-lg text-xs transition-colors whitespace-nowrap"
+                        >
+                          🎸 Artist Bio
+                        </Link>
+                        <Link
+                          to="/map?poi=stage-main"
+                          className="bg-flag hover:bg-flag-deep text-cream font-display font-semibold uppercase tracking-wider px-6 py-3 rounded-lg text-sm transition-colors whitespace-nowrap shadow"
+                        >
+                          📍 View Main Stage on Map
+                        </Link>
+                      </div>
                     </div>
                   </section>
                 )
