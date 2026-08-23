@@ -333,12 +333,20 @@ export const SPONSORS_2026 = [
         url: 'https://bellamedical.us/',
       },
       // Paid Aug 21 (operator order 81536626, $200 Porch), after this page
-      // first went up. Ticket Tailor records the company as "Serrano Taco";
-      // Stacey Van Pelt calls them Serrano's Fine Tacos, which reads as the
-      // trading name, so that is what is shown pending confirmation. The buyer
-      // contact is a personal Gmail with no business domain behind it and no
-      // artwork has arrived, so this is name-only for now.
-      { name: "Serrano's Fine Tacos" },
+      // first went up. Ticket Tailor records the company as "Serrano Taco" and
+      // Stacey Van Pelt calls them Serrano's Fine Tacos; the name here follows
+      // their own Instagram handle and the tagline on their artwork.
+      //
+      // No website — the buyer contact is a personal Gmail — so this points at
+      // the Instagram account they run. Confirmed to be the right business
+      // rather than a name match: @serranofinetacos posts as "Senoia Taco King"
+      // (2.9k followers) and its bio reads "we proudly bring Tijuana, BC style
+      // tacos to Atlanta, Ga", which is why their artwork carries a Tijuana
+      // line despite being a local business.
+      {
+        name: 'Serrano Fine Tacos',
+        url: 'https://www.instagram.com/serranofinetacos/',
+      },
       // The six below were found in the printed porch signs
       // (~/Downloads/PorchFest_Sponsor_Signs, Aug 2026) rather than in any
       // Ticket Tailor row — every one of those signs reads "This Stage
