@@ -43,6 +43,9 @@ import borgoLogo from '../assets/sponsor-borgo-italia.webp'
 import aAbbyLogo from '../assets/sponsor-a-abby-group.webp'
 import senoiaBicycleLogo from '../assets/sponsor-senoia-bicycle.webp'
 import bragassaLogo from '../assets/sponsor-bragassa-orthodontics.webp'
+import guidingLightLogo from '../assets/sponsor-guiding-light-hospice.webp'
+import serranoLogo from '../assets/sponsor-serrano-fine-tacos.webp'
+import missDottiesLogo from '../assets/sponsor-miss-dotties.webp'
 
 export const SPONSOR_CHECKOUT =
   'https://www.tickettailor.com/checkout/new-session/id/8121226/chk/a9f6/?ref=website_widget&show_event_filter=false'
@@ -255,9 +258,16 @@ export const SPONSORS_2026 = [
       // service-area list omits Coweta, but that is a stale marketing page
       // rather than counter-evidence (it lists adjacent Fayette).
       //
-      // Still no artwork, so this stays name-and-link until a logo arrives.
+      // Artwork is the transparent stacked lockup the DDA already holds for
+      // them, lifted from their partner listing on enjoysenoia.com. It is the
+      // squarest of their lockups (1.2:1), so it renders smaller in a
+      // fixed-height cell than the wide version in their own site header — if
+      // they send that one it is worth swapping in.
       {
         name: 'Guiding Light Hospice',
+        logo: guidingLightLogo,
+        w: 400,
+        h: 329,
         url: 'https://www.guidinglighthospicega.com/',
       },
     ],
@@ -343,8 +353,19 @@ export const SPONSORS_2026 = [
       // (2.9k followers) and its bio reads "we proudly bring Tijuana, BC style
       // tacos to Atlanta, Ga", which is why their artwork carries a Tijuana
       // line despite being a local business.
+      //
+      // Their artwork is a dark textured card that carries its own background,
+      // so it needs no `dark` flag — unlike the reverse lockups below, it is
+      // not transparent and was drawn to sit on anything. Cropped past the
+      // "Follow US on social media" block at the foot of the original: that
+      // text is illegible at this cell size anyway, and dropping it takes the
+      // lockup from 1.4:1 to 2.4:1, which renders the wordmark about twice as
+      // large. Same reasoning as the Bella Medical crop above.
       {
         name: 'Serrano Fine Tacos',
+        logo: serranoLogo,
+        w: 400,
+        h: 166,
         url: 'https://www.instagram.com/serranofinetacos/',
       },
       // The six below were found in the printed porch signs
@@ -414,9 +435,23 @@ export const SPONSORS_2026 = [
       // Signed up as "Miss Dottie's" and asked whether we could feature their
       // Facebook page, so no website was supplied. The only "Miss Dottie's"
       // findable online is a gift shop in Gray, GA — ~90 miles from Senoia and
-      // almost certainly a different business — so this stays a name-only entry
-      // until the organizers confirm the right page and artwork.
-      { name: "Miss Dottie's" },
+      // almost certainly a different business — so this keeps its name and
+      // logo but gets no anchor until the organizers confirm the right page.
+      // The order was paid by Leigh Anne Skinner, who the organizers name as
+      // the owner, and Stacey Van Pelt is chasing the page from her.
+      //
+      // The artwork arrived as a Facebook profile picture: a white scalloped
+      // circle sitting on that avatar's near-black backing. Dropped into a
+      // white cell as supplied it would have rendered as a black square, so
+      // the backing is flood-filled out to transparency from the corners and
+      // the result trimmed to the circle. Only the surround is removed — the
+      // black scallop outline and lettering inside the circle are untouched.
+      {
+        name: "Miss Dottie's",
+        logo: missDottiesLogo,
+        w: 383,
+        h: 384,
+      },
     ],
   },
   // Kid's Corner sells for $200, the same as a Porch sponsorship, so it carries
