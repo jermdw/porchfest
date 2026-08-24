@@ -7,9 +7,9 @@ import { FAQS, FAQ_CATEGORIES } from '../data/faq.js'
 
 export default function Faq() {
   usePageMeta({
-    title: 'Frequently Asked Questions | Senoia PorchFest & Welcome Center',
+    title: 'Frequently Asked Questions | Senoia PorchFest',
     description:
-      'Got questions about Senoia PorchFest? Learn how food trucks and craft artisans apply, how bands are selected, downtown event space guidelines, and visitor info.',
+      'Got questions about Senoia PorchFest? Learn about band submissions, food truck locations, festival parking, and visitor info.',
     path: '/faq',
   })
 
@@ -89,8 +89,7 @@ export default function Faq() {
           Frequently Asked Questions
         </h1>
         <p className="text-pale/90 mt-4 max-w-2xl mx-auto">
-          Everything you need to know about vending, performing, downtown event spaces, and
-          attending Senoia PorchFest.
+          Everything you need to know about music, food, parking, and attending Senoia PorchFest.
         </p>
       </header>
 
@@ -102,7 +101,7 @@ export default function Faq() {
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search questions (e.g. food truck, apply, bands, parking)..."
+              placeholder="Search questions (e.g. bands, food trucks, parking)..."
               aria-label="Search frequently asked questions"
               className="w-full bg-white border border-stone-300 rounded-xl px-4 py-3 pl-11 text-ink placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-flag focus:border-transparent transition-shadow shadow-xs"
             />
@@ -231,18 +230,17 @@ export default function Faq() {
           </div>
         )}
 
-        {/* Welcome Center & DDA Inquiries Callout */}
+        {/* Contact Organizers Callout */}
         <section className="mt-12 bg-white rounded-2xl border-2 border-stone-200 p-6 sm:p-8 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="max-w-xl">
               <span className="font-script text-flag text-2xl block mb-0.5">Need more details?</span>
               <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-wide text-ink font-semibold">
-                Senoia Welcome Center &amp; DDA
+                Contact the Organizers
               </h2>
               <p className="text-stone-700 mt-2 leading-relaxed">
-                Have questions about future vendor applications, musician submissions, downtown
-                spaces, or local visiting tips? Melissa Quinn and the Welcome Center team are here
-                to help!
+                Presented by the Senoia Downtown Development Authority (DDA). Have questions not
+                answered here? Feel free to get in touch.
               </p>
               <div className="mt-4 flex flex-wrap gap-y-2 gap-x-6 text-sm text-stone-600">
                 <div>
@@ -264,16 +262,16 @@ export default function Faq() {
                   </a>
                 </div>
                 <div>
-                  <strong className="text-ink">Location:</strong> Historic Downtown Senoia, GA
+                  <strong className="text-ink">Location:</strong> Historic Senoia, GA
                 </div>
               </div>
             </div>
             <div className="shrink-0">
               <a
-                href="mailto:info@enjoysenoia.com?subject=Senoia%20Event%20%26%20Vendor%20Inquiry"
+                href="mailto:info@enjoysenoia.com?subject=Senoia%20PorchFest%20Inquiry"
                 className="inline-block w-full sm:w-auto text-center bg-ink hover:bg-flag text-cream font-display font-semibold uppercase tracking-wider px-6 py-3 rounded-md transition-colors shadow-sm"
               >
-                Email Welcome Center &rarr;
+                Email Organizers &rarr;
               </a>
             </div>
           </div>

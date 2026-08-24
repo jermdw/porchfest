@@ -91,16 +91,19 @@ export default function Vendors() {
             Want to vend at PorchFest?
           </p>
           <p className="text-stone-700 leading-relaxed">
-            Food, drink, and craft vendor spots are curated and handled through the Senoia DDA.
-            Learn more about the application and selection process in our{' '}
-            <Link to="/faq#food-truck-application" className="underline font-semibold text-flag hover:text-flag-deep">
-              Vendor FAQ
-            </Link>
-            , or contact the Senoia Welcome Center at{' '}
+            Food, drink and art vendor spots are handled by the DDA — email{' '}
             <a className="underline font-semibold" href="mailto:info@enjoysenoia.com">
               info@enjoysenoia.com
             </a>{' '}
-            / <a className="underline font-semibold" href="tel:+17707279173">(770) 727-9173</a>.
+            or call{' '}
+            <a className="underline font-semibold" href="tel:+17707279173">
+              (770) 727-9173
+            </a>
+            . See our{' '}
+            <Link to="/faq#food-vendor-locations" className="underline font-semibold text-flag hover:text-flag-deep">
+              FAQ
+            </Link>{' '}
+            for location and setup details.
           </p>
         </div>
       </main>
