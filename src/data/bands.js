@@ -6,54 +6,18 @@
 
 import { PERFORMANCES } from './schedule.js'
 
-import amirSalamPhoto from '../assets/bands/amir-salam.webp'
+// Verified genuine artist photos
 import ashtonDooleyPhoto from '../assets/bands/ashton-dooley-band.webp'
-import atticusRonessPhoto from '../assets/bands/atticus-roness.webp'
-import brainFogPhoto from '../assets/bands/brain-fog.webp'
 import brianCollinsPhoto from '../assets/bands/brian-collins.webp'
-import brianRiversPhoto from '../assets/bands/brian-rivers-band.webp'
-import candlerHobbsPhoto from '../assets/bands/candler-hobbs.webp'
-import chuckXNickPhoto from '../assets/bands/chuck-x-nick.webp'
-import cowboyNoyzPhoto from '../assets/bands/cowboy-noyz.webp'
-import davidPippinPhoto from '../assets/bands/david-pippin-group.webp'
-import duncanBrothersPhoto from '../assets/bands/duncan-brothers-band.webp'
-import flintRiverPhoto from '../assets/bands/flint-river-revlers.webp'
-import gradientPhoto from '../assets/bands/gradient.webp'
-import grassPhoto from '../assets/bands/grass.webp'
-import gratefulToBePhoto from '../assets/bands/grateful-to-be.webp'
-import gregRogersPhoto from '../assets/bands/greg-rogan-rogers.webp'
-import highway54Photo from '../assets/bands/highway-54.webp'
-import jakeNaysayersPhoto from '../assets/bands/jake-and-the-naysayers.webp'
-import jamesPeachesPhoto from '../assets/bands/james-the-georgia-peaches.webp'
-import joelBridgesPhoto from '../assets/bands/joel-bridges.webp'
 import joeyThurmondPhoto from '../assets/bands/joey-thurmond-the-select-orchestra.webp'
-import kellarMcCoyPhoto from '../assets/bands/kellar-mccoy.webp'
-import ladegaPhoto from '../assets/bands/ladega.webp'
-import lastSignalHomePhoto from '../assets/bands/last-signal-home.webp'
-import lucasSmithPhoto from '../assets/bands/lucas-smith.webp'
-import lukeBrownPhoto from '../assets/bands/luke-brown-the-jubilee.webp'
 import lukeMorganPhoto from '../assets/bands/luke-morgan-the-redliners.webp'
-import maryMartinPhoto from '../assets/bands/mary-martin.webp'
-import robHarlanPhoto from '../assets/bands/rob-harlan.webp'
-import rockSolderedPhoto from '../assets/bands/rock-soldered-blues.webp'
-import russGordonPhoto from '../assets/bands/russ-gordon-the-rattletrap.webp'
-import sarahMorganPhoto from '../assets/bands/sarah-morgan-hendrix.webp'
-import soulsHillPhoto from '../assets/bands/souls-hill.webp'
-import tavisMappPhoto from '../assets/bands/tavis-lance-mapp.webp'
-import timMcGeePhoto from '../assets/bands/tim-mcgee.webp'
-import tylerCaldwellPhoto from '../assets/bands/tyler-caldwell.webp'
-import tylerLowmanPhoto from '../assets/bands/tyler-lowman-band.webp'
-import whiskeyRiverPhoto from '../assets/bands/whiskey-river-saints.webp'
-import whollySmokesPhoto from '../assets/bands/wholly-smokes.webp'
-import wildcatPhoto from '../assets/bands/wildcat.webp'
-import wyattBandPhoto from '../assets/bands/wyatt-band.webp'
 
 export const BANDS = [
   {
     act: 'Kellar McCoy',
     composition: 'Father-daughter acoustic duo (Guitar, flute, clarinet & vocals)',
     bio: 'Tim Kellar and Megan Kellar McCoy deliver warm, easy-listening acoustic harmonies, blending acoustic guitar with expressive flute and clarinet melodies to kick off the afternoon in the VIP Luxury Lounge.',
-    photo: kellarMcCoyPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/kellarmccoymusic',
     },
@@ -62,7 +26,7 @@ export const BANDS = [
     act: 'Amir Salam',
     composition: 'Solo singer-songwriter (Acoustic guitar & vocals)',
     bio: 'Honest, heartfelt country songwriting with soulful vocals and acoustic guitar, bringing down-home Georgia storytelling to Senoia Beer Company.',
-    photo: amirSalamPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/amirsalammusic',
       instagram: 'https://www.instagram.com/amirsalammusic',
@@ -72,7 +36,7 @@ export const BANDS = [
     act: 'Brain Fog',
     composition: '4-piece party & covers band (Vocals, guitars, bass, drums)',
     bio: 'High-energy multi-decade party rock spanning the greatest singalongs and anthems of the 70s, 80s, 90s, and 2000s.',
-    photo: brainFogPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/brainfogband',
     },
@@ -81,7 +45,7 @@ export const BANDS = [
     act: 'Candler Hobbs',
     composition: 'Solo classic rock acoustic artist (Guitar & vocals)',
     bio: 'A staple of the Georgia acoustic circuit delivering timeless classic rock favorites and folk rock staples with gritty, passionate delivery.',
-    photo: candlerHobbsPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/candlerhobbsmusic',
     },
@@ -90,7 +54,7 @@ export const BANDS = [
     act: "Flint River Rev'lers",
     composition: 'Americana & roots ensemble (Guitars, bass, percussion & harmonies)',
     bio: 'A Coweta County favorite serving up foot-stomping Americana, folk gems, and acoustic roots favorites with tight harmonies and porch-ready energy.',
-    photo: flintRiverPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/flintriverrevlers',
       youtube: 'https://www.youtube.com/results?search_query=Flint+River+Rev%27lers+Georgia',
@@ -100,7 +64,7 @@ export const BANDS = [
     act: 'GRASS',
     composition: '4-piece rock outfit (Vocals, lead guitar, bass, drums)',
     bio: 'Channeling the golden era of Woodstock and psychedelic classic rock, GRASS brings beloved 60s and 70s rock classics to life.',
-    photo: grassPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/grassbandga',
     },
@@ -109,7 +73,7 @@ export const BANDS = [
     act: 'James & The Georgia Peaches',
     composition: 'Multi-genre vocal & rhythm group (Vocals, guitars, keys, drums)',
     bio: 'An eclectic crowd-pleaser blending soulful pop, upbeat rock, classic country, and southern soul into one non-stop celebratory set.',
-    photo: jamesPeachesPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/jamesandthegeorgiapeaches',
     },
@@ -118,7 +82,7 @@ export const BANDS = [
     act: 'Mary Martin',
     composition: 'Solo indie-folk singer-songwriter (Acoustic guitar & vocals)',
     bio: 'Intimate indie, folk, and Americana storytelling marked by luminous vocals, lyrical depth, and delicate acoustic fingerpicking.',
-    photo: maryMartinPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/marymartinmusic',
       instagram: 'https://www.instagram.com/marymartinmusic',
@@ -128,7 +92,7 @@ export const BANDS = [
     act: 'Tyler Lowman Band',
     composition: 'Full band (Vocals, lead guitar, rhythm guitar, bass, drums)',
     bio: 'A powerhouse Newnan-based outfit blending country grit and blistering Southern rock riffs that get crowds on their feet.',
-    photo: tylerLowmanPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/tylerlowmanmusic',
       youtube: 'https://www.youtube.com/results?search_query=Tyler+Lowman+Band',
@@ -138,7 +102,7 @@ export const BANDS = [
     act: 'David Pippin Group',
     composition: '5-piece blues-rock band (David Pippin on guitar/vocals, bass, keys, drums, lead vocals)',
     bio: 'Fronted by Atlanta Blues Challenge winner and virtuoso guitarist David Pippin, fusing electrifying West Georgia blues with jazz, rock, and soul grooves.',
-    photo: davidPippinPhoto,
+    photo: null,
     links: {
       website: 'http://davidpippinmusic.com/',
       facebook: 'https://www.facebook.com/davidpippinmusic',
@@ -150,7 +114,7 @@ export const BANDS = [
     act: 'Ladega',
     composition: 'Jam & indie rock band (Guitars, bass, drums & vocals)',
     bio: 'Improvisational jam grooves meeting indie sensibilities and classic rock power, taking listeners on a dynamic sonic ride.',
-    photo: ladegaPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/ladegaband',
     },
@@ -159,7 +123,7 @@ export const BANDS = [
     act: 'Last Signal Home',
     composition: 'Classic & modern rock band (Vocals, dual guitars, bass, drums)',
     bio: 'A hard-hitting rock band delivering driving rhythms, melodic guitar hooks, and high-octane classic rock favorites.',
-    photo: lastSignalHomePhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/lastsignalhome',
     },
@@ -179,7 +143,7 @@ export const BANDS = [
     act: 'Russ Gordon & The Rattletrap',
     composition: 'Country band (Vocals, guitars, bass, percussion)',
     bio: 'Traditional country roots with a honky-tonk pulse, delivering twangy guitars, timeless country narratives, and genuine good-timing vibes.',
-    photo: russGordonPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/russgordonmusic',
     },
@@ -188,7 +152,7 @@ export const BANDS = [
     act: 'Tim McGee',
     composition: 'Multi-instrumentalist vocalist (Vocals, acoustic guitar & keys)',
     bio: 'Smooth, versatile sets effortlessly weaving through 70s and 90s radio classics, soulful R&B, light rock, and country staples.',
-    photo: timMcGeePhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/timmcgeemusic',
     },
@@ -197,7 +161,7 @@ export const BANDS = [
     act: 'Whiskey River Saints',
     composition: 'Southern rock & country band (Lead vocals, dual guitars, bass, drums)',
     bio: 'Rowdy southern rock and country anthems with fiery guitar licks, soaring choruses, and unapologetic Southern attitude.',
-    photo: whiskeyRiverPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/whiskeyriversaints',
     },
@@ -206,7 +170,7 @@ export const BANDS = [
     act: 'Wholly Smokes',
     composition: 'Classic rock band (Vocals, guitars, bass, drums)',
     bio: 'Smoking-hot guitar riffs and seasoned musicianship delivering classic and Southern rock hits that never go out of style.',
-    photo: whollySmokesPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/whollysmokesband',
     },
@@ -215,7 +179,7 @@ export const BANDS = [
     act: 'Brian Rivers Band',
     composition: 'Pop & rock group (Vocals, guitars, keyboards, bass, drums)',
     bio: 'Infectious pop and rock hooks with rich arrangements and vibrant vocal delivery, perfect for an evening porch singalong.',
-    photo: brianRiversPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/brianriversband',
     },
@@ -224,7 +188,7 @@ export const BANDS = [
     act: 'Highway 54',
     composition: 'Blues, soul & rock outfit (Vocals, guitar, harmonica, bass, drums)',
     bio: 'Deep-grooving blues, soulful vocal lines, and driving rock rhythm honoring the rich musical heritage of Georgia Highway 54.',
-    photo: highway54Photo,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/highway54band',
     },
@@ -233,7 +197,7 @@ export const BANDS = [
     act: 'Joel Bridges',
     composition: 'Solo acoustic singer-songwriter (Guitar & vocals)',
     bio: 'Warm, resonant acoustic folk and rock featuring thoughtful originals and crowd-favorite acoustic interpretations.',
-    photo: joelBridgesPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/joelbridgesmusic',
     },
@@ -242,7 +206,7 @@ export const BANDS = [
     act: 'Lucas Smith',
     composition: 'Solo country performer (Acoustic guitar & vocals)',
     bio: 'A tribute to classic 70s and 80s golden-era country music, loaded with vintage outlaw charm and deep storytelling vocals.',
-    photo: lucasSmithPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/lucassmithmusic',
     },
@@ -251,7 +215,7 @@ export const BANDS = [
     act: 'Luke Brown & The Jubilee',
     composition: 'Country & roots band (Vocals, acoustic & electric guitars, bass, drums)',
     bio: 'Uplifting modern and traditional country music with spirited musicianship and relatable, heartfelt lyrics.',
-    photo: lukeBrownPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/lukebrownjubilee',
     },
@@ -260,7 +224,7 @@ export const BANDS = [
     act: 'Rob Harlan',
     composition: 'Solo classic rock & country artist (Guitar & vocals)',
     bio: 'Seasoned acoustic delivery covering iconic classic rock anthems and country favorites with soulful authenticity.',
-    photo: robHarlanPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/robharlanmusic',
     },
@@ -269,7 +233,7 @@ export const BANDS = [
     act: 'Wildcat',
     composition: 'Classic & Southern rock band (Lead vocals, guitars, bass, drums)',
     bio: 'Fierce guitar-driven Southern rock and classic party rock that brings festival crowds to their feet.',
-    photo: wildcatPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/wildcatbandga',
     },
@@ -278,7 +242,7 @@ export const BANDS = [
     act: 'Wyatt Band',
     composition: 'Party & dance rock group (Vocals, guitars, keys, bass, drums)',
     bio: 'High-spirit dance tunes and classic rock bangers engineered to keep porchgoers moving and grooving.',
-    photo: wyattBandPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/wyattband',
     },
@@ -300,7 +264,7 @@ export const BANDS = [
     act: 'Cowboy Noyz',
     composition: 'Versatile party ensemble (Vocals, guitars, bass, percussion)',
     bio: 'An all-genres sonic romp jumping effortlessly across country, classic rock, funk, and pop favorites for an unpredictable, fun-filled set.',
-    photo: cowboyNoyzPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/cowboynoyz',
     },
@@ -309,7 +273,7 @@ export const BANDS = [
     act: 'Greg "Rogan" Rogers',
     composition: 'Modern country & inspirational artist (Acoustic guitar & vocals)',
     bio: 'Uplifting modern country melodies paired with faith-rooted songwriting and warm, accessible vocal tones.',
-    photo: gregRogersPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/gregroganrogers',
     },
@@ -318,7 +282,7 @@ export const BANDS = [
     act: 'Jake and The Naysayers',
     composition: 'Jamband & country ensemble (Guitars, bass, drums, percussion, vocals)',
     bio: 'Spirited jam-band improvisation fused with catchy country hooks, creating dynamic, exploratory live sets.',
-    photo: jakeNaysayersPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/jakeandthenaysayers',
     },
@@ -327,7 +291,7 @@ export const BANDS = [
     act: 'Sarah & Morgan Hendrix',
     composition: 'Vocal & acoustic duo (Harmonies, acoustic guitars, light percussion)',
     bio: 'Sisterly vocal harmonies weaving through alternative, soft rock, and indie pop with delicate arrangements and captivating chemistry.',
-    photo: sarahMorganPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/sarahandmorganhendrix',
       instagram: 'https://www.instagram.com/sarahandmorganhendrix',
@@ -337,7 +301,7 @@ export const BANDS = [
     act: 'Souls Hill',
     composition: 'Southern & classic rock band (Lead vocals, guitars, bass, drums)',
     bio: 'Gritty, hard-rocking Southern tunes featuring dual-guitar harmonies, heavy rhythm, and classic rock spirit.',
-    photo: soulsHillPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/soulshillband',
     },
@@ -346,7 +310,7 @@ export const BANDS = [
     act: 'Tyler Caldwell',
     composition: 'Singer-songwriter (Guitar, harmonica & vocals)',
     bio: 'A blend of raw country grit, folk storytelling, and heartland rock delivered with an unmistakable Southern voice.',
-    photo: tylerCaldwellPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/tylercaldwellmusic',
     },
@@ -365,7 +329,7 @@ export const BANDS = [
     act: 'Atticus Roness',
     composition: 'Rock & roll performer / power trio (Vocals, electric guitar, bass, drums)',
     bio: 'Pure, unfiltered rock ’n’ roll energy with vintage riffs, dynamic stage presence, and unmistakable attitude.',
-    photo: atticusRonessPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/atticusroness',
     },
@@ -374,7 +338,7 @@ export const BANDS = [
     act: 'Duncan Brothers Band',
     composition: 'Country band (Brother harmonies, guitars, bass, drums)',
     bio: 'Family-rooted country music featuring seamless blood harmonies, twangy leads, and relatable down-home themes.',
-    photo: duncanBrothersPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/duncanbrothersband',
     },
@@ -383,7 +347,7 @@ export const BANDS = [
     act: 'Gradient',
     composition: 'Blues & rock band (Vocals, lead guitar, rhythm guitar, bass, drums)',
     bio: 'Smoky blues progressions transitioning into soaring classic rock crescendos with exceptional guitar improvisation.',
-    photo: gradientPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/gradientband',
     },
@@ -392,7 +356,7 @@ export const BANDS = [
     act: 'Grateful To Be',
     composition: 'Rock band (Vocals, guitars, bass, drums, keys)',
     bio: 'Celebratory, uplifting rock honoring legendary jam and classic rock pioneers with expansive solos and good vibrations.',
-    photo: gratefulToBePhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/gratefultobe',
     },
@@ -412,7 +376,7 @@ export const BANDS = [
     act: 'Rock Soldered Blues',
     composition: 'Blues & southern rock band (Vocals, slide guitar, bass, drums, harmonica)',
     bio: 'Electrifying 70s-style blues rock and Southern grit with blistering guitar solos and impassioned blues vocals.',
-    photo: rockSolderedPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/rocksolderedblues',
     },
@@ -421,7 +385,7 @@ export const BANDS = [
     act: 'Tavis Lance Mapp',
     composition: 'Country artist (Acoustic & electric guitar, lead vocals)',
     bio: 'Authentic Georgia country music with resonant baritone vocals, classic themes, and genuine Southern charm.',
-    photo: tavisMappPhoto,
+    photo: null,
     links: {
       facebook: 'https://www.facebook.com/tavislancemapp',
     },
@@ -430,7 +394,7 @@ export const BANDS = [
     act: 'Chuck X Nick',
     composition: 'Dynamic duo (Chuck Parrish & Nick Ferrell on acoustic guitars, vocals & rap fusion)',
     bio: 'Senoia favorites Chuck Parrish and Nick Ferrell headline the Main Stage with their signature high-energy blend of country, rock, pop covers, acoustic rap fusion, and hilarious crowd interaction to close out PorchFest 2026.',
-    photo: chuckXNickPhoto,
+    photo: null,
     links: {
       website: 'https://chuckxnick.com/',
       facebook: 'https://www.facebook.com/chuckxnick',
