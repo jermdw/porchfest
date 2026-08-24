@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
@@ -89,7 +90,7 @@ export default function Vendors() {
           <p className="font-display text-xl uppercase tracking-wide text-ink mb-2">
             Want to vend at PorchFest?
           </p>
-          <p className="text-stone-700">
+          <p className="text-stone-700 leading-relaxed">
             Food, drink and art vendor spots are handled by the DDA — email{' '}
             <a className="underline font-semibold" href="mailto:info@enjoysenoia.com">
               info@enjoysenoia.com
@@ -98,7 +99,11 @@ export default function Vendors() {
             <a className="underline font-semibold" href="tel:+17707279173">
               (770) 727-9173
             </a>
-            .
+            . See our{' '}
+            <Link to="/faq#food-vendor-locations" className="underline font-semibold text-flag hover:text-flag-deep">
+              FAQ
+            </Link>{' '}
+            for location details.
           </p>
         </div>
       </main>
