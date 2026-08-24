@@ -238,41 +238,55 @@ export default function Bands() {
                   className="bg-white rounded-2xl border border-stone-200 shadow-sm hover:border-flag/60 transition-all flex flex-col justify-between overflow-hidden scroll-mt-24"
                 >
                   <div>
-                    {/* Visual Card Header */}
-                    <div className="bg-ink text-cream p-4 relative flex items-center justify-between border-b border-stone-200">
-                      <div className="flex items-center gap-3 min-w-0">
-                        {/* Stage Number / Type Badge */}
+                    {/* Band Photo Header */}
+                    <div className="relative h-48 sm:h-52 w-full bg-ink overflow-hidden border-b border-stone-200 group">
+                      {band.photo ? (
+                        <img
+                          src={band.photo}
+                          alt={`${band.act} live performance`}
+                          loading="lazy"
+                          width="640"
+                          height="380"
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-ink via-stone-900 to-ink flex items-center justify-center">
+                          <span className="font-display font-bold text-3xl uppercase tracking-widest text-white/20">
+                            {band.act}
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10" />
+
+                      {/* Stage Number / VIP / Main Badge top-left */}
+                      <div className="absolute top-3 left-3 flex items-center gap-2">
                         {band.stage != null ? (
                           <span
-                            className="w-10 h-10 rounded-full bg-flag text-cream font-display font-bold text-base flex items-center justify-center shrink-0 shadow-xs border-2 border-white/20"
+                            className="w-10 h-10 rounded-full bg-flag text-cream font-display font-bold text-base flex items-center justify-center shadow-md border-2 border-white/25"
                             title={`Stage ${band.stage}`}
                           >
                             {band.stage}
                           </span>
                         ) : band.venue === 'Main Stage' ? (
-                          <span className="px-2.5 py-1 rounded bg-flag text-cream font-display text-xs uppercase font-bold tracking-wider shrink-0">
+                          <span className="px-3 py-1 rounded-md bg-flag text-cream font-display text-xs uppercase font-bold tracking-wider shadow-md">
                             Main Stage
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded bg-amber-600 text-cream font-display text-xs uppercase font-bold tracking-wider shrink-0">
-                            VIP
+                          <span className="px-3 py-1 rounded-md bg-amber-600 text-cream font-display text-xs uppercase font-bold tracking-wider shadow-md">
+                            VIP Lounge
                           </span>
                         )}
-
-                        <div className="min-w-0">
-                          <p className="text-[11px] font-display uppercase tracking-widest text-pale/70">
-                            {band.stage != null ? `Stage ${band.stage}` : 'Featured Stage'}
-                          </p>
-                          <p className="font-display font-bold text-sm text-flag-bright tracking-wide">
-                            {band.time || 'Schedule pending'}
-                          </p>
-                        </div>
                       </div>
 
-                      {/* Genre Pill */}
-                      <span className="text-[11px] font-semibold bg-white/10 text-cream px-2.5 py-1 rounded-full uppercase tracking-wider shrink-0 max-w-[130px] truncate text-right">
-                        {band.genre}
-                      </span>
+                      {/* Set time & genre badges bottom on photo */}
+                      <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between gap-2">
+                        <span className="px-2.5 py-1 rounded-md bg-ink/90 backdrop-blur-xs text-cream font-display font-bold text-xs tracking-wide border border-white/15 shadow-xs">
+                          ⏰ {band.time || 'Time pending'}
+                        </span>
+                        <span className="text-[11px] font-semibold bg-white/90 text-ink px-2.5 py-1 rounded-full uppercase tracking-wider shadow-xs max-w-[150px] truncate">
+                          {band.genre}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Body Content */}
