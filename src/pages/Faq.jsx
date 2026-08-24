@@ -129,14 +129,14 @@ export default function Faq() {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-1" role="tablist" aria-label="FAQ Categories">
+          <div className="flex flex-wrap gap-2 pt-1" aria-label="FAQ Categories">
             {FAQ_CATEGORIES.map((cat) => {
               const active = selectedCategory === cat.id
               return (
                 <button
                   key={cat.id}
-                  role="tab"
-                  aria-selected={active}
+                  type="button"
+                  aria-pressed={active}
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`px-3.5 py-1.5 rounded-full text-sm font-display tracking-wide uppercase transition-colors ${
                     active

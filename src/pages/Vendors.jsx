@@ -103,7 +103,7 @@ export default function Vendors() {
             <Link to="/faq#food-vendor-locations" className="underline font-semibold text-flag hover:text-flag-deep">
               FAQ
             </Link>{' '}
-            for location and setup details.
+            for location details.
           </p>
         </div>
       </main>
