@@ -282,11 +282,12 @@ export default function Bands() {
                         </div>
                       </div>
                     ) : (
-                      <div className="relative h-32 w-full bg-gradient-to-br from-ink via-stone-900 to-ink p-4 flex flex-col justify-between border-b border-stone-200 overflow-hidden">
-                        {/* Decorative Stage Number Watermark */}
-                        <div className="absolute -right-2 -bottom-4 text-white/5 font-display font-black text-7xl select-none pointer-events-none">
-                          {band.stage != null ? `#${band.stage}` : 'PF'}
+                      <div className="relative h-48 sm:h-52 w-full bg-gradient-to-br from-ink via-[#17254b] to-ink p-4 flex flex-col justify-between border-b border-stone-200 overflow-hidden">
+                        {/* Decorative Stage Number & Ambient Watermarks */}
+                        <div className="absolute -right-3 -bottom-6 text-white/[0.04] font-display font-black text-8xl select-none pointer-events-none">
+                          {band.stage != null ? `#${band.stage}` : 'SPF'}
                         </div>
+                        <div className="absolute -left-6 -top-6 w-32 h-32 bg-flag/10 rounded-full blur-2xl pointer-events-none" />
 
                         {/* Top row: Stage badge + Genre */}
                         <div className="flex items-center justify-between z-10">
@@ -323,10 +324,21 @@ export default function Bands() {
                           </span>
                         </div>
 
-                        {/* Bottom row: Live festival subtitle */}
-                        <div className="z-10 flex items-center justify-between text-[10px] font-display uppercase tracking-wider text-pale/50 pt-1 border-t border-white/10">
-                          <span>Senoia PorchFest 2026</span>
-                          <span>Live Performance</span>
+                        {/* Center visual accent */}
+                        <div className="z-10 text-center my-auto py-1">
+                          <p className="font-script text-flag-bright text-2xl tracking-wide opacity-90">
+                            Live on the Porch
+                          </p>
+                        </div>
+
+                        {/* Bottom row: Set time & festival tag */}
+                        <div className="z-10 flex items-center justify-between gap-2 pt-2 border-t border-white/10">
+                          <span className="px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-xs text-cream font-display font-bold text-xs tracking-wide border border-white/10">
+                            ⏰ {band.time || 'Time pending'}
+                          </span>
+                          <span className="text-[10px] font-display uppercase tracking-wider text-pale/60">
+                            Senoia PorchFest 2026
+                          </span>
                         </div>
                       </div>
                     )}
