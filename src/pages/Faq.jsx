@@ -129,7 +129,7 @@ export default function Faq() {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-1" aria-label="FAQ Categories">
+          <div className="flex flex-wrap gap-2 pt-1" role="group" aria-label="FAQ Categories">
             {FAQ_CATEGORIES.map((cat) => {
               const active = selectedCategory === cat.id
               return (
