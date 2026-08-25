@@ -3,10 +3,10 @@ import madGreekLogo from '../assets/vendor-mad-greek.webp'
 import littleMissJuicyLogo from '../assets/vendor-little-miss-juicy.webp'
 import bigDaddysLogo from '../assets/vendor-big-daddys-peanuts.webp'
 import southernLocalNutsLogo from '../assets/vendor-southern-local-nuts.webp'
-import creperieLogo from '../assets/vendor-lisas-creperie.webp'
 import perroLogo from '../assets/vendor-mr-perro-atl.webp'
 import oystersLogo from '../assets/vendor-oysters-co.webp'
 import senoiaPizzaLogo from '../assets/vendor-senoia-pizza-co.webp'
+import serranoLogo from '../assets/vendor-serrano-fine-tacos.webp'
 
 // The 2026 food, drink and snack vendors, reconciled from the "Senoia PorchFest
 // Food/Drink/Art 2026" registrations in Ticket Tailor (`ev_8472588`) on
@@ -30,25 +30,33 @@ import senoiaPizzaLogo from '../assets/vendor-senoia-pizza-co.webp'
 // neither is linked. A `url` appears only where the site was confirmed to be this
 // vendor. `logo` and `url` are independent, exactly as on /sponsors.
 //
-// Four more logos (2026-08-23): Lisa's Creperie came from the legacy DDA business
-// directory (enjoysenoia.com/downtown-businesses); Mr. Perro ATL and Senoia Pizza
-// Company have only a Facebook page, so their logo is their profile picture and
-// they stay unlinked; Oysters Co has a real site and Executive Chef Christopher
-// Murphy matches the registrant exactly (`cmurphy@oystersco.com`). Pinchos
-// Factory's own Instagram avatar is a personal photo, not a wordmark, so it stays
-// a placeholder rather than putting a photo in a grid of logos. High on the Hog,
+// Three more logos (2026-08-23): Mr. Perro ATL and Senoia Pizza Company have
+// only a Facebook page, so their logo is their profile picture and they stay
+// unlinked; Oysters Co has a real site and Executive Chef Christopher Murphy
+// matches the registrant exactly (`cmurphy@oystersco.com`). Pinchos Factory's
+// own Instagram avatar is a personal photo, not a wordmark, so it stays a
+// placeholder rather than putting a photo in a grid of logos. High on the Hog,
 // Social Sugar and The Local turned up no confirmable match — several
 // same-named businesses exist nationally and guessing which one is this vendor
 // isn't safe without asking the food truck coordinator.
+//
+// Lisa's Creperie pulled out of the event (2026-08-25) and is removed below.
+//
+// Serrano Fine Tacos (2026-08-25): paid for a Porch Sponsorship by mistake —
+// they're a food vendor, not a sponsor (see /sponsors) — so they move here
+// instead. Not in the ev_8472588 export above; the food truck coordinator
+// (Valerie Kinney) emailed the logo directly asking for it on the site. Reuses
+// the sponsor-grid crop (same 2.4:1 crop, no `dark` flag needed) rather than
+// the freshly emailed JPG.
 export const FOOD_VENDORS_2026 = [
   // ---- Food trucks ---------------------------------------------------------
   { name: 'High on the Hog' },
-  { name: "Lisa's Creperie", logo: creperieLogo, w: 400, h: 210 },
   { name: 'Little Miss Juicy', logo: littleMissJuicyLogo, w: 290, h: 290, url: 'https://linktr.ee/littlemissjuicy' },
   { name: 'Mr. Perro ATL', logo: perroLogo, w: 400, h: 400 },
   { name: 'Oysters Co', logo: oystersLogo, w: 400, h: 89, url: 'http://www.oystersco.com/' },
   { name: 'Pinchos Factory' },
   { name: 'Senoia Pizza Company', logo: senoiaPizzaLogo, w: 400, h: 400 },
+  { name: 'Serrano Fine Tacos', logo: serranoLogo, w: 400, h: 166, url: 'https://www.instagram.com/serranofinetacos/' },
   { name: 'The Mad Greek', logo: madGreekLogo, w: 315, h: 315, url: 'https://www.themadgreekfood.com/' },
 
   // ---- Food & drink stands -------------------------------------------------
