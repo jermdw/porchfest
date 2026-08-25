@@ -44,7 +44,7 @@ export default function Bands() {
   usePageMeta({
     title: '2026 Band Bios & Lineup — Meet the Artists | Senoia PorchFest',
     description:
-      'Explore concise bios, band instrumentation, sound previews, and social links for all 41 acts playing Senoia PorchFest 2026 on Sunday, Sept 6.',
+      'Explore concise bios, band instrumentation, set details, and social links for all 41 acts playing Senoia PorchFest 2026 on Sunday, Sept 6.',
     path: '/bands',
   })
 
