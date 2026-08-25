@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
@@ -85,27 +84,6 @@ export default function Vendors() {
           . This is the list as vendors register — if you&rsquo;re expecting someone who
           isn&rsquo;t here yet, they may still be finishing their paperwork.
         </p>
-
-        <div className="mt-8 bg-white rounded-xl border border-stone-200 p-6">
-          <p className="font-display text-xl uppercase tracking-wide text-ink mb-2">
-            Want to vend at PorchFest?
-          </p>
-          <p className="text-stone-700 leading-relaxed">
-            Food, drink and art vendor spots are handled by the DDA — email{' '}
-            <a className="underline font-semibold" href="mailto:info@enjoysenoia.com">
-              info@enjoysenoia.com
-            </a>{' '}
-            or call{' '}
-            <a className="underline font-semibold" href="tel:+17707279173">
-              (770) 727-9173
-            </a>
-            . See our{' '}
-            <Link to="/faq#food-vendor-locations" className="underline font-semibold text-flag hover:text-flag-deep">
-              FAQ
-            </Link>{' '}
-            for location details.
-          </p>
-        </div>
       </main>
       <SiteFooter />
     </div>

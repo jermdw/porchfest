@@ -243,16 +243,15 @@ export const SPONSORS_2026 = [
       // standalone website, so this points at her managed Facebook page (1.3k
       // followers) rather than the brokerage's — she is the sponsor, not them.
       //
-      // The artwork she supplied is her full Facebook cover banner: headshot,
-      // brokerage panel, and her mobile number and personal Gmail. Cropped to
-      // just the Southern Real Estate Connections panel — at this cell size the
-      // contact details would be illegible anyway, so publishing them on an
-      // indexable page would be risk with no upside.
+      // Logo replaced 2026-08-25 with a clean wordmark she supplied directly
+      // (house-outline mark, name, "real estate agent / associate broker"),
+      // trimmed to content with a small border restored. This supersedes the
+      // original artwork, which was a crop of her Facebook cover banner.
       {
         name: 'Kimberly Peacock',
         logo: kimPeacockLogo,
         w: 400,
-        h: 204,
+        h: 172,
         url: 'https://www.facebook.com/KimberlyPeacockRealtor/',
       },
       // The sponsor is the Newnan office (8 Savannah St — Coweta County,
