@@ -2,7 +2,6 @@ import { Suspense, lazy } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Landing from './pages/Landing.jsx'
 import Schedule from './pages/Schedule.jsx'
-import Bands from './pages/Bands.jsx'
 import Vip from './pages/Vip.jsx'
 import Sponsors from './pages/Sponsors.jsx'
 import Vendors from './pages/Vendors.jsx'
@@ -25,7 +24,6 @@ export default function AppRoutes() {
     <Suspense fallback={<div className="min-h-screen bg-cream" />}>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/bands" element={<Bands />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/map" element={<EventMap />} />
         <Route path="/vip" element={<Vip />} />
