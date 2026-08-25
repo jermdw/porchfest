@@ -1,6 +1,8 @@
 import { useEffect, useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { formatTime, isShowDay, getCurrentSlot } from '../lib/showTime.js'
 import { publishedPerformances } from '../data/schedule.js'
+import { getActSlug } from '../data/bands.js'
 
 const TICK_MS = 30_000
 
@@ -178,7 +180,13 @@ export default function ScheduleList({ onSelectPoi, now }) {
                       <div>
                         <div className="flex items-start justify-between gap-2">
                           <h4 className="font-bold text-ink text-base leading-snug">
-                            {perf.act}
+                            <Link
+                              to={`/bands#${getActSlug(perf.act)}`}
+                              className="hover:text-flag hover:underline transition-colors"
+                              title={`View ${perf.act} bio & links`}
+                            >
+                              {perf.act}
+                            </Link>
                           </h4>
                           {perf.stage != null ? (
                             <span className="w-6 h-6 rounded-full bg-flag text-cream font-display font-bold text-xs flex items-center justify-center shrink-0">
@@ -203,8 +211,8 @@ export default function ScheduleList({ onSelectPoi, now }) {
                         </p>
                       </div>
 
-                      {perf.poiId && (
-                        <div className="mt-3 pt-2 border-t border-stone-100 flex items-center justify-between">
+                      <div className="mt-3 pt-2 border-t border-stone-100 flex items-center justify-between">
+                        {perf.poiId ? (
                           <button
                             type="button"
                             onClick={() => onSelectPoi?.(perf.poiId)}
@@ -212,11 +220,19 @@ export default function ScheduleList({ onSelectPoi, now }) {
                           >
                             <span>📍 Show on Map</span>
                           </button>
+                        ) : <div />}
+                        <div className="flex items-center gap-2">
+                          <Link
+                            to={`/bands#${getActSlug(perf.act)}`}
+                            className="text-[11px] font-semibold text-stone-500 hover:text-flag underline underline-offset-2"
+                          >
+                            Bio →
+                          </Link>
                           <span className="text-[11px] font-display text-stone-400">
                             {perf.time}
                           </span>
                         </div>
-                      )}
+                      </div>
                     </div>
                   ))}
                 </div>

@@ -17,6 +17,11 @@ const SECTIONS = [
     text: 'Who’s playing, where, and when — plan your porch-to-porch route.',
   },
   {
+    to: '/bands',
+    title: 'Meet the Bands',
+    text: 'Browse bios, sound previews, and social links for all 41 performers.',
+  },
+  {
     to: '/map',
     title: 'Day Of',
     text: 'The interactive festival map: porch stages, food, parking, and more.',
@@ -87,7 +92,7 @@ export default function Landing() {
         </section>
 
         <section className="bg-cream pb-14 px-4">
-          <div className="max-w-4xl mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="max-w-5xl mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {SECTIONS.map((s) => (
               <Link
                 key={s.to}
