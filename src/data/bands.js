@@ -7,10 +7,21 @@
 import { PERFORMANCES } from './schedule.js'
 
 // Verified genuine artist photos
+import amirSalamPhoto from '../assets/bands/amir-salam.webp'
 import ashtonDooleyPhoto from '../assets/bands/ashton-dooley-band.webp'
+import atticusRonessPhoto from '../assets/bands/atticus-roness.webp'
 import brianCollinsPhoto from '../assets/bands/brian-collins.webp'
+import chuckXNickPhoto from '../assets/bands/chuck-x-nick.webp'
+import davidPippinPhoto from '../assets/bands/david-pippin-group.webp'
+import duncanBrothersPhoto from '../assets/bands/duncan-brothers-band.webp'
 import joeyThurmondPhoto from '../assets/bands/joey-thurmond-the-select-orchestra.webp'
+import lukeBrownPhoto from '../assets/bands/luke-brown-the-jubilee.webp'
 import lukeMorganPhoto from '../assets/bands/luke-morgan-the-redliners.webp'
+import maryMartinPhoto from '../assets/bands/mary-martin.webp'
+import soulsHillPhoto from '../assets/bands/souls-hill.webp'
+import tavisLanceMappPhoto from '../assets/bands/tavis-lance-mapp.webp'
+import tylerLowmanPhoto from '../assets/bands/tyler-lowman-band.webp'
+import wyattBandPhoto from '../assets/bands/wyatt-band.webp'
 
 export const BANDS = [
   {
@@ -24,8 +35,10 @@ export const BANDS = [
     act: 'Amir Salam',
     composition: 'Solo singer-songwriter (Acoustic guitar & vocals)',
     bio: 'Honest, heartfelt country songwriting with soulful vocals and acoustic guitar, bringing down-home Georgia storytelling to Senoia Beer Company.',
-    photo: null,
-    links: {},
+    photo: amirSalamPhoto,
+    links: {
+      website: 'https://linktr.ee/amirsalam',
+    },
   },
   {
     act: 'Brain Fog',
@@ -66,21 +79,30 @@ export const BANDS = [
     act: 'Mary Martin',
     composition: 'Solo indie-folk singer-songwriter (Acoustic guitar & vocals)',
     bio: 'Intimate indie, folk, and Americana storytelling marked by luminous vocals, lyrical depth, and delicate acoustic fingerpicking.',
-    photo: null,
-    links: {},
+    photo: maryMartinPhoto,
+    links: {
+      website: 'https://marymartinmusic.com',
+      spotify: 'https://open.spotify.com/artist/0j9cqKirxnWBBFV9ACsGp9',
+      apple: 'https://music.apple.com/us/artist/mary-martin/1434417846',
+      instagram: 'https://instagram.com/colormemary',
+    },
   },
   {
     act: 'Tyler Lowman Band',
     composition: 'Full band (Vocals, lead guitar, rhythm guitar, bass, drums)',
     bio: 'A powerhouse Newnan-based outfit blending country grit and blistering Southern rock riffs that get crowds on their feet.',
-    photo: null,
-    links: {},
+    photo: tylerLowmanPhoto,
+    links: {
+      website: 'https://tylerlowmanmusic.com',
+      instagram: 'https://www.instagram.com/tylerlowmanmusic/',
+      facebook: 'https://www.facebook.com/share/fZ6LPFkdLBpmDdwf/',
+    },
   },
   {
     act: 'David Pippin Group',
     composition: '5-piece blues-rock band (David Pippin on guitar/vocals, bass, keys, drums, lead vocals)',
     bio: 'Fronted by Atlanta Blues Challenge winner and virtuoso guitarist David Pippin, fusing electrifying West Georgia blues with jazz, rock, and soul grooves.',
-    photo: null,
+    photo: davidPippinPhoto,
     links: {
       website: 'http://davidpippinmusic.com/',
       spotify: 'https://open.spotify.com/album/34wG88PZk1mXwEa4W5yB9L',
@@ -169,8 +191,13 @@ export const BANDS = [
     act: 'Luke Brown & The Jubilee',
     composition: 'Country & roots band (Vocals, acoustic & electric guitars, bass, drums)',
     bio: 'Uplifting modern and traditional country music with spirited musicianship and relatable, heartfelt lyrics.',
-    photo: null,
-    links: {},
+    photo: lukeBrownPhoto,
+    links: {
+      website: 'https://lukebrownjubilee.com',
+      youtube: 'https://www.youtube.com/@LukeBrownAndTheJubilee',
+      facebook: 'https://facebook.com/lukebrownandthejubilee',
+      instagram: 'https://www.instagram.com/lukebrownandthejubilee',
+    },
   },
   {
     act: 'Rob Harlan',
@@ -190,8 +217,11 @@ export const BANDS = [
     act: 'Wyatt Band',
     composition: 'Party & dance rock group (Vocals, guitars, keys, bass, drums)',
     bio: 'High-spirit dance tunes and classic rock bangers engineered to keep porchgoers moving and grooving.',
-    photo: null,
-    links: {},
+    photo: wyattBandPhoto,
+    links: {
+      website: 'https://wyattband.com',
+      facebook: 'https://facebook.com/TheWyattBand',
+    },
   },
   {
     act: 'Brian Collins',
@@ -235,8 +265,10 @@ export const BANDS = [
     act: 'Souls Hill',
     composition: 'Southern & classic rock band (Lead vocals, guitars, bass, drums)',
     bio: 'Gritty, hard-rocking Southern tunes featuring dual-guitar harmonies, heavy rhythm, and classic rock spirit.',
-    photo: null,
-    links: {},
+    photo: soulsHillPhoto,
+    links: {
+      website: 'https://soulshill.com/',
+    },
   },
   {
     act: 'Tyler Caldwell',
@@ -258,15 +290,22 @@ export const BANDS = [
     act: 'Atticus Roness',
     composition: 'Rock & roll performer / power trio (Vocals, electric guitar, bass, drums)',
     bio: 'Pure, unfiltered rock ’n’ roll energy with vintage riffs, dynamic stage presence, and unmistakable attitude.',
-    photo: null,
-    links: {},
+    photo: atticusRonessPhoto,
+    links: {
+      website: 'https://atticusroness.net',
+      youtube: 'https://www.youtube.com/@atticusroness',
+      instagram: 'https://www.instagram.com/atticusroness/',
+    },
   },
   {
     act: 'Duncan Brothers Band',
     composition: 'Country band (Brother harmonies, guitars, bass, drums)',
     bio: 'Family-rooted country music featuring seamless blood harmonies, twangy leads, and relatable down-home themes.',
-    photo: null,
-    links: {},
+    photo: duncanBrothersPhoto,
+    links: {
+      website: 'https://duncanbrothersband.com/',
+      facebook: 'https://facebook.com/DuncanBrothersBand/',
+    },
   },
   {
     act: 'Gradient',
@@ -302,15 +341,22 @@ export const BANDS = [
     act: 'Tavis Lance Mapp',
     composition: 'Country artist (Acoustic & electric guitar, lead vocals)',
     bio: 'Authentic Georgia country music with resonant baritone vocals, classic themes, and genuine Southern charm.',
-    photo: null,
-    links: {},
+    photo: tavisLanceMappPhoto,
+    links: {
+      website: 'https://www.tavislancemapp.com',
+      instagram: 'https://instagram.com/tavislancemapp',
+      facebook: 'https://facebook.com/tavislancemapp',
+    },
   },
   {
     act: 'Chuck X Nick',
     composition: 'Dynamic duo (Chuck Parrish & Nick Ferrell on acoustic guitars, vocals & rap fusion)',
     bio: 'Senoia favorites Chuck Parrish and Nick Ferrell headline the Main Stage with their signature high-energy blend of country, rock, pop covers, acoustic rap fusion, and hilarious crowd interaction to close out PorchFest 2026.',
-    photo: null,
-    links: {},
+    photo: chuckXNickPhoto,
+    links: {
+      website: 'https://linktr.ee/ChuckXNick',
+      instagram: 'https://www.instagram.com/chuckxnick/',
+    },
   },
 ]
 
