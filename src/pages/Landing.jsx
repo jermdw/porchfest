@@ -17,11 +17,6 @@ const SECTIONS = [
     text: 'Who’s playing, where, and when — plan your porch-to-porch route.',
   },
   {
-    to: '/bands',
-    title: 'Meet the Bands',
-    text: 'Browse bios, sound previews, and social links for all 41 performers.',
-  },
-  {
     to: '/map',
     title: 'Day Of',
     text: 'The interactive festival map: porch stages, food, parking, and more.',

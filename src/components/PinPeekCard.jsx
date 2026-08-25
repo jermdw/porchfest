@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
 import CategoryIcon from './CategoryIcon.jsx'
-import { getActSlug } from '../data/bands.js'
 
 export default function PinPeekCard({ poi, onClose, activeTimeSlot }) {
   const cardRef = useRef(null)
@@ -81,13 +79,9 @@ export default function PinPeekCard({ poi, onClose, activeTimeSlot }) {
                     {perf.time}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <Link
-                      to={`/bands#${getActSlug(perf.act)}`}
-                      className="font-semibold text-cream truncate block hover:text-flag-bright hover:underline transition-colors"
-                      title={`View ${perf.act} bio & links`}
-                    >
+                    <span className="font-semibold text-cream truncate block">
                       {perf.act}
-                    </Link>
+                    </span>
                     {perf.genre && (
                       <span className="text-pale/70 text-[11px] block truncate">
                         {perf.genre}
