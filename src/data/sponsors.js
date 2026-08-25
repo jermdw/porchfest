@@ -6,12 +6,19 @@
 // array order and the roster is grouped the same way.
 //
 // The roster is reconciled against the Ticket Tailor "2026 Sponsorships" export
-// (event 8121226) — last pulled 2026-08-22: 23 orders, 21 named businesses, all
-// of them listed below. Only sponsors who answered **Yes** to "Would you like
-// us to share your business info on our event website?" appear here — that
-// consent question is the whole reason the column exists, so a sponsor who
-// declines is silently omitted rather than listed without a link. Every one of
-// the 21 answered Yes.
+// (event 8121226) — last pulled 2026-08-22: 23 orders, 21 named businesses. Only
+// sponsors who answered **Yes** to "Would you like us to share your business
+// info on our event website?" appear here — that consent question is the whole
+// reason the column exists, so a sponsor who declines is silently omitted
+// rather than listed without a link. Every one of the 21 answered Yes.
+//
+// One of those 21 orders — Serrano Fine Tacos (operator order 81536626, $200
+// Porch, paid Aug 21) — was pulled 2026-08-25: they're a food vendor, not a
+// sponsor, so they're omitted here.
+//
+// DoTerra (order 81631052) paid Aug 23, after that Aug 22 pull, so it's in
+// neither the 23-order count above nor the no-Ticket-Tailor-row list below —
+// added straight from the order notification, not a reconcile pass.
 //
 // Six names here have NO Ticket Tailor row at all — 4 Rivers Antiques, Knife &
 // Stone, Mahaffey Linkous Orthodontics, Pollard, Senoia Coffee and Vaulted
@@ -44,7 +51,6 @@ import aAbbyLogo from '../assets/sponsor-a-abby-group.webp'
 import senoiaBicycleLogo from '../assets/sponsor-senoia-bicycle.webp'
 import bragassaLogo from '../assets/sponsor-bragassa-orthodontics.webp'
 import guidingLightLogo from '../assets/sponsor-guiding-light-hospice.webp'
-import serranoLogo from '../assets/sponsor-serrano-fine-tacos.webp'
 import missDottiesLogo from '../assets/sponsor-miss-dotties.webp'
 import cowetaCharterLogo from '../assets/sponsor-coweta-charter-academy.webp'
 
@@ -344,32 +350,6 @@ export const SPONSORS_2026 = [
         h: 199,
         url: 'https://bellamedical.us/',
       },
-      // Paid Aug 21 (operator order 81536626, $200 Porch), after this page
-      // first went up. Ticket Tailor records the company as "Serrano Taco" and
-      // Stacey Van Pelt calls them Serrano's Fine Tacos; the name here follows
-      // their own Instagram handle and the tagline on their artwork.
-      //
-      // No website — the buyer contact is a personal Gmail — so this points at
-      // the Instagram account they run. Confirmed to be the right business
-      // rather than a name match: @serranofinetacos posts as "Senoia Taco King"
-      // (2.9k followers) and its bio reads "we proudly bring Tijuana, BC style
-      // tacos to Atlanta, Ga", which is why their artwork carries a Tijuana
-      // line despite being a local business.
-      //
-      // Their artwork is a dark textured card that carries its own background,
-      // so it needs no `dark` flag — unlike the reverse lockups below, it is
-      // not transparent and was drawn to sit on anything. Cropped past the
-      // "Follow US on social media" block at the foot of the original: that
-      // text is illegible at this cell size anyway, and dropping it takes the
-      // lockup from 1.4:1 to 2.4:1, which renders the wordmark about twice as
-      // large. Same reasoning as the Bella Medical crop above.
-      {
-        name: 'Serrano Fine Tacos',
-        logo: serranoLogo,
-        w: 400,
-        h: 166,
-        url: 'https://www.instagram.com/serranofinetacos/',
-      },
       // The six below were found in the printed porch signs
       // (~/Downloads/PorchFest_Sponsor_Signs, Aug 2026) rather than in any
       // Ticket Tailor row — every one of those signs reads "This Stage
@@ -454,6 +434,12 @@ export const SPONSORS_2026 = [
         w: 383,
         h: 384,
       },
+      // Paid Aug 23 (order 81631052), after the Aug 22 export this file is
+      // otherwise reconciled against. Cathy Geis is an independent doTERRA
+      // distributor, not doTERRA the corporation — no website or logo, so
+      // this stays name-only rather than linking or bearing the corporate
+      // wordmark, which would misattribute a global brand to a local seller.
+      { name: 'DoTerra' },
     ],
   },
   // Kid's Corner sells for $200, the same as a Porch sponsorship, so it carries
