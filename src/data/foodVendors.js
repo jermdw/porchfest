@@ -7,6 +7,7 @@ import perroLogo from '../assets/vendor-mr-perro-atl.webp'
 import oystersLogo from '../assets/vendor-oysters-co.webp'
 import senoiaPizzaLogo from '../assets/vendor-senoia-pizza-co.webp'
 import serranoLogo from '../assets/vendor-serrano-fine-tacos.webp'
+import pinchosLogo from '../assets/vendor-pinchos-factory.webp'
 
 // The 2026 food, drink and snack vendors, reconciled from the "Senoia PorchFest
 // Food/Drink/Art 2026" registrations in Ticket Tailor (`ev_8472588`) on
@@ -33,9 +34,7 @@ import serranoLogo from '../assets/vendor-serrano-fine-tacos.webp'
 // Three more logos (2026-08-23): Mr. Perro ATL and Senoia Pizza Company have
 // only a Facebook page, so their logo is their profile picture and they stay
 // unlinked; Oysters Co has a real site and Executive Chef Christopher Murphy
-// matches the registrant exactly (`cmurphy@oystersco.com`). Pinchos Factory's
-// own Instagram avatar is a personal photo, not a wordmark, so it stays a
-// placeholder rather than putting a photo in a grid of logos. High on the Hog,
+// matches the registrant exactly (`cmurphy@oystersco.com`). High on the Hog,
 // Social Sugar and The Local turned up no confirmable match — several
 // same-named businesses exist nationally and guessing which one is this vendor
 // isn't safe without asking the food truck coordinator.
@@ -48,13 +47,20 @@ import serranoLogo from '../assets/vendor-serrano-fine-tacos.webp'
 // (Valerie Kinney) emailed the logo directly asking for it on the site. Reuses
 // the sponsor-grid crop (same 2.4:1 crop, no `dark` flag needed) rather than
 // the freshly emailed JPG.
+//
+// Pinchos Factory (2026-08-25): an earlier note here dismissed their Instagram
+// avatar as "a personal photo, not a wordmark" and kept a placeholder. That
+// was a different image — Javier Torres (owner) then emailed an actual circle
+// badge logo via Valerie, trimmed tight to the badge. No confirmed site or
+// social handle, so it stays unlinked; `pinchosfactory.com` is unrelated (see
+// above).
 export const FOOD_VENDORS_2026 = [
   // ---- Food trucks ---------------------------------------------------------
   { name: 'High on the Hog' },
   { name: 'Little Miss Juicy', logo: littleMissJuicyLogo, w: 290, h: 290, url: 'https://linktr.ee/littlemissjuicy' },
   { name: 'Mr. Perro ATL', logo: perroLogo, w: 400, h: 400 },
   { name: 'Oysters Co', logo: oystersLogo, w: 400, h: 89, url: 'http://www.oystersco.com/' },
-  { name: 'Pinchos Factory' },
+  { name: 'Pinchos Factory', logo: pinchosLogo, w: 400, h: 402 },
   { name: 'Senoia Pizza Company', logo: senoiaPizzaLogo, w: 400, h: 400 },
   { name: 'Serrano Fine Tacos', logo: serranoLogo, w: 400, h: 166, url: 'https://www.instagram.com/serranofinetacos/' },
   { name: 'The Mad Greek', logo: madGreekLogo, w: 315, h: 315, url: 'https://www.themadgreekfood.com/' },
