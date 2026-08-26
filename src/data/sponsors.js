@@ -53,6 +53,10 @@ import bragassaLogo from '../assets/sponsor-bragassa-orthodontics.webp'
 import guidingLightLogo from '../assets/sponsor-guiding-light-hospice.webp'
 import missDottiesLogo from '../assets/sponsor-miss-dotties.webp'
 import cowetaCharterLogo from '../assets/sponsor-coweta-charter-academy.webp'
+import filmoresGarageLogo from '../assets/sponsor-filmores-garage.webp'
+import crustCraftLogo from '../assets/sponsor-crust-and-craft.webp'
+import maguiresLogo from '../assets/sponsor-maguires-irish-pub.webp'
+import nicNormansLogo from '../assets/sponsor-nic-and-normans.webp'
 
 export const SPONSOR_CHECKOUT =
   'https://www.tickettailor.com/checkout/new-session/id/8121226/chk/a9f6/?ref=website_widget&show_event_filter=false'
@@ -439,6 +443,56 @@ export const SPONSORS_2026 = [
       // this stays name-only rather than linking or bearing the corporate
       // wordmark, which would misattribute a global brand to a local seller.
       { name: 'DoTerra' },
+      // Three Senoia restaurants added straight from the organizers, not from
+      // a Ticket Tailor row — same gap-in-the-record situation as the six
+      // porch-sign sponsors above.
+      //
+      // Crust & Craft and Nic & Norman's logos were supplied directly (their
+      // own circular/oval badge art). Nic & Norman's arrived as a light mark
+      // on a solid black square; the black is flood-filled to transparent
+      // and trimmed to the oval so it sits on the white cell like every other
+      // logo here, rather than carrying a black backing plate no other
+      // sponsor has.
+      {
+        name: 'Crust & Craft',
+        logo: crustCraftLogo,
+        w: 400,
+        h: 400,
+        url: 'https://www.crustandcraftpizza.com/senoia',
+      },
+      {
+        name: "Nic & Norman's",
+        logo: nicNormansLogo,
+        w: 400,
+        h: 258,
+        url: 'https://www.nicandnormans.com/senoia-ga',
+      },
+      // No logo was supplied for Maguire's, so this is pulled from their own
+      // site (maguiresirishpub.com) rather than a submitted asset — a small
+      // (200x83) source image, upscaled 2x rather than left native-size like
+      // every other logo here.
+      {
+        name: "Maguire's Irish Pub",
+        logo: maguiresLogo,
+        w: 400,
+        h: 166,
+        url: 'https://maguiresirishpub.com/',
+      },
+      // Logo supplied directly, on a solid black square like the others above
+      // — but here the black isn't packaging around a self-contained badge,
+      // it's the design's actual background (no black in the artwork itself,
+      // so a plain flood-fill-to-transparent was safe). `dark: true` because,
+      // unlike Crust & Craft/Nic & Norman's/Maguire's, the remaining marks
+      // (white wordmark, grey subtext) only read against a dark cell — same
+      // treatment as Borgo Italia and Senoia Bicycle above.
+      {
+        name: "Filmore's Garage",
+        logo: filmoresGarageLogo,
+        w: 400,
+        h: 212,
+        url: 'https://www.filmoresgarage.com/',
+        dark: true,
+      },
     ],
   },
   // Kid's Corner sells for $200, the same as a Porch sponsorship, so it carries

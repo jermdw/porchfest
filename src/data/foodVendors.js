@@ -8,6 +8,9 @@ import oystersLogo from '../assets/vendor-oysters-co.webp'
 import senoiaPizzaLogo from '../assets/vendor-senoia-pizza-co.webp'
 import serranoLogo from '../assets/vendor-serrano-fine-tacos.webp'
 import pinchosLogo from '../assets/vendor-pinchos-factory.webp'
+import hogLogo from '../assets/vendor-high-on-the-hog.webp'
+import socialSugarLogo from '../assets/vendor-social-sugar.webp'
+import theLocalLogo from '../assets/vendor-the-local-nutrition.webp'
 
 // The 2026 food, drink and snack vendors, reconciled from the "Senoia PorchFest
 // Food/Drink/Art 2026" registrations in Ticket Tailor (`ev_8472588`) on
@@ -54,13 +57,24 @@ import pinchosLogo from '../assets/vendor-pinchos-factory.webp'
 // badge logo via Valerie, trimmed tight to the badge. No confirmed site or
 // social handle, so it stays unlinked; `pinchosfactory.com` is unrelated (see
 // above).
+//
+// High on the Hog, Social Sugar and The Local (2026-08-26): logos supplied
+// directly, filling in the three placeholders the "no confirmable match" note
+// above left blank. Still no confirmed site for any of the three, so all stay
+// unlinked — same reasoning as before, just with artwork now.
+//
+// Pinchos Factory logo replaced the same day with a higher-resolution version
+// of the identical badge (the emailed JPG was a tighter crop with less
+// working resolution). It arrived on a solid black square like Nic & Norman's
+// on /sponsors; flood-filled to transparent and trimmed to the badge rather
+// than left with baked-in black corners on this page's white cell.
 export const FOOD_VENDORS_2026 = [
   // ---- Food trucks ---------------------------------------------------------
-  { name: 'High on the Hog' },
+  { name: 'High on the Hog', logo: hogLogo, w: 400, h: 220 },
   { name: 'Little Miss Juicy', logo: littleMissJuicyLogo, w: 290, h: 290, url: 'https://linktr.ee/littlemissjuicy' },
   { name: 'Mr. Perro ATL', logo: perroLogo, w: 400, h: 400 },
   { name: 'Oysters Co', logo: oystersLogo, w: 400, h: 89, url: 'http://www.oystersco.com/' },
-  { name: 'Pinchos Factory', logo: pinchosLogo, w: 400, h: 402 },
+  { name: 'Pinchos Factory', logo: pinchosLogo, w: 400, h: 400 },
   { name: 'Senoia Pizza Company', logo: senoiaPizzaLogo, w: 400, h: 400 },
   { name: 'Serrano Fine Tacos', logo: serranoLogo, w: 400, h: 166, url: 'https://www.instagram.com/serranofinetacos/' },
   { name: 'The Mad Greek', logo: madGreekLogo, w: 315, h: 315, url: 'https://www.themadgreekfood.com/' },
@@ -71,10 +85,10 @@ export const FOOD_VENDORS_2026 = [
   // same-named business trades in Brent, AL and the registrant's address reads
   // `kettleworksal@`, so don't "correct" this to the Alabama one without asking.
   { name: 'Kettleworks', logo: kettleworksLogo, w: 400, h: 363 },
-  { name: 'Social Sugar' },
+  { name: 'Social Sugar', logo: socialSugarLogo, w: 397, h: 400 },
   // `dark`: the artwork is white type on a baked-in navy square, so it needs the
   // ink cell the sponsor grid uses for the same problem — on white it reads as a
   // floating block rather than a logo.
   { name: 'Southern Local Nuts', logo: southernLocalNutsLogo, w: 250, h: 250, url: 'https://southernlocalnuts.com/', dark: true },
-  { name: 'The Local' },
+  { name: 'The Local', logo: theLocalLogo, w: 400, h: 262 },
 ]
