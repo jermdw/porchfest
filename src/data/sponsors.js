@@ -136,10 +136,19 @@ export const TIERS = [
 // white cell. Those cells render on navy instead. The alternative — recolouring
 // the mark ourselves — would mean inventing a version of someone else's
 // trademark, so we show each logo on the background it was drawn for.
+//
+// `cell` heights bumped one Tailwind step per tier (2026-08-26): several
+// circular/seal-style logos (Roof King, Senoia Family Dentistry, Crust &
+// Craft) ring a bold central mark with thin arc text, and `object-contain`
+// bounds a square logo by the cell's *height* on both axes regardless of
+// column width — so that ring text was shrinking well past legible. A uniform
+// per-tier bump keeps the existing scale hierarchy intact (each tier is still
+// strictly bigger than the one below it) while giving every logo more room,
+// rather than special-casing box size for a few sponsors within one tier.
 export const SPONSORS_2026 = [
   {
     tier: 'Presenting Sponsor',
-    cell: 'h-40',
+    cell: 'h-48',
     cols: 'grid-cols-1 sm:grid-cols-2',
     heading: 'text-3xl',
     rule: 'border-flag',
@@ -153,10 +162,17 @@ export const SPONSORS_2026 = [
       },
     ],
   },
+  // Pulled out of Title Sponsors on its own (2026-08-26, per Stacey): BMW
+  // already carries naming rights on the VIP Luxury Lounge itself — see the
+  // "sponsored by BMW of South Atlanta" copy on /vip and the landing page —
+  // so this section header says so explicitly instead of leaving BMW to read
+  // as one of three interchangeable Title Sponsors. Sits directly below the
+  // true Presenting Sponsor (Peachtree) rather than at that same size/weight:
+  // same cell/heading scale as Title Sponsors, just promoted to its own row.
   {
-    tier: 'Title Sponsors',
-    cell: 'h-32',
-    cols: 'grid-cols-2 sm:grid-cols-3',
+    tier: 'Presenting Sponsor of the VIP Luxury Lounge',
+    cell: 'h-36',
+    cols: 'grid-cols-1 sm:grid-cols-2',
     heading: 'text-2xl',
     rule: 'border-flag',
     sponsors: [
@@ -167,6 +183,17 @@ export const SPONSORS_2026 = [
         h: 168,
         url: 'https://www.bmwofsouthatlanta.com/',
       },
+    ],
+  },
+  // Down to two sponsors now that BMW has its own section above — cols
+  // dropped from a 3-up grid to match, same as every other 2-item group here.
+  {
+    tier: 'Title Sponsors',
+    cell: 'h-36',
+    cols: 'grid-cols-1 sm:grid-cols-2',
+    heading: 'text-2xl',
+    rule: 'border-flag',
+    sponsors: [
       {
         name: 'Progressive Heating & Air',
         logo: progressiveLogo,
@@ -185,7 +212,7 @@ export const SPONSORS_2026 = [
   },
   {
     tier: 'Gold Sponsors',
-    cell: 'h-28',
+    cell: 'h-32',
     cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
     heading: 'text-xl',
     rule: 'border-flag/50',
@@ -216,7 +243,7 @@ export const SPONSORS_2026 = [
   },
   {
     tier: 'Silver Sponsors',
-    cell: 'h-28',
+    cell: 'h-32',
     cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
     heading: 'text-lg',
     rule: 'border-flag/40',
@@ -285,7 +312,7 @@ export const SPONSORS_2026 = [
   },
   {
     tier: 'Porch Sponsors',
-    cell: 'h-28',
+    cell: 'h-32',
     cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
     heading: 'text-lg',
     rule: 'border-flag/30',
@@ -500,7 +527,7 @@ export const SPONSORS_2026 = [
   // renders, and equal price has to mean equal size or the ranking lies.
   {
     tier: "Kid's Corner Sponsors",
-    cell: 'h-28',
+    cell: 'h-32',
     cols: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
     heading: 'text-lg',
     rule: 'border-flag/30',
