@@ -354,28 +354,32 @@ def sign_food_truck_alley(doc, logo):
     place_dove(page, YARD_W, YARD_H)
 
 
-def sign_vip_parking_arrows(doc, direction='both'):
-    """`both` = the double-headed median sign; `left`/`right` = the split pair."""
-    page = new_yard(doc)
-    aw, ah = 240, 292
-    margin, gap = 55, 40
+def sign_vip_parking_arrows(doc):
+    """Double-headed parking directional: an arrow at each edge, type between.
 
-    # Type gets whatever the arrows leave; only reserve a side that has one.
-    x0 = BAND[0] + margin + (aw + gap if direction in ('both', 'left') else 0)
-    x1 = BAND[2] - margin - (aw + gap if direction in ('both', 'right') else 0)
-    size, lines = best_layout('VIP PARKING ONLY', x1 - x0, 620, 320, 2)
+    The type stacks VIP / PARKING / ONLY on three lines rather than two. The
+    arrows eat the width, so a two-line break is width-limited to ~148pt;
+    breaking on the longest single word instead lets the same space carry
+    ~224pt, which is what makes this readable from a moving car.
+    """
+    page = new_yard(doc)
+    aw, ah = 230, 330
+    margin, gap = 48, 55
+
+    x0 = BAND[0] + margin + aw + gap
+    x1 = BAND[2] - margin - aw - gap
+    size, lines = best_layout('VIP PARKING ONLY', x1 - x0, BAND[3] - BAND[1],
+                              320, 3, glue=False)
     th = block_height(size, lines)
 
     top = _band_top(max(th, ah))
     cy = top + max(th, ah) / 2
     draw_lines(page, lines, size, cy - th / 2, ROYAL, (x0 + x1) / 2)
 
-    if direction in ('both', 'left'):
-        draw_block_arrow(page, (BAND[0] + margin, cy - ah / 2,
-                                BAND[0] + margin + aw, cy + ah / 2), 'left', FLAG)
-    if direction in ('both', 'right'):
-        draw_block_arrow(page, (BAND[2] - margin - aw, cy - ah / 2,
-                                BAND[2] - margin, cy + ah / 2), 'right', FLAG)
+    draw_block_arrow(page, (BAND[0] + margin, cy - ah / 2,
+                            BAND[0] + margin + aw, cy + ah / 2), 'left', FLAG)
+    draw_block_arrow(page, (BAND[2] - margin - aw, cy - ah / 2,
+                            BAND[2] - margin, cy + ah / 2), 'right', FLAG)
     place_dove(page, YARD_W, YARD_H)
 
 
@@ -441,8 +445,10 @@ def build_banner(path, wordmark_svg, bmw_logo):
 
     # --- right: sponsor plaque, laid out from the right edge inward ---
     prepped, pw, ph = prep_logo(bmw_logo, bg=CREAM_RGB, cache_key='_bmw')
-    # 30dpi floor: this is a 400px web asset and a banner is read from 15ft+.
-    lw, lh = fit_logo(pw, ph, 1080, 430, min_dpi=30)
+    # Sized up on request, which costs resolution: this is only a 400px web
+    # asset, so it now lands at ~22dpi effective (was 30). Fine for vinyl read
+    # from 15ft+, but the dealer's approved logo pack would place far cleaner.
+    lw, lh = fit_logo(pw, ph, 1400, 540, min_dpi=22)
     pad = 46
     plaque_w, plaque_h = lw + 2 * pad, lh + 2 * pad
     plaque_x0 = right - plaque_w
@@ -538,14 +544,8 @@ def main():
 
     emit('01 VIP Management Only', sign_vip_management)
     emit('02 Food Truck Alley', lambda d: sign_food_truck_alley(d, args.peachtree))
-    emit('03 VIP Parking Only (both arrows)',
-         lambda d: sign_vip_parking_arrows(d, 'both'))
+    emit('03 VIP Parking Only', sign_vip_parking_arrows)
     emit('04 Employees Only + VIP Parking', sign_employees_vip)
-    # Split pair, in case the double-headed sign needs to become two.
-    emit('03a VIP Parking Only (left arrow)',
-         lambda d: sign_vip_parking_arrows(d, 'left'))
-    emit('03b VIP Parking Only (right arrow)',
-         lambda d: sign_vip_parking_arrows(d, 'right'))
 
     banner = os.path.join(args.outdir, '05 VIP Luxury Lounge Banner 96x18.pdf')
     build_banner(banner, os.path.join(REPO, 'src/assets/porchfest-wordmark.svg'),
