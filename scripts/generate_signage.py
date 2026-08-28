@@ -19,10 +19,12 @@ is legible on white and navy alike.
 Fonts are derived from the repo's own `@fontsource/oswald` webfont at run time,
 so nothing here can drift out of sync with the site.
 
-Outputs print PDFs plus a `_proof.png` contact sheet. Needs `pymupdf` (not a
-repo dependency — this is a print tool, not part of the site build):
+Outputs print PDFs plus a `_proof.png` contact sheet. None of these are repo
+dependencies — this is a print tool, not part of the site build. PyMuPDF
+declares no dependencies of its own, so Pillow (logo prep) and fontTools
+(woff -> ttf) have to be installed alongside it:
 
-    pip install pymupdf
+    pip install pymupdf pillow fonttools
     python3 scripts/generate_signage.py [--outdir DIR]
 """
 
@@ -30,7 +32,7 @@ import argparse
 import os
 
 import pymupdf
-from PIL import Image
+from PIL import Image, ImageChops
 from fontTools.ttLib import TTFont
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -267,12 +269,14 @@ def prep_logo(path, bg=(255, 255, 255), cache_key=''):
     flat = Image.alpha_composite(ground, im).convert('RGB')
 
     if tuple(bg) != (255, 255, 255):
-        px = flat.load()
-        for y in range(flat.height):
-            for x in range(flat.width):
-                r, g, b = px[x, y]
-                if min(r, g, b) > 238:
-                    px[x, y] = tuple(bg)
+        # Per-pixel min(r,g,b) > 238 -> repaint as ground. Done through
+        # ImageChops so it stays C-speed; a print-res logo would be millions
+        # of pixels, and the same loop in Python would crawl.
+        r, g, b = flat.split()
+        near_white = ImageChops.darker(ImageChops.darker(r, g), b).point(
+            lambda v: 255 if v > 238 else 0).convert('1')
+        flat = Image.composite(
+            Image.new('RGB', flat.size, tuple(bg)), flat, near_white)
 
     alpha_bbox = im.getchannel('A').point(lambda v: 255 if v > 12 else 0).getbbox()
     thresh_bbox = flat.convert('L').point(
