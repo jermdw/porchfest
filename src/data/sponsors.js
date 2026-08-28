@@ -5,28 +5,23 @@
 // price here. Order is the ranking, richest first — the page renders tiers in
 // array order and the roster is grouped the same way.
 //
-// The roster is reconciled against the Ticket Tailor "2026 Sponsorships" export
-// (event 8121226) — last pulled 2026-08-22: 23 orders, 21 named businesses. Only
-// sponsors who answered **Yes** to "Would you like us to share your business
-// info on our event website?" appear here — that consent question is the whole
-// reason the column exists, so a sponsor who declines is silently omitted
-// rather than listed without a link. Every one of the 21 answered Yes.
+// **Consent gate.** A sponsor appears here only if they opted in to having
+// their business info shared on the event website — that is the whole reason
+// the sign-up asks. A sponsor who declines is omitted entirely rather than
+// listed without a link, so don't add a name from some other source without
+// checking that opt-in first.
 //
-// One of those 21 orders — Serrano Fine Tacos (operator order 81536626, $200
-// Porch, paid Aug 21) — was pulled 2026-08-25: they're a food vendor, not a
-// sponsor, so they're omitted here.
+// **Not every sponsor came through the online roster.** Several here are
+// recorded only on the printed porch signs, or came straight from the
+// organizers. A name missing from the online export is NOT evidence that it is
+// stale — check with the DDA before removing anyone.
 //
-// DoTerra (order 81631052) paid Aug 23, after that Aug 22 pull, so it's in
-// neither the 23-order count above nor the no-Ticket-Tailor-row list below —
-// added straight from the order notification, not a reconcile pass.
+// Serrano Fine Tacos is a food vendor rather than a sponsor and is listed in
+// `foodVendors.js` instead.
 //
-// Six names here have NO Ticket Tailor row at all — 4 Rivers Antiques, Knife &
-// Stone, Mahaffey Linkous Orthodontics, Pollard, Senoia Coffee and Vaulted
-// Vintage — and come from the printed porch signs instead. Read that as a gap
-// in the record, not as evidence they did not pay: the DDA keys walk-in checks
-// into Ticket Tailor by hand, and a check nobody keyed leaves no row behind. So
-// when a name here is missing from the export, check with the DDA rather than
-// assuming it is stale and deleting it.
+// This file is public. Sponsor payment records, order references and buyer
+// contact details belong in the DDA's own systems, not in these comments —
+// keep the notes here to what the page renders and why.
 import bmwLogo from '../assets/sponsor-bmw-south-atlanta.webp'
 import progressiveLogo from '../assets/sponsor-progressive-heating-air.webp'
 import trunorthLogo from '../assets/sponsor-trunorth-pest.webp'
@@ -163,7 +158,8 @@ export const SPONSORS_2026 = [
       },
     ],
   },
-  // Pulled out of Title Sponsors on its own (2026-08-26, per Stacey): BMW
+  // Pulled out of Title Sponsors on its own (2026-08-26, per the organizers):
+  // BMW
   // already carries naming rights on the VIP Luxury Lounge itself — see the
   // "sponsored by BMW of South Atlanta" copy on /vip and the landing page —
   // so this section header says so explicitly instead of leaving BMW to read
@@ -269,13 +265,12 @@ export const SPONSORS_2026 = [
         h: 137,
         url: 'https://www.renewalbyandersen.com/locations/atlanta-ga',
       },
-      // Bragassa hold BOTH tiers; this was never an upgrade. The export shows
-      // two separate Stripe orders — $200 Kid's Corner on Aug 17 (81317335) and
-      // $500 Silver on Aug 20 (81485082) — and Melissa Quinn confirmed it on
-      // 2026-08-22: "They paid for both." So they appear twice, once under each
-      // tier they bought. An earlier version of this file listed them at Silver
-      // only, on the theory that Silver superseded the Kid's Corner purchase;
-      // the export disproves that, so don't collapse them back to one entry.
+      // Bragassa hold BOTH tiers; this was never an upgrade. They took the
+      // Kid's Corner and Silver sponsorships separately, and the DDA confirmed
+      // both (2026-08-22), so they appear twice — once under each tier. An
+      // earlier version of this file listed them at Silver only, on the theory
+      // that Silver superseded the Kid's Corner purchase. That was wrong; don't
+      // collapse them back to one entry.
       {
         name: 'Bragassa Orthodontics',
         logo: bragassaLogo,
@@ -283,15 +278,14 @@ export const SPONSORS_2026 = [
         h: 117,
         url: 'https://www.bragassaorthodontics.com/',
       },
-      // Signed up as "Kim Peacock"; her own page and artwork both brand her as
-      // Kimberly Peacock, a realtor with Southern Real Estate Connections. No
-      // standalone website, so this points at her managed Facebook page (1.3k
-      // followers) rather than the brokerage's — she is the sponsor, not them.
+      // Signed up as "Kim Peacock"; the sponsor's own page and artwork both
+      // brand her as Kimberly Peacock. The sponsor is the individual agent
+      // rather than her brokerage, so this links her own page, not theirs —
+      // don't "correct" it to the brokerage.
       //
-      // Logo replaced 2026-08-25 with a clean wordmark she supplied directly
-      // (house-outline mark, name, "real estate agent / associate broker"),
-      // trimmed to content with a small border restored. This supersedes the
-      // original artwork, which was a crop of her Facebook cover banner.
+      // Logo replaced 2026-08-25 with a wordmark supplied directly, trimmed to
+      // content with a small border restored. It supersedes the original
+      // artwork, which was a low-resolution crop.
       {
         name: 'Kimberly Peacock',
         logo: kimPeacockLogo,
@@ -299,15 +293,12 @@ export const SPONSORS_2026 = [
         h: 172,
         url: 'https://www.facebook.com/KimberlyPeacockRealtor/',
       },
-      // The sponsor is the Newnan office (8 Savannah St — Coweta County,
-      // registered federally as "Guiding Light Hospice SW, LLC"), and the
-      // export settles which site is theirs: the buyer on order 77227556 is
-      // lisa.mansfield@guidinglighthospicega.com — the sponsor's own staff
-      // email, on that exact domain. An earlier note here dismissed
-      // guidinglighthospicega.com as an unrelated Stockbridge practice and left
-      // the entry unlinked; the domain match disproves that. The site's
-      // service-area list omits Coweta, but that is a stale marketing page
-      // rather than counter-evidence (it lists adjacent Fayette).
+      // The sponsor is the Newnan (Coweta County) office, and
+      // guidinglighthospicega.com is confirmed to be theirs. An earlier note
+      // here dismissed that domain as an unrelated Stockbridge practice and
+      // left the entry unlinked — that was wrong, so don't unlink it again.
+      // The site's service-area list omits Coweta, but that is a stale
+      // marketing page rather than counter-evidence (it lists adjacent Fayette).
       //
       // Artwork is the horizontal transparent lockup from their own site
       // header, in preference to the stacked one the DDA holds on
@@ -394,24 +385,16 @@ export const SPONSORS_2026 = [
         h: 199,
         url: 'https://bellamedical.us/',
       },
-      // The six below were found in the printed porch signs
-      // (~/Downloads/PorchFest_Sponsor_Signs, Aug 2026) rather than in any
-      // Ticket Tailor row — every one of those signs reads "This Stage
-      // Sponsored by:", which is the Porch tier by definition. Artwork is
-      // lifted from the signs themselves, so it matches what stands at the
-      // porch on the day.
+      // The six below come from the printed porch signs rather than the online
+      // roster — every one of those signs reads "This Stage Sponsored by:",
+      // which is the Porch tier by definition. Artwork is lifted from the signs
+      // themselves, so it matches what stands at the porch on the day.
       //
-      // Three of them have no website to link, so they point at the social
-      // account they actually run instead. Each was opened and confirmed to be
-      // the right business, not just a name match:
-      //   4 Rivers Antiques — @4riversantiques, the brand account (2.5k
-      //     followers, bio address is their Fayetteville store). They also have
-      //     a Senoia-location page at facebook.com/p/4-Rivers-Senoia-61576654692937
-      //     if the organizers would rather point at the local shop.
-      //   Knife & Stone — a managed Facebook Page, 4.7k followers, 30 Perry St.
-      //     Their knifeandstone.com is a GoDaddy "Launching Soon" parking page.
-      //   Vaulted Vintage — @vaulted_vtg; the bio's Wed–Sat 10–6 matches the
-      //     28 Main St shop. vaultedvintage.com is also parked.
+      // Three of them have no usable website of their own, so they link the
+      // social account the business actually runs instead. Each was opened and
+      // confirmed to be the right business, not just a name match. 4 Rivers
+      // also runs a separate Senoia-location page, if the organizers would
+      // rather point at the local shop than the brand account.
       {
         name: '4 Rivers Antiques',
         logo: fourRiversLogo,
@@ -434,9 +417,8 @@ export const SPONSORS_2026 = [
         url: 'https://peachtreecitybraces.com/',
       },
       // Sponsored under "Pollard Residential Waste Services" (the name on their
-      // porch sign); the business trades online as Pollard Disposal. Their only
-      // Facebook presence is an auto-generated "Unofficial Page" with zero
-      // followers — that page is what surfaced the real site.
+      // porch sign); the business trades online as Pollard Disposal, which is
+      // why the name and the link don't match.
       {
         name: 'Pollard Residential Waste Services',
         logo: pollardLogo,
@@ -458,13 +440,10 @@ export const SPONSORS_2026 = [
         h: 399,
         url: 'https://www.instagram.com/vaulted_vtg/',
       },
-      // Signed up as "Miss Dottie's" and asked whether we could feature their
-      // Facebook page, so no website was supplied. The only "Miss Dottie's"
-      // findable online is a gift shop in Gray, GA — ~90 miles from Senoia and
-      // almost certainly a different business — so this keeps its name and
-      // logo but gets no anchor until the organizers confirm the right page.
-      // The order was paid by Leigh Anne Skinner, who the organizers name as
-      // the owner, and Stacey Van Pelt is chasing the page from her.
+      // Signed up as "Miss Dottie's" with no website supplied. The only
+      // "Miss Dottie's" findable online is a gift shop ~90 miles away, almost
+      // certainly a different business, so this keeps its name and logo but
+      // gets no anchor until the organizers confirm the right page.
       //
       // The artwork arrived as a Facebook profile picture: a white scalloped
       // circle sitting on that avatar's near-black backing. Dropped into a
@@ -478,11 +457,10 @@ export const SPONSORS_2026 = [
         w: 383,
         h: 384,
       },
-      // Paid Aug 23 (order 81631052), after the Aug 22 export this file is
-      // otherwise reconciled against. Cathy Geis is an independent doTERRA
-      // distributor, not doTERRA the corporation — no website or logo, so
-      // this stays name-only rather than linking or bearing the corporate
-      // wordmark, which would misattribute a global brand to a local seller.
+      // The sponsor is an independent doTERRA distributor, not doTERRA the
+      // corporation — no website or logo of their own, so this stays name-only
+      // rather than linking or bearing the corporate wordmark, which would
+      // misattribute a global brand to a local seller.
       { name: 'DoTerra' },
       // Three Senoia restaurants added straight from the organizers, not from
       // a Ticket Tailor row — same gap-in-the-record situation as the six
@@ -556,11 +534,9 @@ export const SPONSORS_2026 = [
         h: 117,
         url: 'https://www.bragassaorthodontics.com/',
       },
-      // Flagged as missing by Melissa Quinn on 2026-08-22 and confirmed in the
-      // export: order 81469652, $200 Kid's Corner, Aug 20. The link is taken
-      // from the buyer's own staff email —
-      // hannah.anderson@cowetacharteracademy.org — so the domain is the
-      // school's rather than a name match. No artwork yet.
+      // Added after the DDA flagged it as missing (2026-08-22) and confirmed
+      // the Kid's Corner sponsorship. The link is the school's own domain,
+      // confirmed with the organizers rather than assumed from a name match.
       //
       // Two lockups were supplied: this horizontal one and a circular seal.
       // The horizontal wins on the same grounds as everything else here — at
