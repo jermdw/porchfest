@@ -12,22 +12,21 @@ import hogLogo from '../assets/vendor-high-on-the-hog.webp'
 import socialSugarLogo from '../assets/vendor-social-sugar.webp'
 import theLocalLogo from '../assets/vendor-the-local-nutrition.webp'
 
-// The 2026 food, drink and snack vendors, reconciled from the "Senoia PorchFest
-// Food/Drink/Art 2026" registrations in Ticket Tailor (`ev_8472588`) on
-// 2026-08-23. Ordered by ticket type, then alphabetically.
+// The 2026 food, drink and snack vendors, reconciled from the PorchFest
+// food/drink/art registrations on 2026-08-23. Ordered by ticket type, then
+// alphabetically.
 //
 // **This is the registered roster, not a closed list.** Unlike the car show, no
-// coordinator list exists to check it against, and we already know registrations
-// undercount: three car show vendors paid by check and never appeared in Ticket
-// Tailor at all. Treat a vendor missing from here as unconfirmed, not absent, and
-// re-check with the food truck coordinator before calling the list complete.
+// coordinator list exists to check it against, and registrations are known to
+// undercount — vendors who pay by check can miss the online export entirely.
+// Treat a vendor missing from here as unconfirmed, not absent, and re-check
+// with the food truck coordinator before calling the list complete.
 //
-// Identifying who each buyer *is* takes work: the PorchFest checkout form asks
-// only for contact details and a text-message opt-in — no business name, and not
-// even the menu description the car show form collects. Every name below is read
-// off the buyer's own email address (e.g. `themadgreekfood@` → The Mad Greek). One
-// 2026 registrant, a Food Truck buyer whose address carries no business name, could
-// not be identified and is deliberately omitted rather than guessed — see the PR.
+// Working out which business each registration belongs to takes real effort:
+// the checkout form collects contact details only — no business name, and not
+// even the menu description the car show form collects. Where a registration
+// could not be matched to a business with confidence, it is deliberately
+// omitted rather than guessed at.
 //
 // Domain-guessing is a trap here and cost real time: `pinchosfactory.com` is a
 // restaurant in Puerto Rico and `socialsugar.com` is an unrelated Substack, so
@@ -36,27 +35,22 @@ import theLocalLogo from '../assets/vendor-the-local-nutrition.webp'
 //
 // Three more logos (2026-08-23): Mr. Perro ATL and Senoia Pizza Company have
 // only a Facebook page, so their logo is their profile picture and they stay
-// unlinked; Oysters Co has a real site and Executive Chef Christopher Murphy
-// matches the registrant exactly (`cmurphy@oystersco.com`). High on the Hog,
-// Social Sugar and The Local turned up no confirmable match — several
-// same-named businesses exist nationally and guessing which one is this vendor
-// isn't safe without asking the food truck coordinator.
+// unlinked; Oysters Co has a real site, confirmed against the registration.
+// High on the Hog, Social Sugar and The Local turned up no confirmable match —
+// several same-named businesses exist nationally, and guessing which one is
+// this vendor isn't safe without asking the food truck coordinator.
 //
 // Lisa's Creperie pulled out of the event (2026-08-25) and is removed below.
 //
-// Serrano Fine Tacos (2026-08-25): paid for a Porch Sponsorship by mistake —
-// they're a food vendor, not a sponsor (see /sponsors) — so they move here
-// instead. Not in the ev_8472588 export above; the food truck coordinator
-// (Valerie Kinney) emailed the logo directly asking for it on the site. Reuses
-// the sponsor-grid crop (same 2.4:1 crop, no `dark` flag needed) rather than
-// the freshly emailed JPG.
+// Serrano Fine Tacos (2026-08-25) belongs here rather than on /sponsors —
+// they are a food vendor, not a sponsor. Reuses the sponsor-grid crop (same
+// 2.4:1 crop, no `dark` flag needed) rather than the later emailed JPG.
 //
 // Pinchos Factory (2026-08-25): an earlier note here dismissed their Instagram
 // avatar as "a personal photo, not a wordmark" and kept a placeholder. That
-// was a different image — Javier Torres (owner) then emailed an actual circle
-// badge logo via Valerie, trimmed tight to the badge. No confirmed site or
-// social handle, so it stays unlinked; `pinchosfactory.com` is unrelated (see
-// above).
+// was a different image — the business later supplied an actual circle badge
+// logo, trimmed tight to the badge. No confirmed site or social handle, so it
+// stays unlinked; `pinchosfactory.com` is unrelated (see above).
 //
 // High on the Hog, Social Sugar and The Local (2026-08-26): logos supplied
 // directly, filling in the three placeholders the "no confirmable match" note
@@ -82,8 +76,8 @@ export const FOOD_VENDORS_2026 = [
   // ---- Food & drink stands -------------------------------------------------
   { name: "Big Daddy's Peanuts", logo: bigDaddysLogo, w: 400, h: 273, url: 'https://bigdaddyspeanuts.com/' },
   // The Newnan, GA business — its logo prints "NEWNAN, GA / EST. 2015". A
-  // same-named business trades in Brent, AL and the registrant's address reads
-  // `kettleworksal@`, so don't "correct" this to the Alabama one without asking.
+  // same-named business trades in Alabama, and the registration points there
+  // too, so don't "correct" this one either way without asking the organizers.
   { name: 'Kettleworks', logo: kettleworksLogo, w: 400, h: 363 },
   { name: 'Social Sugar', logo: socialSugarLogo, w: 397, h: 400 },
   // `dark`: the artwork is white type on a baked-in navy square, so it needs the
