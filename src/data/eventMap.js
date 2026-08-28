@@ -12,6 +12,10 @@
 //  - "node" = an exact OSM intersection node shared by the two named streets.
 // Amenity positions come from the organizers' printed venue map, snapped to
 // the nearest real intersection — same convention the car show site used.
+//  - "printed" = read off the organizers' printed venue map by registering it
+//    onto this one (affine fit, 25 shared control points). The printed map is a
+//    stylised drawing, not a projection, so those are good to ~25 m; see the
+//    block above the beverage/restroom entries.
 //
 // `confirmed: false` entries are a working checklist and are NOT rendered.
 
@@ -202,25 +206,140 @@ export const POIS = [
     lon: -84.556098,
     confirmed: true,
   },
+  // ---- Beverage stations & restrooms ---------------------------------------
+  // Source: the organizers' printed venue map (public/senoia-porchfest-2026-map.pdf),
+  // which is the ONLY place these are marked — hence "printed" in the notes below.
+  // Both used to be a single entry with lat/lon null, so they showed in the key
+  // but never on the map.
+  //
+  // Positions were derived by registering the printed map onto this one: its
+  // beverage/restroom icons were located by colour, then an affine transform was
+  // fitted from 25 control points visible on BOTH maps (the five placed amenities
+  // above plus 20 matched numbered porch pins). The printed map is a stylised
+  // drawing rather than a projection, so the fit has a median residual of ~23 m
+  // and a worst case of ~55 m. Read these as "right block", not "right corner" —
+  // the `where` text is the precise guidance, same convention as the porch pins.
+  //
+  // NOTE: the printed map shows SEVEN beverage stations; the old copy here said
+  // five. Seven is what the organizers drew.
   {
-    id: 'drinks-stations',
+    id: 'drinks-1',
     category: 'drinks',
-    name: 'Beverage Stations',
-    where: 'Five stations around the festival',
-    blurb:
-      'Look for the beverage markers along Main Street, Lower Creek Trail, Pylant Street and Seavy Street.',
-    lat: null, // marked on the printed map only — exact spots not yet confirmed
-    lon: null,
+    name: 'Beverage Station',
+    where: 'Seavy Street, between Main and Barnes',
+    blurb: null,
+    lat: 33.300845, // printed (±~25 m)
+    lon: -84.553161,
     confirmed: true,
   },
   {
-    id: 'restrooms',
+    id: 'drinks-2',
+    category: 'drinks',
+    name: 'Beverage Station',
+    where: 'Seavy Street near Baggarly Way',
+    blurb: null,
+    lat: 33.300949, // printed (±~25 m)
+    lon: -84.555701,
+    confirmed: true,
+  },
+  {
+    id: 'drinks-3',
+    category: 'drinks',
+    name: 'Beverage Station',
+    where: 'Travis Street, by the VIP Lounge',
+    blurb: null,
+    lat: 33.30004, // printed (±~25 m)
+    lon: -84.55499,
+    confirmed: true,
+  },
+  {
+    id: 'drinks-4',
+    category: 'drinks',
+    name: 'Beverage Station',
+    where: 'Pylant Street at Gin Street',
+    blurb: null,
+    lat: 33.299986, // printed (±~25 m)
+    lon: -84.556455,
+    confirmed: true,
+  },
+  {
+    id: 'drinks-5',
+    category: 'drinks',
+    name: 'Beverage Station',
+    where: 'Gin Street',
+    blurb: null,
+    lat: 33.299838, // printed (±~25 m)
+    lon: -84.555771,
+    confirmed: true,
+  },
+  {
+    id: 'drinks-6',
+    category: 'drinks',
+    name: 'Beverage Station',
+    where: 'Pylant Street near Morgan Street',
+    blurb: null,
+    lat: 33.299406, // printed (±~25 m)
+    lon: -84.558531,
+    confirmed: true,
+  },
+  {
+    id: 'drinks-7',
+    category: 'drinks',
+    name: 'Beverage Station',
+    where: 'Lower Creek Trail',
+    blurb: null,
+    lat: 33.298623, // printed (±~25 m)
+    lon: -84.556036,
+    confirmed: true,
+  },
+  {
+    id: 'restroom-1',
     category: 'restroom',
     name: 'Restrooms',
-    where: 'Located throughout the venue',
+    where: 'Pylant Street near Seavy Street',
     blurb: null,
-    lat: null, // exact placements pending the organizers' final site plan
-    lon: null,
+    lat: 33.300737, // printed (±~25 m)
+    lon: -84.556296,
+    confirmed: true,
+  },
+  {
+    id: 'restroom-2',
+    category: 'restroom',
+    name: 'Restrooms',
+    where: 'Seavy Street Park',
+    blurb: null,
+    lat: 33.301294, // printed (±~25 m)
+    lon: -84.552059,
+    confirmed: true,
+  },
+  {
+    id: 'restroom-3',
+    category: 'restroom',
+    name: 'Restrooms',
+    where: 'Main Street at Bourbon Street',
+    blurb: null,
+    lat: 33.299736, // printed (±~25 m)
+    lon: -84.554073,
+    confirmed: true,
+  },
+  {
+    id: 'restroom-4',
+    category: 'restroom',
+    name: 'Restrooms',
+    where: 'Lower Creek Trail at Bourbon Street',
+    blurb: null,
+    lat: 33.299277, // printed (±~25 m)
+    lon: -84.555447,
+    confirmed: true,
+  },
+  {
+    id: 'restroom-5',
+    category: 'restroom',
+    name: 'Restrooms',
+    where: 'Morgan Street near Pylant Street',
+    blurb: null,
+    lat: 33.299176, // printed (±~25 m)
+    lon: -84.558125,
     confirmed: true,
   },
 

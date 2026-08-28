@@ -31,6 +31,7 @@ import bmwLogo from '../assets/sponsor-bmw-south-atlanta.webp'
 import progressiveLogo from '../assets/sponsor-progressive-heating-air.webp'
 import trunorthLogo from '../assets/sponsor-trunorth-pest.webp'
 import peachtreeLogo from '../assets/sponsor-peachtree-omfs.webp'
+import anytimeLogo from '../assets/sponsor-anytime-fitness.webp'
 import inspiredLogo from '../assets/sponsor-inspired-wealth-planning.webp'
 import turinLogo from '../assets/sponsor-turin-pest.webp'
 import roofKingLogo from '../assets/sponsor-roof-king-exteriors.webp'
@@ -217,6 +218,19 @@ export const SPONSORS_2026 = [
     heading: 'text-xl',
     rule: 'border-flag/50',
     sponsors: [
+      // Added from the organizers, not a Ticket Tailor row. Unlike DoTerra
+      // below, a franchise trades under the national brand mark, so the
+      // corporate logo is the correct representation here — taken from Anytime
+      // Fitness's own CDN (the SVG their site serves), not a logo-aggregator
+      // site. The URL is the Senoia club specifically, confirmed by the DDA as
+      // the sponsor; it read "Opening Soon" as of 2026-08-28.
+      {
+        name: 'Anytime Fitness',
+        logo: anytimeLogo,
+        w: 400,
+        h: 107,
+        url: 'https://www.anytimefitness.com/locations/senoia-georgia-5654',
+      },
       {
         name: 'Inspired Wealth Planning',
         logo: inspiredLogo,
