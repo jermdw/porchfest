@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PorchFest Brand Guide</title>
+<meta name="description" content="Colors, type, logo usage, and content patterns for Senoia PorchFest — consolidated from the live site and 2026 print collateral. Internal reference only; not part of the deployed site." />
+<link rel="icon" href="../public/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#101D3A;
+    --flag:#B02A30;
+    --flag-deep:#8C1F24;
+    --flag-bright:#E35A55;
+    --cream:#F5F1E6;
+    --pale:#CDD3E8;
+    --stone-50:#FAFAF9;
+    --stone-100:#F5F5F4;
+    --stone-200:#E7E5E4;
+    --stone-300:#D6D3D1;
+    --stone-400:#A8A29E;
+    --stone-500:#78716C;
+    --stone-600:#57534E;
+    --stone-700:#44403C;
+    --stone-800:#292524;
+    --stone-900:#1C1917;
+    --star:#D9A41F;
+    --cat-porch:#24365E; --cat-stage:#7C1F3F; --cat-vip:#6D4C12; --cat-food:#3F6327;
+    --cat-drinks:#14595E; --cat-kids:#6A2F52; --cat-restroom:#1D4A63; --cat-parking:#3D3527;
+    --cat-aid:#93262C; --cat-merch:#5B3A72;
+    --radius:.6rem;
+    --content-w:920px;
+  }
+
+  /* Deliberately single-theme: this document IS the brand's fixed palette
+     (cream stock / navy ink / flag red), the same way a printed style
+     booklet doesn't re-theme itself for the room it's read in. Every color
+     below is an explicit token, never inherited from the host page. */
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition-duration:.01ms !important; } }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; }
+  h1,h2,h3{ text-wrap:balance; margin:0; }
+  table{ border-collapse:collapse; width:100%; }
+
+  .wrap{ max-width:var(--content-w); margin-inline:auto; padding-inline:clamp(1.1rem,4vw,2rem); }
+  .scroller{ overflow-x:auto; }
+  .scroller::-webkit-scrollbar{ height:8px; }
+
+  code, .mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    background:var(--ink);
+    color:var(--cream);
+    text-align:center;
+    padding:3.6rem 1.5rem 2.6rem;
+    position:relative;
+    border-bottom:4px solid var(--flag);
+  }
+  .masthead .script{
+    font-family:"Yellowtail",cursive;
+    font-size:clamp(1.6rem,4vw,2.1rem);
+    color:var(--flag-bright);
+    margin-bottom:.15rem;
+  }
+  .masthead .wordmark-img{ width:min(360px,72vw); height:auto; margin:0 auto; filter:drop-shadow(0 6px 22px rgba(176,42,48,.35)); }
+  .masthead .doc-title{
+    font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase;
+    letter-spacing:.14em; font-size:1rem; color:var(--pale); margin-top:1.1rem;
+  }
+  .stars{
+    letter-spacing:.6em; color:var(--flag); opacity:.55; font-size:.85rem;
+    margin:1.15rem 0 .35rem; text-indent:.6em;
+  }
+  .masthead .meta{ color:var(--pale); opacity:.85; font-size:.85rem; }
+  .masthead .flag-note{
+    display:inline-block; margin-top:1.3rem; font-family:"Oswald",sans-serif; font-weight:500;
+    text-transform:uppercase; letter-spacing:.1em; font-size:.68rem; color:var(--pale); opacity:.65;
+    border:1px solid rgba(205,211,232,.3); border-radius:999px; padding:.35rem .9rem;
+  }
+
+  /* ---------- subnav ---------- */
+  .subnav{
+    position:sticky; top:0; z-index:20;
+    background:rgba(16,29,58,.97); backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--flag);
+  }
+  .subnav .wrap{ display:flex; gap:1.4rem; overflow-x:auto; padding-block:.7rem; }
+  .subnav a{
+    white-space:nowrap; text-decoration:none; color:var(--pale);
+    font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase;
+    letter-spacing:.08em; font-size:.78rem; transition:color .15s;
+  }
+  .subnav a:hover, .subnav a:focus-visible{ color:var(--flag-bright); }
+
+  /* ---------- sections ---------- */
+  section{ padding-block:3.2rem; border-bottom:1px solid rgba(16,29,58,.1); scroll-margin-top:3.2rem; }
+  section:last-of-type{ border-bottom:none; }
+  .eyebrow{
+    font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase;
+    letter-spacing:.14em; color:var(--flag); font-size:.75rem; margin-bottom:.4rem;
+  }
+  h2.title{
+    font-family:"Oswald",sans-serif; font-weight:700; text-transform:uppercase;
+    letter-spacing:.02em; font-size:clamp(1.5rem,3.4vw,2rem);
+    display:inline-block; border-bottom:3px solid var(--flag); padding-bottom:.4rem; margin-bottom:1.3rem;
+  }
+  p.lede{ max-width:66ch; color:var(--ink); opacity:.82; font-size:1.02rem; }
+
+  .callout{
+    background:var(--stone-50); border-left:4px solid var(--flag); border-radius:0 .4rem .4rem 0;
+    padding:1rem 1.25rem; max-width:70ch; font-size:.95rem; color:var(--stone-700);
+  }
+  .callout strong{ color:var(--ink); }
+
+  /* ---------- color swatches ---------- */
+  .swatch-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-top:1.5rem; }
+  .swatch{ border:1px solid rgba(16,29,58,.12); border-radius:var(--radius); overflow:hidden; background:#fff; }
+  .swatch-face{ height:96px; display:flex; align-items:flex-end; padding:.6rem .7rem; font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.04em; font-size:.85rem; }
+  .swatch-info{ padding:.7rem .85rem .85rem; }
+  .swatch-info .name{ font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; font-size:.8rem; letter-spacing:.03em; }
+  .swatch-info .hex{ font-size:.78rem; color:var(--stone-500); margin-top:.15rem; }
+  .swatch-info .use{ font-size:.78rem; color:var(--stone-600); margin-top:.4rem; line-height:1.45; }
+
+  .neutrals-strip{ display:flex; gap:0; border-radius:var(--radius); overflow:hidden; margin-top:1rem; border:1px solid rgba(16,29,58,.12); }
+  .neutrals-strip div{ flex:1; height:56px; position:relative; }
+  .neutrals-strip span{ position:absolute; bottom:3px; left:50%; transform:translateX(-50%); font-size:.62rem; font-family:ui-monospace,monospace; }
+
+  .cat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:.6rem; margin-top:1rem; }
+  .cat-chip{ display:flex; align-items:center; gap:.5rem; background:var(--stone-50); border:1px solid var(--stone-200); border-radius:.4rem; padding:.45rem .6rem; font-size:.78rem; }
+  .cat-dot{ width:14px; height:14px; border-radius:50%; flex-shrink:0; }
+
+  /* ---------- typography ---------- */
+  .type-row{ padding-block:1rem; border-top:1px solid var(--stone-200); }
+  .type-row:first-of-type{ border-top:none; }
+  .type-row .label{ font-family:"Oswald",sans-serif; font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--flag); margin-bottom:.35rem; }
+  .display-sample{ font-family:"Oswald",sans-serif; text-transform:uppercase; }
+  .script-sample{ font-family:"Yellowtail",cursive; color:var(--flag-bright); font-size:2.1rem; }
+  .body-sample{ max-width:62ch; color:var(--stone-700); }
+
+  .scale-table th, .scale-table td{ text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--stone-200); font-size:.86rem; vertical-align:top; }
+  .scale-table th{ font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:.72rem; color:var(--stone-500); }
+  .scale-table td.example{ font-family:"Oswald",sans-serif; }
+
+  /* ---------- logo ---------- */
+  .logo-panels{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.5rem; }
+  @media (max-width:620px){ .logo-panels{ grid-template-columns:1fr; } }
+  .logo-panel{ border-radius:var(--radius); padding:2.4rem 1rem; display:flex; align-items:center; justify-content:center; position:relative; border:1px dashed rgba(16,29,58,.25); }
+  .logo-panel.on-cream{ background:var(--cream); }
+  .logo-panel.on-navy{ background:var(--ink); }
+  .logo-panel img{ width:min(220px,60%); height:auto; }
+  .logo-panel .tag{ position:absolute; top:.6rem; left:.8rem; font-family:"Oswald",sans-serif; font-size:.68rem; text-transform:uppercase; letter-spacing:.1em; }
+  .logo-panel.on-cream .tag{ color:var(--stone-500); }
+  .logo-panel.on-navy .tag{ color:var(--pale); }
+
+  .dos-donts{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1.5rem; }
+  @media (max-width:620px){ .dos-donts{ grid-template-columns:1fr; } }
+  .dos-donts h3{ font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:.85rem; letter-spacing:.08em; margin-bottom:.6rem; }
+  .dos-donts ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+  .dos-donts li{ font-size:.88rem; padding-left:1.4rem; position:relative; color:var(--stone-700); }
+  .dos-donts .yes li::before{ content:"✓"; position:absolute; left:0; color:#3F6327; font-weight:700; }
+  .dos-donts .no li::before{ content:"✕"; position:absolute; left:0; color:var(--flag); font-weight:700; }
+
+  /* ---------- motifs ---------- */
+  .motif-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:1.5rem; }
+  @media (max-width:700px){ .motif-grid{ grid-template-columns:1fr; } }
+  .motif-card{ border:1px solid var(--stone-200); border-radius:var(--radius); overflow:hidden; background:#fff; }
+  .motif-card img{ border-bottom:1px solid var(--stone-200); }
+  .motif-card figcaption{ margin:0; padding:.85rem 1rem 1rem; font-size:.82rem; color:var(--stone-600); line-height:1.5; }
+  .motif-card figcaption strong{ color:var(--ink); }
+
+  /* ---------- voice ---------- */
+  .voice-dl{ margin-top:1.3rem; display:grid; gap:1.1rem; }
+  .voice-row{ display:grid; grid-template-columns:180px 1fr; gap:1rem; padding-block:.9rem; border-top:1px solid var(--stone-200); }
+  .voice-row:first-child{ border-top:none; }
+  @media (max-width:600px){ .voice-row{ grid-template-columns:1fr; gap:.3rem; } }
+  .voice-row dt{ font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; font-size:.78rem; letter-spacing:.06em; color:var(--flag); }
+  .voice-row dd{ margin:0; font-size:.9rem; color:var(--stone-700); }
+  .voice-row dd .ex{ display:block; margin-top:.3rem; font-family:ui-monospace,monospace; font-size:.82rem; color:var(--ink); background:var(--stone-50); padding:.4rem .6rem; border-radius:.3rem; }
+
+  /* ---------- components ---------- */
+  .comp-block{ margin-top:1.6rem; }
+  .comp-block h3{ font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:.8rem; letter-spacing:.08em; color:var(--stone-500); margin-bottom:.7rem; }
+  .btn-row{ display:flex; flex-wrap:wrap; gap:.9rem; align-items:center; }
+  .btn{ font-family:"Oswald",sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.06em; font-size:.85rem; padding:.85rem 1.6rem; border-radius:.4rem; border:none; cursor:pointer; transition:background-color .15s; text-decoration:none; display:inline-block; }
+  .btn-primary{ background:var(--flag); color:var(--cream); }
+  .btn-primary:hover{ background:var(--flag-deep); }
+  .btn-secondary{ background:var(--ink); color:var(--cream); }
+  .btn-secondary:hover{ background:var(--flag); }
+  .btn-tertiary{ background:none; color:var(--flag); text-decoration:underline; padding:.5rem 0; font-weight:600; }
+  .btn-tertiary:hover{ color:var(--flag-deep); }
+
+  .card-row{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+  @media (max-width:620px){ .card-row{ grid-template-columns:1fr; } }
+  .card{ border-radius:.7rem; padding:1.3rem; border:1px solid var(--stone-200); background:#fff; }
+  .card.featured{ background:var(--ink); border-color:var(--flag); color:var(--pale); }
+  .card h4{ font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.03em; font-size:1.05rem; margin:0 0 .3rem; }
+  .card.featured h4{ color:var(--flag-bright); }
+  .card p{ margin:0; font-size:.86rem; color:var(--stone-600); }
+  .card.featured p{ color:var(--pale); opacity:.85; }
+
+  .pill-row{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
+  .pill{ background:#fff; border:1px solid var(--stone-200); border-radius:999px; padding:.4rem 1rem; font-size:.82rem; }
+
+  .header-demo{ margin-top:1rem; font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.03em; font-size:1.2rem; display:inline-block; border-bottom:2px solid var(--flag); padding-bottom:.35rem; color:var(--ink); }
+
+  /* ---------- accessibility ---------- */
+  .contrast-table td, .contrast-table th{ padding:.6rem .7rem; border-bottom:1px solid var(--stone-200); font-size:.85rem; }
+  .contrast-table th{ text-align:left; font-family:"Oswald",sans-serif; text-transform:uppercase; font-size:.7rem; letter-spacing:.06em; color:var(--stone-500); }
+  .chip-preview{ display:inline-flex; align-items:center; padding:.35rem .8rem; border-radius:.3rem; font-family:"Oswald",sans-serif; font-weight:600; font-size:.78rem; text-transform:uppercase; letter-spacing:.03em; }
+  .verdict{ font-weight:700; font-family:"Oswald",sans-serif; letter-spacing:.03em; font-size:.78rem; text-transform:uppercase; }
+  .verdict.pass{ color:#3F6327; }
+  .verdict.fail{ color:var(--flag); }
+
+  /* ---------- footer ---------- */
+  footer{ background:var(--ink); color:var(--pale); padding:2.6rem 1.5rem; }
+  footer .wrap{ max-width:var(--content-w); }
+  footer p{ font-size:.82rem; margin:0 0 .5rem; opacity:.85; }
+  footer code{ background:rgba(255,255,255,.08); padding:.1rem .35rem; border-radius:.25rem; }
+  footer a{ color:var(--flag-bright); text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="script">Senoia</div>
+  <img class="wordmark-img" src="../src/assets/porchfest-wordmark.svg" width="571" height="264" alt="PorchFest 2026 wordmark" />
+  <div class="stars">★ ★ ★</div>
+  <div class="doc-title">Brand Guide</div>
+  <p class="meta">5th Annual · Sunday, September 6, 2026 · Prepared for the Senoia Downtown Development Authority</p>
+  <div class="flag-note">Internal reference — not part of the deployed site</div>
+</div>
+
+<nav class="subnav">
+  <div class="wrap">
+    <a href="#colors">Colors</a>
+    <a href="#type">Type</a>
+    <a href="#logo">Logo</a>
+    <a href="#motifs">Motifs</a>
+    <a href="#voice">Voice</a>
+    <a href="#components">Components</a>
+    <a href="#accessibility">Accessibility</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section id="overview">
+    <div class="eyebrow">Why this exists</div>
+    <h2 class="title">One Look, Everywhere</h2>
+    <p class="lede">
+      PorchFest's colors and type already come from one place — the ink used on the 2026 shirt-print
+      design system, carried into the website's <code class="mono">src/index.css</code> tokens and the
+      vector wordmark. This page collects that system in one spot so anyone adding a sponsor page,
+      a social graphic, a flyer, or a new site section can match it without guessing.
+    </p>
+    <div class="callout" style="margin-top:1.4rem;">
+      <strong>Source of truth:</strong> the shirt-print ink values — navy <code class="mono">#101D3A</code>,
+      flag red <code class="mono">#B02A30</code>, warm white <code class="mono">#F5F1E6</code> — plus the
+      true-vector 2026 wordmark. Everything below is either pulled directly from those files or
+      documents how they're already used across the live site.
+    </div>
+  </section>
+
+  <section id="colors">
+    <div class="eyebrow">Palette</div>
+    <h2 class="title">Colors</h2>
+    <p class="lede">Six tokens carry the whole site. Red and navy are the identity; cream is the paper it sits on.</p>
+
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-face" style="background:var(--ink); color:var(--cream);">Ink</div>
+        <div class="swatch-info"><div class="name">ink</div><div class="hex mono">#101D3A</div><div class="use">Primary navy — header, footer, hero backgrounds, body text on cream.</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-face" style="background:var(--flag); color:var(--cream);">Flag</div>
+        <div class="swatch-info"><div class="name">flag</div><div class="hex mono">#B02A30</div><div class="use">Primary accent — buttons, links, section rules, active states on light backgrounds.</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-face" style="background:var(--flag-deep); color:var(--cream);">Flag&nbsp;Deep</div>
+        <div class="swatch-info"><div class="name">flag-deep</div><div class="hex mono">#8C1F24</div><div class="use">Hover / pressed state for flag-colored buttons and nav — never a standalone fill.</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-face" style="background:var(--flag-bright); color:var(--ink);">Flag&nbsp;Bright</div>
+        <div class="swatch-info"><div class="name">flag-bright</div><div class="hex mono">#E35A55</div><div class="use">Flag red, lifted for text <em>on navy</em> — true flag red fails contrast there.</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-face" style="background:var(--pale); color:var(--ink);">Pale</div>
+        <div class="swatch-info"><div class="name">pale</div><div class="hex mono">#CDD3E8</div><div class="use">Secondary / muted text on navy — nav links, footer copy, captions.</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-face" style="background:var(--cream); color:var(--ink); border-bottom:1px solid rgba(16,29,58,.1);">Cream</div>
+        <div class="swatch-info"><div class="name">cream</div><div class="hex mono">#F5F1E6</div><div class="use">Warm white — the "paper" ground for content sections and cards.</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:.8rem; letter-spacing:.08em; color:var(--stone-500); margin:2.2rem 0 .5rem;">Neutrals — warm stone, never slate</h3>
+    <div class="neutrals-strip">
+      <div style="background:var(--stone-50);"><span>50</span></div>
+      <div style="background:var(--stone-100);"><span>100</span></div>
+      <div style="background:var(--stone-200);"><span>200</span></div>
+      <div style="background:var(--stone-300);"><span>300</span></div>
+      <div style="background:var(--stone-400); color:#fff;"><span>400</span></div>
+      <div style="background:var(--stone-500); color:#fff;"><span>500</span></div>
+      <div style="background:var(--stone-600); color:#fff;"><span>600</span></div>
+      <div style="background:var(--stone-700); color:#fff;"><span>700</span></div>
+      <div style="background:var(--stone-800); color:#fff;"><span>800</span></div>
+      <div style="background:var(--stone-900); color:#fff;"><span>900</span></div>
+    </div>
+    <p style="font-size:.82rem; color:var(--stone-600); margin-top:.6rem;">
+      Body copy on cream runs on <code class="mono">stone-600</code>/<code class="mono">stone-700</code>; card borders on <code class="mono">stone-200</code>. Tailwind's <code class="mono">slate</code> scale is intentionally unused — it reads cool against the warm cream/navy pairing.
+    </p>
+
+    <h3 style="font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:.8rem; letter-spacing:.08em; color:var(--stone-500); margin:2.2rem 0 .5rem;">Extended palette — day-of map categories only</h3>
+    <p style="font-size:.82rem; color:var(--stone-600); margin:0 0 .3rem;">Muted so they sit next to flag red and navy without competing. Not for marketing use — these exist only to color-code map pins.</p>
+    <div class="cat-grid">
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-porch);"></span>Porch</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-stage);"></span>Stage</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-vip);"></span>VIP</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-food);"></span>Food</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-drinks);"></span>Drinks</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-kids);"></span>Kids</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-restroom);"></span>Restroom</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-parking);"></span>Parking</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-aid);"></span>First Aid</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--cat-merch);"></span>Merch</div>
+      <div class="cat-chip"><span class="cat-dot" style="background:var(--star);"></span>Selected (star)</div>
+    </div>
+  </section>
+
+  <section id="type">
+    <div class="eyebrow">Typography</div>
+    <h2 class="title">Two Faces, One Job Each</h2>
+    <p class="lede">Oswald carries every heading, label, and button. Yellowtail appears once per page, if at all. Body copy uses no webfont at all — on purpose.</p>
+
+    <div style="margin-top:1.6rem;">
+      <div class="type-row">
+        <div class="label">Display — Oswald 700</div>
+        <div class="display-sample" style="font-weight:700; font-size:clamp(2rem,6vw,3.2rem); letter-spacing:.01em; color:var(--ink);">Porchfest</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Display — Oswald 600, tracked wide (nav / buttons)</div>
+        <div class="display-sample" style="font-weight:600; font-size:1.1rem; letter-spacing:.08em; color:var(--flag);">Volunteer Sign-Up</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Display — Oswald 500 (section eyebrows, meta)</div>
+        <div class="display-sample" style="font-weight:500; font-size:1rem; letter-spacing:.14em; color:var(--stone-600);">5th Annual · Sept 6, 2026</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Script — Yellowtail (sparingly)</div>
+        <div class="script-sample">Senoia</div>
+        <p style="font-size:.82rem; color:var(--stone-600); margin-top:.3rem;">Reserved for the "Senoia" lockup above the wordmark and short taglines — never body copy, never more than one line on a page.</p>
+      </div>
+      <div class="type-row">
+        <div class="label">Body — system font stack (no webfont)</div>
+        <div class="body-sample">
+          Senoia PorchFest is free to attend — stroll porch to porch from 3 to 10pm, catching new sets every hour across the historic downtown.
+        </div>
+        <p style="font-size:.82rem; color:var(--stone-600); margin-top:.5rem;">
+          The site is deliberately hardcoded with no CMS and no third webfont for body text — one less network request keeps pages fast. Body copy renders in each device's native UI font.
+        </p>
+      </div>
+    </div>
+
+    <div class="scroller" style="margin-top:1.8rem;">
+      <table class="scale-table">
+        <thead><tr><th>Role</th><th>Font / weight</th><th>Treatment</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Hero H1</td><td>Oswald 700</td><td>Uppercase, 2–3.2rem</td><td class="example" style="text-transform:uppercase; font-size:1.1rem;">Porchfest 2026</td></tr>
+          <tr><td>Section H2</td><td>Oswald 700</td><td>Uppercase, border-bottom flag rule</td><td class="example"><span style="text-transform:uppercase; border-bottom:2px solid var(--flag); padding-bottom:2px;">Volunteer Perks</span></td></tr>
+          <tr><td>Nav link / button</td><td>Oswald 600</td><td>Uppercase, tracking .06–.08em</td><td class="example" style="text-transform:uppercase; letter-spacing:.06em;">Schedule</td></tr>
+          <tr><td>Eyebrow / meta</td><td>Oswald 500</td><td>Uppercase, tracking .12–.14em, small</td><td class="example" style="text-transform:uppercase; letter-spacing:.14em; font-size:.75rem;">Featuring</td></tr>
+          <tr><td>Body</td><td>System UI sans</td><td>Sentence case, 1–1.02rem / 1.6</td><td class="example" style="font-family:-apple-system,sans-serif; text-transform:none; font-weight:400;">Free admission, all ages.</td></tr>
+          <tr><td>Script accent</td><td>Yellowtail</td><td>One line max, flag-bright</td><td class="example" style="font-family:'Yellowtail',cursive; color:var(--flag-bright); font-size:1.2rem;">Senoia</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="logo">
+    <div class="eyebrow">Mark</div>
+    <h2 class="title">The Wordmark</h2>
+    <p class="lede">
+      One file: the true-vector 2026 wordmark (<code class="mono">src/assets/porchfest-wordmark.svg</code>) —
+      the same hand-drawn art that's on the printed merch. It ships as flag-red letterforms on a warm-white
+      offset shadow, which is why it reads clearly on either ground below without any recoloring. Every
+      instance on this page loads that same file directly, so it can never drift out of sync.
+    </p>
+
+    <div class="logo-panels">
+      <div class="logo-panel on-cream">
+        <span class="tag">On cream</span>
+        <img src="../src/assets/porchfest-wordmark.svg" width="571" height="264" alt="PorchFest wordmark on cream" />
+      </div>
+      <div class="logo-panel on-navy">
+        <span class="tag">On navy</span>
+        <img src="../src/assets/porchfest-wordmark.svg" width="571" height="264" alt="PorchFest wordmark on navy" />
+      </div>
+    </div>
+    <p style="font-size:.82rem; color:var(--stone-600); margin-top:.8rem;">
+      Both panels render the identical file — the wordmark carries its own warm-white outline, so it never needs a different asset or a swapped fill per background.
+    </p>
+
+    <div class="dos-donts">
+      <div class="yes">
+        <h3 style="color:#3F6327;">Do</h3>
+        <ul>
+          <li>Use the SVG straight from <code class="mono">src/assets/</code> at any size — it's vector.</li>
+          <li>Give it breathing room at least equal to the cap-height of "PORCHFEST" on every side.</li>
+          <li>Pair it with the "Senoia" script line above it when there's room for the full lockup.</li>
+          <li>Use the soft flag-red drop shadow only in the hero — it's a one-time flourish, not a default.</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3 style="color:var(--flag);">Don't</h3>
+        <ul>
+          <li>Substitute a raster export or a traced copy — always the vector source file.</li>
+          <li>Recolor the mark; it's calibrated for both cream and navy already.</li>
+          <li>Stretch, skew, or rotate it to fit a layout.</li>
+          <li>Drop it directly onto a busy photo without a solid cream or navy panel behind it.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="motifs">
+    <div class="eyebrow">In the wild</div>
+    <h2 class="title">Recurring Devices</h2>
+    <p class="lede">The print collateral repeats a small set of moves — worth carrying into any new sponsor sheet, social post, or flyer.</p>
+
+    <div class="motif-grid">
+      <figure class="motif-card">
+        <img src="../public/lineup-poster-2026.png" alt="2026 lineup poster: a guitar illustrated as an American flag, with a bird perched on the headstock, beside the alphabetical list of featured performers.">
+        <figcaption><strong>Guitar-as-flag illustration.</strong> The recurring hero graphic — a guitar body painted as stars and stripes, with a small bird accent on the headstock. Pairs with the all-caps condensed headline treatment.</figcaption>
+      </figure>
+      <figure class="motif-card">
+        <img src="../public/schedule-poster-2026.jpg" alt="2026 schedule poster: hourly time blocks in alternating navy and flag-red banners, with star dividers between headline sections.">
+        <figcaption><strong>Star dividers &amp; hourly color-blocks.</strong> ★ marks section breaks; each hour gets its own navy/cream/flag banner so the eye can scan by time slot.</figcaption>
+      </figure>
+    </div>
+    <p style="font-size:.78rem; color:var(--stone-500); margin-top:.6rem;">
+      Both images load from <code class="mono">public/</code> — if next year's posters get new filenames per the yearly rollover checklist, update the two <code class="mono">&lt;img&gt;</code> sources above to match.
+    </p>
+
+    <div class="callout" style="margin-top:1.4rem;">
+      <strong>Map attribution is non-negotiable:</strong> the day-of map is stitched from OpenStreetMap tiles, so every rendering of it must keep the <code class="mono">© OpenStreetMap</code> credit visible — a legal requirement, not a style choice.
+    </div>
+  </section>
+
+  <section id="voice">
+    <div class="eyebrow">Content</div>
+    <h2 class="title">Voice &amp; Formatting</h2>
+    <p class="lede">The copy on senoiaporchfest.org is plain and specific — no CMS boilerplate, no marketing fluff. A few conventions repeat everywhere.</p>
+
+    <dl class="voice-dl">
+      <div class="voice-row">
+        <dt>Labels &amp; headings</dt>
+        <dd>ALL CAPS, Oswald, letter-spaced. Reserved for nav, buttons, and section titles — never for a full sentence.<span class="ex">SCHEDULE · VOLUNTEER SIGN-UP · FAQ</span></dd>
+      </div>
+      <div class="voice-row">
+        <dt>Body copy</dt>
+        <dd>Sentence case, direct, second person where it helps ("grab a shift"). States facts plainly rather than selling.</dd>
+      </div>
+      <div class="voice-row">
+        <dt>Dates &amp; times</dt>
+        <dd>Full date, middle dot, en dash for ranges.<span class="ex">Sunday, September 6, 2026 · 3–10pm</span></dd>
+      </div>
+      <div class="voice-row">
+        <dt>Numbers</dt>
+        <dd>Numerals for counts and money, spelled ordinals for the anniversary.<span class="ex">29 Porches · $100 · 5th Annual</span></dd>
+      </div>
+      <div class="voice-row">
+        <dt>Link copy</dt>
+        <dd>Names the destination, ends with an arrow — never "click here."<span class="ex">Read our FAQ &rarr;</span></dd>
+      </div>
+    </dl>
+  </section>
+
+  <section id="components">
+    <div class="eyebrow">Patterns</div>
+    <h2 class="title">Buttons, Cards &amp; Section Rules</h2>
+    <p class="lede">The recurring UI patterns already in use across the site, so a new page reaches for the same shapes.</p>
+
+    <div class="comp-block">
+      <h3>Buttons</h3>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="#">Volunteer Sign-Up</a>
+        <a class="btn btn-secondary" href="#">Get Sponsorship Info</a>
+        <a class="btn btn-tertiary" href="#">See sponsor levels →</a>
+      </div>
+      <p style="font-size:.82rem; color:var(--stone-600); margin-top:.7rem;">Primary = flag → flag-deep on hover, for the one action a page wants most. Secondary = ink → flag on hover, for a page's second CTA. Tertiary is an underlined text link.</p>
+    </div>
+
+    <div class="comp-block">
+      <h3>Cards</h3>
+      <div class="card-row">
+        <div class="card">
+          <h4 style="color:var(--ink);">Schedule →</h4>
+          <p>Who's playing, where, and when — plan your porch-to-porch route.</p>
+        </div>
+        <div class="card featured">
+          <h4>Volunteer →</h4>
+          <p>PorchFest runs on volunteers — grab a shift and be part of it.</p>
+        </div>
+      </div>
+      <p style="font-size:.82rem; color:var(--stone-600); margin-top:.7rem;">The dark "featured" card is used sparingly — one per grid, for the single link a page most wants clicked.</p>
+    </div>
+
+    <div class="comp-block">
+      <h3>Pills &amp; section rules</h3>
+      <div class="pill-row">
+        <span class="pill">BMW of South Atlanta — Presenting Sponsor</span>
+        <span class="pill">Senoia Coffee — Porch Sponsor</span>
+      </div>
+      <div class="header-demo">Perks &amp; Access</div>
+      <p style="font-size:.82rem; color:var(--stone-600); margin-top:.7rem;">Sponsor names and tiers live in rounded pills on white. Every content section on a light page opens with an uppercase Oswald heading underlined in flag red.</p>
+    </div>
+  </section>
+
+  <section id="accessibility">
+    <div class="eyebrow">Contrast</div>
+    <h2 class="title">What Pairs With What</h2>
+    <p class="lede">Computed against WCAG 2.1, so "flag-bright is for navy" isn't just a rule of thumb — here's why.</p>
+
+    <div class="scroller">
+      <table class="contrast-table">
+        <thead><tr><th>Pairing</th><th>Preview</th><th>Ratio</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>ink on cream</td>
+            <td><span class="chip-preview" style="background:var(--cream); color:var(--ink);">Aa</span></td>
+            <td class="mono">14.8:1</td>
+            <td><span class="verdict pass">AAA</span></td>
+          </tr>
+          <tr>
+            <td>cream on ink</td>
+            <td><span class="chip-preview" style="background:var(--ink); color:var(--cream);">Aa</span></td>
+            <td class="mono">14.8:1</td>
+            <td><span class="verdict pass">AAA</span></td>
+          </tr>
+          <tr>
+            <td>pale on ink</td>
+            <td><span class="chip-preview" style="background:var(--ink); color:var(--pale);">Aa</span></td>
+            <td class="mono">11.2:1</td>
+            <td><span class="verdict pass">AAA</span></td>
+          </tr>
+          <tr>
+            <td>flag on cream</td>
+            <td><span class="chip-preview" style="background:var(--cream); color:var(--flag);">Aa</span></td>
+            <td class="mono">5.8:1</td>
+            <td><span class="verdict pass">AA</span></td>
+          </tr>
+          <tr>
+            <td>flag-bright on ink</td>
+            <td><span class="chip-preview" style="background:var(--ink); color:var(--flag-bright);">Aa</span></td>
+            <td class="mono">4.7:1</td>
+            <td><span class="verdict pass">AA</span></td>
+          </tr>
+          <tr>
+            <td>flag (true red) on ink</td>
+            <td><span class="chip-preview" style="background:var(--ink); color:var(--flag);">Aa</span></td>
+            <td class="mono">2.6:1</td>
+            <td><span class="verdict fail">Fails — use flag-bright</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dos-donts" style="margin-top:2rem;">
+      <div class="yes">
+        <h3 style="color:#3F6327;">Do</h3>
+        <ul>
+          <li>Use <code class="mono">flag-bright</code> for any red text sitting on navy.</li>
+          <li>Use plain <code class="mono">flag</code> for red text and accents on cream or white.</li>
+          <li>Reach for <code class="mono">pale</code> for secondary text on navy — it clears AAA.</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3 style="color:var(--flag);">Don't</h3>
+        <ul>
+          <li>Put true <code class="mono">flag</code> red text directly on <code class="mono">ink</code> navy.</li>
+          <li>Introduce a new red or navy shade — the six tokens above cover every case so far.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:var(--cream);">Tokens live in code, not in this page.</strong> Colors and fonts are defined once, in <code>src/index.css</code> as Tailwind <code>@theme</code> variables; the wordmark is <code>src/assets/porchfest-wordmark.svg</code>. Update those, then this guide, together.</p>
+    <p>Senoia PorchFest shares its ink system with its sibling event, the Senoia Car Show — fixes to one usually apply to both.</p>
+    <p>This file lives at <code>docs/brand-guide.html</code> — outside <code>public/</code> and <code>src/</code>, so it is never bundled or deployed. Open it locally in a browser, or clone the repo and double-click it.</p>
+    <p style="margin-top:1rem; opacity:.6;">Brand guide compiled from the live site and 2026 print collateral · last updated August 28, 2026.</p>
+  </div>
+</footer>
+
+</body>
+</html>

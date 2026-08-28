@@ -163,7 +163,10 @@ fails contrast there), `pale` for secondary text on navy. Neutrals are warm
 `stone-*`, never `slate`. Fonts: `font-display` (Oswald), `font-script`
 (Yellowtail). Logo is the true-vector 2026 wordmark
 `src/assets/porchfest-wordmark.svg` (same art as the printed shirts) — used in
-the header and hero; don't substitute traced/raster versions.
+the header and hero; don't substitute traced/raster versions. Full guide with
+swatches, type specimens, and contrast ratios: `docs/brand-guide.html` (open
+locally in a browser — lives outside `public/`/`src/`, so it's never bundled
+or deployed).
 
 ## Gotchas
 
