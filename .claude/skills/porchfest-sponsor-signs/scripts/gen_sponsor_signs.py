@@ -13,6 +13,12 @@ ASSETS = os.path.join(SKILL_DIR, 'assets')
 
 NAVY = (0/255, 47/255, 167/255)      # royal blue #002FA7 (ink-sample colour, NOT
                                       # the site's brand navy #101D3A -- see SKILL.md)
+FLAG = (0xB0/255, 0x2A/255, 0x30/255)  # brand flag red, the yard-sign family's accent
+
+# Named inks a spec's "ink" field can ask for. Deliberately a short list rather
+# than free-form hex: the printed set is one ink for a reason, and an exception
+# should be a decision someone made, not a colour someone typed.
+INKS = {'blue': NAVY, 'red': FLAG}
 W, H = 1728, 1296                    # 24x18in at 72pt/in
 FONTFILE = os.path.join(ASSETS, 'Oswald-Bold.ttf')
 font = pymupdf.Font(fontfile=FONTFILE)
@@ -78,19 +84,21 @@ def block_height(size, lines):
     return size * LEAD * (len(lines) - 1) + size * (font.ascender - font.descender)
 
 
-def draw_lines_at(page, size, lines, y_top):
+def draw_lines_at(page, size, lines, y_top, color=None):
     """Draw centered lines with the block's top edge at y_top."""
     y = y_top + size * font.ascender
     for line in lines:
         lw = font.text_length(line, fontsize=size)
-        page.insert_text(((W - lw) / 2, y), line, fontname='OswB', fontsize=size, color=NAVY)
+        page.insert_text(((W - lw) / 2, y), line, fontname='OswB', fontsize=size,
+                         color=color or NAVY)
         y += size * LEAD
 
 
-def draw_name(page, name, zone_top, zone_bottom, max_size, max_lines=3):
+def draw_name(page, name, zone_top, zone_bottom, max_size, max_lines=3, color=None):
     size, lines = best_layout(name, zone_top, zone_bottom, max_size, max_lines)
     draw_lines_at(page, size, lines,
-                  zone_top + (zone_bottom - zone_top - block_height(size, lines)) / 2)
+                  zone_top + (zone_bottom - zone_top - block_height(size, lines)) / 2,
+                  color=color)
     return size, lines
 
 
@@ -121,7 +129,7 @@ SUB_RATIO = 0.46          # subtitle size, as a fraction of the name's size
 SUB_GAP = 0.28            # gap above the subtitle, as a fraction of that size
 
 
-def draw_subtitle(page, text, size, y_top):
+def draw_subtitle(page, text, size, y_top, color=None):
     """One centered line under the sponsor name, in the same ink at ~46%.
 
     For the second line a sponsor's name sometimes needs and the header cannot
@@ -131,10 +139,10 @@ def draw_subtitle(page, text, size, y_top):
     """
     w = font.text_length(text, fontsize=size)
     page.insert_text(((W - w) / 2, y_top + size * font.ascender), text,
-                     fontname='OswB', fontsize=size, color=NAVY)
+                     fontname='OswB', fontsize=size, color=color or NAVY)
 
 
-def make_sign(name, logo_path, outdir, out_name=None, subtitle=None):
+def make_sign(name, logo_path, outdir, out_name=None, subtitle=None, ink=None):
     """Render one sign PDF. Returns (filename, logo_size), where logo_size is
     (placed_w_in, placed_h_in, src_w_px, src_h_px) for a logo sign, or None for
     a name-only sign -- the caller already knows this at creation time, so
@@ -144,9 +152,13 @@ def make_sign(name, logo_path, outdir, out_name=None, subtitle=None):
     page = doc.new_page(width=W, height=H)
     page.insert_font(fontname='OswB', fontfile=FONTFILE)
 
+    if ink is not None and ink not in INKS:
+        raise ValueError(f'unknown ink {ink!r}; choose one of {sorted(INKS)}')
+    color = INKS[ink] if ink else NAVY
+
     hw = font.text_length(HEADER, fontsize=HEADER_SIZE)
     page.insert_text(((W - hw) / 2, 48 + HEADER_SIZE * font.ascender),
-                     HEADER, fontname='OswB', fontsize=HEADER_SIZE, color=NAVY)
+                     HEADER, fontname='OswB', fontsize=HEADER_SIZE, color=color)
 
     logo_size = None
     if logo_path:
@@ -169,10 +181,11 @@ def make_sign(name, logo_path, outdir, out_name=None, subtitle=None):
         top = BAND_TOP + (BAND_BOTTOM - BAND_TOP - group_h) / 2
         page.insert_image(pymupdf.Rect(W/2 - w/2, top, W/2 + w/2, top + h),
                           filename=prepped)
-        draw_lines_at(page, size, lines, top + h + LOGO_NAME_GAP)
+        draw_lines_at(page, size, lines, top + h + LOGO_NAME_GAP, color=color)
         if subtitle:
             draw_subtitle(page, subtitle, sub_size,
-                          top + h + LOGO_NAME_GAP + name_h + sub_size * SUB_GAP)
+                          top + h + LOGO_NAME_GAP + name_h + sub_size * SUB_GAP,
+                          color=color)
     else:
         # Name-only signs reserve the subtitle's slice before centring, so the
         # pair sits centred in the band as one block rather than the name
@@ -183,9 +196,10 @@ def make_sign(name, logo_path, outdir, out_name=None, subtitle=None):
         sub_h = (sub_size * SUB_GAP + sub_size * (font.ascender - font.descender)
                  if subtitle else 0)
         top = BAND_TOP + (BAND_BOTTOM - BAND_TOP - name_h - sub_h) / 2
-        draw_lines_at(page, size, lines, top)
+        draw_lines_at(page, size, lines, top, color=color)
         if subtitle:
-            draw_subtitle(page, subtitle, sub_size, top + name_h + sub_size * SUB_GAP)
+            draw_subtitle(page, subtitle, sub_size, top + name_h + sub_size * SUB_GAP,
+                          color=color)
 
     # dove: small, bottom-right, below the name band, mirrored to face into the sign
     bh = 90

@@ -11,6 +11,10 @@ the PorchFest dove mirrored into the bottom-right corner. White background.
 
 Everything the generator needs is bundled in this skill directory:
 - `scripts/gen_sponsor_signs.py` -- the layout engine (import this, don't copy it).
+- `scripts/gen_area_sign.py` -- the 24x36in portrait AREA sign: names a festival
+  area (Kid's Area, Cooling Tent) and stacks the sponsors backing it, one per
+  row. Different object from a stage sign, same ink, type and dove so the two
+  read as one family. `python gen_area_sign.py SPEC.json OUTDIR`.
 - `scripts/build_signs.py` -- CLI driver. Give it a JSON spec + an output dir; it
   writes the PDFs, a contact-sheet proof, and a delivery zip.
 - `assets/Oswald-Bold.ttf`, `assets/dove.png` -- fonts and mascot art, already
@@ -159,7 +163,9 @@ differently across sources, a variant the user hasn't picked yet).
 ## Design constants (don't relitigate these)
 
 - **Ink is royal blue `#002FA7`**, chosen by the user from physical print
-  samples. This is deliberately NOT the site's brand navy `#101D3A` from
+  samples. One sign can opt out with `"ink": "red"` (brand flag red) when it is
+  meant to stand apart from the sponsor wall -- the co-chairs' own sign does.
+  That is a per-sign exception, not a way to re-ink the set. This is deliberately NOT the site's brand navy `#101D3A` from
   `CLAUDE.md` -- don't "fix" it to match. If a future user explicitly wants a
   different ink, change `NAVY` in `gen_sponsor_signs.py`, not per-call.
 - **24"x18" landscape**, white background, header "This Stage Sponsored by:" in

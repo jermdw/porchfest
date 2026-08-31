@@ -12,7 +12,8 @@ on the contact sheet:
       {"name": "The Veranda Inn", "logo": null},
       {"name": "Senoia Area Historical Society", "logo": "logos/sahs.png",
        "out_name": "Senoia Area Historical Society (classic logo)"},
-      {"name": "doTERRA", "logo": null, "subtitle": "Cathy Geis"}
+      {"name": "doTERRA", "logo": null, "subtitle": "Cathy Geis"},
+      {"name": "PorchFest Co Chairs Steph & Stace", "logo": null, "ink": "red"}
     ]
 
 - "logo": null (or omitted) falls back to the name-only big-type layout.
@@ -23,6 +24,9 @@ on the contact sheet:
 - "subtitle" adds a smaller second line under the name, for what the name alone
   does not say -- a reseller's own name, or the towns a shop trades in. Works on
   both the logo and name-only layouts.
+- "ink" recolours one sign's type: "blue" (default royal blue) or "red" (brand
+  flag red). For the odd sign that is meant to stand apart from the sponsor
+  wall, not for re-inking the set -- to change every sign, change NAVY.
 
 Renders everything into a private staging directory first; OUTDIR is only
 touched after every sign renders successfully, and only this run's filenames
@@ -64,7 +68,8 @@ def main():
             logo_abs = os.path.join(spec_dir, logo) if logo else None
             fname, sized = g.make_sign(s['name'], logo_abs, staging,
                                        out_name=s.get('out_name'),
-                                       subtitle=s.get('subtitle'))
+                                       subtitle=s.get('subtitle'),
+                                       ink=s.get('ink'))
             made.append(fname)
             if sized:
                 w, h, sw, sh = sized
