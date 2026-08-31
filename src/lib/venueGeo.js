@@ -15,7 +15,11 @@
 
 export const BBOX = { west: -84.5595526, south: 33.2972713, east: -84.5516224, north: 33.303274 }
 
-export const ATTRIBUTION = '© OpenStreetMap'
+// "contributors" is not decoration — OSM's attribution guidance asks for the
+// project name plus the contributors who own the data. The printed sign-tower
+// map (scripts/signtower/side2-map.html) additionally spells out the ODbL,
+// which a web map can leave to a link but a PDF cannot.
+export const ATTRIBUTION = '© OpenStreetMap contributors'
 
 // Web Mercator: longitude is linear, latitude is not. Using raw latitude here would
 // skew pins vertically — a few metres at this scale, but enough to put a pin on the

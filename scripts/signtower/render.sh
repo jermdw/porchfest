@@ -12,7 +12,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+CHROME=$(. ./chrome.sh)
 OUT="${OUT:-$HOME/Downloads/PorchFest_SignTower}"
 mkdir -p "$OUT"
 

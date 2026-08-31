@@ -29,7 +29,8 @@ perl -0pe 's{</style>\s*</head>}{</style>
 </style>
 </head>}s' "$f" > .measure/probe.html
 
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+CHROME=$(. ./chrome.sh)
+"$CHROME" --headless --disable-gpu \
   --no-pdf-header-footer --print-to-pdf-no-header \
   --print-to-pdf=".measure/probe.pdf" \
   --virtual-time-budget=20000 "file://$PWD/.measure/probe.html" 2>/dev/null

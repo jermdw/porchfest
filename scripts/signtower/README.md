@@ -22,6 +22,18 @@ Like `scripts/generate_signage.py`, this is a **print tool** — nothing here is
 repo dependency and nothing is bundled or deployed. It only needs Google Chrome
 plus poppler (`pdftoppm`, `pdfinfo`) and Pillow for the measure probe.
 
+`chrome.sh` finds the browser: it takes `/Applications/Google Chrome.app` first,
+then Chromium.app, then `google-chrome` / `chromium` on `PATH`. Override it when
+yours lives elsewhere:
+
+```bash
+CHROME=/path/to/chrome ./render.sh
+```
+
+It has to be Chrome or Chromium. These panels use flexbox and
+percentage-positioned pins, and Chrome's `--print-to-pdf` is the only engine
+here that lays them out the way the browser preview did.
+
 ## Things that will bite you
 
 - **`.banner` is fixed-height with `overflow:hidden`.** Content past the bottom
