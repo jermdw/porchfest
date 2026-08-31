@@ -431,7 +431,7 @@ def sign_employees_vip(doc):
 
 
 # ----------------------------------------------------------------- banner ---
-def build_banner(path, bmw_logo):
+def build_banner(path):
     """96 x 18in vinyl: VIP LUXURY LOUNGE | PRESENTED BY / [BMW].
 
     The 2026 wordmark used to open the banner on the left. It came out at the
@@ -456,15 +456,29 @@ def build_banner(path, bmw_logo):
     mid = BANNER_H / 2
 
     # --- right: sponsor plaque, laid out from the right edge inward ---
-    prepped, pw, ph = prep_logo(bmw_logo, bg=CREAM_RGB, cache_key='_bmw')
-    # Sized up three times now, and every pass costs resolution: this is only a
-    # 400px web asset, so it lands at 17dpi effective (was 19, then 22,
-    # originally 30). Still legible on vinyl read from 15ft+, which is how this
-    # banner is seen, but this is about as far as the web asset stretches —
-    # the dealer's approved logo pack is worth chasing before it goes to print.
-    lw, lh = fit_logo(pw, ph, 2100, 800, min_dpi=17)
-    pad = 58
-    plaque_w, plaque_h = lw + 2 * pad, lh + 2 * pad
+    # Built the way the DDA's own VIP flyer builds it: the roundel is the mark,
+    # and "BMW of South Atlanta" is set as type beside it rather than being part
+    # of the picture. That split is what finally let this get big. The dealer's
+    # 400x168 web asset bakes mark and name into one raster whose *lettering*
+    # sets the resolution ceiling — it was placing at 17dpi and looking it.
+    # The roundel alone is true vector (assets/bmw-roundel.pdf, the flat modern
+    # mark matching the dealer's own artwork), so it is sharp at any size, and
+    # the name is now live Oswald rather than 17dpi pixels.
+    roundel = pymupdf.open(os.path.join(ASSETS, 'bmw-roundel.pdf'))
+    rd = roundel[0].rect
+
+    pad = 62
+    rh = 720                                   # roundel height inside the plaque
+    rw = rh * (rd.width / rd.height)
+    name_gap = 58
+    bmw_size = 330
+    dealer_size = 145
+    bmw_w = bold.text_length('BMW', fontsize=bmw_size)
+    dealer_w = med.text_length('of South Atlanta', fontsize=dealer_size)
+    text_w = max(bmw_w, dealer_w)
+    inner_w = rw + name_gap + text_w
+
+    plaque_w, plaque_h = inner_w + 2 * pad, rh + 2 * pad
     plaque_x0 = right - plaque_w
     eyebrow_size = 132
     eyebrow_gap = 48
@@ -480,10 +494,21 @@ def build_banner(path, bmw_logo):
                                  plaque_x0 + plaque_w, p_top + plaque_h))
     shape.finish(fill=CREAM, color=None)
     shape.commit()
-    page.insert_image(
+
+    page.show_pdf_page(
         pymupdf.Rect(plaque_x0 + pad, p_top + pad,
-                     plaque_x0 + pad + lw, p_top + pad + lh),
-        filename=prepped)
+                     plaque_x0 + pad + rw, p_top + pad + rh),
+        roundel, 0)
+
+    # Name block, optically centred on the roundel rather than on the box.
+    tx = plaque_x0 + pad + rw + name_gap
+    block_h = bmw_size * CAP + 22 + dealer_size * CAP
+    ty = p_top + pad + (rh - block_h) / 2
+    page.insert_text((tx, ty + bmw_size * CAP), 'BMW',
+                     fontname='OswB', fontsize=bmw_size, color=INK)
+    page.insert_text((tx, ty + bmw_size * CAP + 22 + dealer_size * CAP),
+                     'of South Atlanta', fontname='OswM', fontsize=dealer_size,
+                     color=INK)
 
     # --- flag-red rule dividing hero from sponsor ---
     # There used to be a matching rule on the far left, bracketing the hero
@@ -506,7 +531,7 @@ def build_banner(path, bmw_logo):
     # tightness, which is wrong here: this is a 96x18in banner, and stacking the
     # hero wastes the one dimension it has.
     hero_x0, hero_x1 = left, plaque_x0 - 250
-    size, lines = best_layout('VIP LUXURY LOUNGE', hero_x1 - hero_x0, 900, 430, 1)
+    size, lines = best_layout('VIP LUXURY LOUNGE', hero_x1 - hero_x0, 900, 380, 1)
     h = block_height(size, lines)
     draw_lines(page, lines, size, mid - h / 2, CREAM, (hero_x0 + hero_x1) / 2)
 
@@ -553,7 +578,6 @@ def main():
     ap.add_argument('--outdir',
                     default=os.path.expanduser('~/Downloads/PorchFest_VIP_Signage'))
     ap.add_argument('--peachtree', default=os.path.join(ASSETS, 'logo-peachtree.png'))
-    ap.add_argument('--bmw', default=os.path.join(ASSETS, 'logo-bmw.png'))
     args = ap.parse_args()
     os.makedirs(args.outdir, exist_ok=True)
 
@@ -573,7 +597,7 @@ def main():
     emit('04 Employees Only + VIP Parking', sign_employees_vip)
 
     banner = os.path.join(args.outdir, '05 VIP Luxury Lounge Banner 96x18.pdf')
-    build_banner(banner, args.bmw)
+    build_banner(banner)
     made.append(banner)
 
     proof_sheet(made, os.path.join(args.outdir, '_proof.png'))

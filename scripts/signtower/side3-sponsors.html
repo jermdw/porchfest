@@ -73,7 +73,10 @@ html,body{ width:48in; height:96in; background:var(--ink); }
    uncaptioned neighbours and the tier ladder is unaffected. */
 .card.captioned{ flex-direction:column; gap:0.1in; padding:0.24in 0.35in 0.26in; }
 .card.captioned img{ flex:1 1 auto; min-height:0; }
-.card .cap{ font-weight:600; font-size:0.6in; line-height:1.1; color:var(--ink);
+/* One line, always: these porch cards are only 3.6in tall, and a caption that
+   wraps to two steals the height the logo needs. Sized to the longest caption
+   on the wall ("Located at Kathleen, GA & Gray, GA"), not to the shortest. */
+.card .cap{ font-weight:600; font-size:0.42in; line-height:1.1; color:var(--ink);
   text-align:center; white-space:nowrap; flex:0 0 auto; }
 .gold .card.textonly{ color:var(--ink); font-weight:700; font-size:1.7in; line-height:1.15; text-align:center; letter-spacing:0.01em; }
 .porch .card.textonly, .kids .card.textonly{
@@ -179,7 +182,7 @@ html,body{ width:48in; height:96in; background:var(--ink); }
         <div class="card"><img src="../../src/assets/sponsor-pollard-waste.webp" alt="Pollard Residential Waste Services" /></div>
         <div class="card"><img src="../../src/assets/sponsor-senoia-coffee.webp" alt="Senoia Coffee" /></div>
         <div class="card"><img src="../../src/assets/sponsor-vaulted-vintage.webp" alt="Vaulted Vintage" /></div>
-        <div class="card captioned"><img src="../../src/assets/sponsor-miss-dotties.webp" alt="Miss Dottie&rsquo;s" /><span class="cap">Kathleen, GA &amp; Gray, GA</span></div>
+        <div class="card captioned"><img src="../../src/assets/sponsor-miss-dotties.webp" alt="Miss Dottie&rsquo;s" /><span class="cap">Located at Kathleen, GA &amp; Gray, GA</span></div>
         <div class="card textonly"><span>DoTerra</span><span class="cap">Cathy Geis</span></div>
         <div class="card"><img src="../../src/assets/sponsor-crust-and-craft.webp" alt="Crust &amp; Craft" /></div>
         <div class="card"><img src="../../src/assets/sponsor-nic-and-normans.webp" alt="Nic &amp; Norman&rsquo;s" /></div>

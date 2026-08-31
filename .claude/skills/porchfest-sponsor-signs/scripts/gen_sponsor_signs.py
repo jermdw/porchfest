@@ -125,7 +125,7 @@ def prep_logo(path):
     return out, flat.width, flat.height
 
 
-SUB_RATIO = 0.46          # subtitle size, as a fraction of the name's size
+SUB_RATIO = 0.62          # subtitle size, as a fraction of the name's size
 SUB_GAP = 0.28            # gap above the subtitle, as a fraction of that size
 
 
