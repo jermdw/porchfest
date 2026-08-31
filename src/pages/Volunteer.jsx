@@ -5,6 +5,7 @@ import { db, functions, EVENT_ID } from '../firebase'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
+import { pushVolunteerSignup } from '../lib/gtm.js'
 
 const DAY_LABELS = {
   '2026-09-05': 'Saturday, Sept 5 — Setup',
@@ -168,6 +169,7 @@ function SignupModal({ shift, onClose }) {
     try {
       const signUp = httpsCallable(functions, 'signUp')
       await signUp({ eventId: EVENT_ID, shiftId: shift.id, ...form })
+      pushVolunteerSignup(shift)
       setState({ status: 'done', error: null })
     } catch (err) {
       setState({ status: 'idle', error: err.message || 'Something went wrong. Please try again.' })
