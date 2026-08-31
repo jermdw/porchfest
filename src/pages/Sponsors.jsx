@@ -44,7 +44,7 @@ export default function Sponsors() {
               {tier}
             </h2>
             <ul className={`grid gap-4 ${cols}`}>
-              {sponsors.map(({ name, logo, w, h, url, dark }) => (
+              {sponsors.map(({ name, logo, w, h, url, dark, note }) => (
                 <li
                   key={name}
                   className={`rounded-xl border transition-colors ${cell} ${
@@ -79,6 +79,22 @@ export default function Sponsors() {
                         {name}
                       </span>
                     )
+                    // `note` names the person behind a sponsorship the brand
+                    // alone does not identify — an independent distributor, for
+                    // instance. Rendered under whatever fills the cell, so it
+                    // works for a logo entry as well as a name-only one.
+                    const filled = note ? (
+                      <span className="flex flex-col items-center gap-1">
+                        {inner}
+                        <span
+                          className={`text-xs font-medium ${dark ? 'text-pale' : 'text-stone-600'}`}
+                        >
+                          {note}
+                        </span>
+                      </span>
+                    ) : (
+                      inner
+                    )
                     // The whole cell is the target, not just the logo pixels — a
                     // wordmark with whitespace around it is frustrating to hit
                     // otherwise. Without a url there is no anchor at all, rather
@@ -86,10 +102,10 @@ export default function Sponsors() {
                     const box = `w-full h-full flex items-center justify-center p-4${logo ? '' : ' text-center'}`
                     return url ? (
                       <a href={url} target="_blank" rel="noreferrer" className={box}>
-                        {inner}
+                        {filled}
                       </a>
                     ) : (
-                      <div className={box}>{inner}</div>
+                      <div className={box}>{filled}</div>
                     )
                   })()}
                 </li>

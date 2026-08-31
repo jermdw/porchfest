@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PorchFest Sign Tower — Side 4: Lineup</title>
+<style>
+@font-face{font-family:'League Gothic';font-weight:400;font-style:normal;src:url('fonts/league-gothic-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:500;font-style:normal;src:url('fonts/oswald-latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:600;font-style:normal;src:url('fonts/oswald-latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:700;font-style:normal;src:url('fonts/oswald-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Yellowtail';font-weight:400;font-style:normal;src:url('fonts/yellowtail-latin-400-normal.woff2') format('woff2');}
+@page { size: 48in 96in; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --ink:#101d3a; --flag:#c00000; --flag-deep:#a80000; --flag-bright:#c00000;
+  --pale:#cdd3e8; --paper:#ffffff;
+}
+html,body{ width:48in; height:96in; background:var(--ink); }
+.banner{
+  position:relative; width:48in; height:96in; overflow:hidden;
+  background:var(--ink); color:var(--paper);
+  font-family:'Oswald',"Arial Narrow",sans-serif;
+  display:flex; flex-direction:column;
+}
+.topband{ flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:0.4in; padding:1.95in 4in 0; text-align:center; }
+.lockup{ --lockup-cap:4.15in; }
+.title{ font-weight:700; font-size:2.9in; letter-spacing:0.02em; margin-top:0.35in; }
+.subtitle{ font-weight:500; font-size:1.5in; color:var(--pale); letter-spacing:0.04em; }
+.rule{ width:16in; height:0.07in; background:var(--flag-bright); margin-top:0.25in; }
+
+.main{ flex:1 1 auto; display:flex; flex-direction:column; align-items:stretch; gap:0.42in; padding:1.05in 4.5in 0; }
+
+.block{ display:flex; flex-direction:column; gap:0.3in; padding:0.26in 0.9in; border-radius:0.4in; }
+.block-head{
+  display:flex; align-items:baseline; gap:0.6in; border-bottom:0.06in solid var(--flag); padding-bottom:0.18in;
+}
+.block-time{ font-weight:700; font-size:2.1in; color:var(--flag-bright); letter-spacing:0.02em; }
+.grid2{ display:grid; grid-template-columns:1fr 1fr; column-gap:1.5in; row-gap:0.26in; }
+/* An hour with a single act shouldn't wrap inside a half-width column
+   while the other half sits empty (2:00 PM VIP kickoff). */
+.grid2:has(> .act:only-child){ grid-template-columns:1fr; }
+.act{ display:flex; align-items:baseline; gap:0.32in; font-weight:500; font-size:1.22in; line-height:1.28; }
+.act .stagepill{
+  flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center;
+  width:1.5in; height:1.5in; border-radius:50%; background:var(--flag); color:var(--paper);
+  font-weight:700; font-size:0.9in;
+}
+.act .stagepill.none{ background:transparent; }
+.act .actname{ overflow-wrap:anywhere; }
+.act .subnote{ color:var(--pale); font-weight:500; }
+
+/* Finale — deliberately unlike the hourly blocks: no left-aligned head rule,
+   everything centred, name set as the largest type on the sign. Cream is set
+   explicitly here rather than inherited from the nth-child checker, so adding
+   or removing an hour block can never flip the finale to navy. */
+.block.finale{
+  background:var(--paper); color:var(--ink);
+  margin:0.4in -4.5in 0; padding:0.85in 3in 0.95in;
+  border-radius:0; align-items:center; text-align:center; gap:0;
+}
+.finale-eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:1.1in; width:100%;
+  font-weight:600; font-size:1.05in; letter-spacing:0.24em; text-transform:uppercase;
+  color:var(--flag-deep);
+}
+.finale-eyebrow::before, .finale-eyebrow::after{
+  content:""; flex:1 1 0; max-width:7in; height:0.07in; background:var(--flag-deep); opacity:0.5;
+}
+.finale-name{
+  font-weight:700; font-size:4.0in; line-height:1.02; letter-spacing:0.005em;
+  color:var(--ink); margin:0.45in 0 0.32in;
+}
+.finale-stage{
+  font-weight:600; font-size:1.3in; letter-spacing:0.13em; text-transform:uppercase; color:var(--flag);
+}
+.finale-where{
+  font-weight:500; font-size:0.95in; letter-spacing:0.05em; color:#5b5142; margin-top:0.2in;
+}
+
+/* Checkering: 1st, 3rd, 5th, 7th time blocks get a full-bleed white band for readability.
+   The finale is excluded: it lands on an odd index today, and since `.block.finale` and
+   `.block:nth-child(odd)` have identical specificity, this later rule would otherwise win
+   and silently override the finale's own margin/padding. */
+.block:nth-child(odd):not(.finale){
+  background:var(--paper); color:var(--ink);
+  margin:0 -4.5in; padding:0.26in 5.4in;
+  border-radius:0;   /* full-bleed bands must meet the banner edge square */
+}
+.block:nth-child(odd):not(.finale) .block-time{ color:var(--flag-deep); border-bottom-color:var(--flag-deep); }
+.block:nth-child(odd):not(.finale) .block-head{ border-bottom-color:var(--flag-deep); }
+.block:nth-child(odd):not(.finale) .act .subnote{ color:#5b5142; }
+
+
+/* --- 2026 lockup ------------------------------------------------------- */
+/* Replaces the arched "PorchFest 2026" wordmark. Set in League Gothic, which
+   is what the 2026 ad banners use: matched letterform-for-letterform against
+   them, and 5% off on SENOIA'S at equal cap height. (Their PORCHFEST is that
+   same face squashed to ~71% to survive a 90px-tall ad slot -- not reproduced
+   here, because a 48in panel has all the width it needs and squashed type
+   reads as a mistake at this size.) */
+.lockup{ font-family:'League Gothic','Oswald',"Arial Narrow",sans-serif;
+  text-transform:uppercase; text-align:center; line-height:0.88;
+  color:var(--paper); display:block; }
+.lockup .lk-top{ font-size:calc(var(--lockup-cap) * 0.40); letter-spacing:0.005em;
+  display:block; white-space:nowrap; }
+.lockup .lk-yr{ color:var(--flag-bright); }
+.lockup .lk-yr sup{ font-size:0.62em; vertical-align:baseline;
+  position:relative; top:-0.42em; }
+.lockup .lk-main{ font-size:var(--lockup-cap); letter-spacing:0.004em;
+  display:block; white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="banner" data-side="4-lineup">
+  <div class="topband">
+<div class="lockup">
+      <span class="lk-top">Senoia&rsquo;s <span class="lk-yr">5<sup>th</sup> Annual</span></span>
+      <span class="lk-main">PorchFest</span>
+    </div>
+    <div class="title">LINEUP</div>
+    <div class="rule"></div>
+  </div>
+
+  <div class="main">
+    <div class="block">
+      <div class="block-head"><div class="block-time">2:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">1</div><div class="actname">Kellar McCoy <span class="subnote">— VIP Lounge</span></div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">3:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">2</div><div class="actname">Amir Salam</div></div>
+        <div class="act"><div class="stagepill">12</div><div class="actname">Brain Fog</div></div>
+        <div class="act"><div class="stagepill">27</div><div class="actname">Candler Hobbs</div></div>
+        <div class="act"><div class="stagepill">16</div><div class="actname">GRASS</div></div>
+        <div class="act"><div class="stagepill">19</div><div class="actname">James &amp; The Georgia Peaches</div></div>
+        <div class="act"><div class="stagepill">7</div><div class="actname">Mary Martin</div></div>
+        <div class="act"><div class="stagepill">22</div><div class="actname">Tyler Lowman Band</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">4:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">11</div><div class="actname">David Pippin Group</div></div>
+        <div class="act"><div class="stagepill">15</div><div class="actname">Ladega</div></div>
+        <div class="act"><div class="stagepill">8</div><div class="actname">Last Signal Home</div></div>
+        <div class="act"><div class="stagepill">17</div><div class="actname">Luke Morgan &amp; The Redliners</div></div>
+        <div class="act"><div class="stagepill">2</div><div class="actname">Russ Gordon &amp; The Rattletrap</div></div>
+        <div class="act"><div class="stagepill">1</div><div class="actname">Tim McGee</div></div>
+        <div class="act"><div class="stagepill">21</div><div class="actname">Whiskey River Saints</div></div>
+        <div class="act"><div class="stagepill">22</div><div class="actname">Wholly Smokes</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">5:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">13</div><div class="actname">Brian Rivers Band</div></div>
+        <div class="act"><div class="stagepill">4</div><div class="actname">Highway 54</div></div>
+        <div class="act"><div class="stagepill">3</div><div class="actname">Joel Bridges</div></div>
+        <div class="act"><div class="stagepill">23</div><div class="actname">Lucas Smith</div></div>
+        <div class="act"><div class="stagepill">14</div><div class="actname">Luke Brown &amp; The Jubilee</div></div>
+        <div class="act"><div class="stagepill">24</div><div class="actname">Rob Harlan</div></div>
+        <div class="act"><div class="stagepill">25</div><div class="actname">Wildcat</div></div>
+        <div class="act"><div class="stagepill">28</div><div class="actname">Wyatt Band</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">6:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">26</div><div class="actname">Brian Collins</div></div>
+        <div class="act"><div class="stagepill">6</div><div class="actname">Cowboy Noyz</div></div>
+        <div class="act"><div class="stagepill">20</div><div class="actname">Greg &ldquo;Rogan&rdquo; Rogers</div></div>
+        <div class="act"><div class="stagepill">23</div><div class="actname">Jake and The Naysayers</div></div>
+        <div class="act"><div class="stagepill">9</div><div class="actname">Sarah &amp; Morgan Hendrix</div></div>
+        <div class="act"><div class="stagepill">18</div><div class="actname">Souls Hill</div></div>
+        <div class="act"><div class="stagepill">21</div><div class="actname">Tyler Caldwell</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">7:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">1</div><div class="actname">Ashton Dooley Band</div></div>
+        <div class="act"><div class="stagepill">7</div><div class="actname">Atticus Roness</div></div>
+        <div class="act"><div class="stagepill">26</div><div class="actname">Duncan Brothers Band</div></div>
+        <div class="act"><div class="stagepill">2</div><div class="actname">Gradient</div></div>
+        <div class="act"><div class="stagepill">10</div><div class="actname">Grateful To Be</div></div>
+        <div class="act"><div class="stagepill">19</div><div class="actname">Joey Thurmond &amp; The Select Orchestra</div></div>
+        <div class="act"><div class="stagepill">29</div><div class="actname">Rock Soldered Blues</div></div>
+        <div class="act"><div class="stagepill">12</div><div class="actname">Tavis Lance Mapp</div></div>
+      </div>
+    </div>
+
+    <div class="block finale">
+      <div class="finale-eyebrow">Closing Act</div>
+      <div class="finale-name">Chuck X Nick</div>
+      <div class="finale-stage">Main Stage</div>
+      <div class="finale-where">Bottom of Main Street</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

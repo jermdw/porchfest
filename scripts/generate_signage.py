@@ -10,11 +10,19 @@ Two deliberate house styles, because these are two different objects:
   it is a *print* value, and matching the signs already on the ground beats
   matching the screen palette.
 * **Banner** is sponsor recognition on vinyl, so it follows the brand guide
-  proper (`docs/brand-guide.html`) and the printed sign towers: navy `#101D3A`
-  ground, cream type, flag-red rules, and the true-vector 2026 wordmark.
+  proper (`docs/brand-guide.html`): navy `#101D3A` ground, cream type, flag-red
+  rules.
 
 Flag red `#B02A30` carries the section rules on both — the one brand token that
 is legible on white and navy alike.
+
+NOTE — this banner and the sign towers no longer match. `scripts/signtower/`
+was moved onto the 2026 ad-banner inks (pure red `#C00000`, pure white) at the
+DDA's request; this file still uses the brand tokens (`#B02A30`, cream
+`#F5F1E6`). Both hang at the same event on the same navy, so side by side the
+difference is visible. That may well be fine — the yard signs above already
+diverge from the brand palette on purpose — but it is a live inconsistency, not
+a settled decision, and it needs an answer from the DDA before print.
 
 Fonts are derived from the repo's own `@fontsource/oswald` webfont at run time,
 so nothing here can drift out of sync with the site.
@@ -334,56 +342,60 @@ def sign_vip_management(doc):
 
 
 def sign_food_truck_alley(doc, logo):
+    """Sponsor-led: SPONSORED BY / [Peachtree] / rule / FOOD TRUCK ALLEY.
+
+    Inverted from the usual name-first order at the DDA's request — the logo is
+    the hero here and the place name labels it. That costs resolution: the
+    Peachtree source is only 511x174 (nothing larger exists publicly, see the
+    sourcing notes in session memory), so `min_dpi` is what governs how big it
+    can honestly go. At 30 it places ~17in wide — 3x the area of the previous
+    9.8in, and soft only if you walk right up to it.
+    """
     page = new_yard(doc)
-    g1, rule_th, g2, g3 = 56, 13, 46, 34
-    size, lines = best_layout('FOOD TRUCK ALLEY', BAND[2] - BAND[0], 520, 330, 2)
-    th = block_height(size, lines)
+    g1, g2, rule_th, g3 = 54, 62, 13, 48
 
     sb_size = 80
     sb_h = sb_size * CAP
 
     prepped, pw, ph = prep_logo(logo, cache_key='_peachtree')
-    lw, lh = fit_logo(pw, ph, 1200, 340, min_dpi=52)
+    lw, lh = fit_logo(pw, ph, BAND[2] - BAND[0], 560, min_dpi=30)
 
-    top = _band_top(th + g1 + rule_th + g2 + sb_h + g3 + lh)
-    draw_lines(page, lines, size, top, ROYAL, YARD_W / 2)
-    y = top + th + g1
-    draw_rule(page, YARD_W / 2, y, 720, FLAG, rule_th)
-    y += rule_th + g2
-    draw_tracked(page, 'SPONSORED BY', sb_size, YARD_W / 2, y, ROYAL)
-    y += sb_h + g3
+    # Headline is subordinate to the logo now, so it is measured against the
+    # logo's width rather than the full band and held to one line. Letting it
+    # run the full band width would set it *wider* than the logo it labels,
+    # which puts the hierarchy back the way it was.
+    size, lines = best_layout('FOOD TRUCK ALLEY', lw, 420, 200, 1)
+    th = block_height(size, lines)
+
+    top = _band_top(sb_h + g1 + lh + g2 + rule_th + g3 + th)
+    draw_tracked(page, 'SPONSORED BY', sb_size, YARD_W / 2, top, ROYAL)
+    y = top + sb_h + g1
     page.insert_image(
         pymupdf.Rect(YARD_W / 2 - lw / 2, y, YARD_W / 2 + lw / 2, y + lh),
         filename=prepped)
+    y += lh + g2
+    draw_rule(page, YARD_W / 2, y, 720, FLAG, rule_th)
+    y += rule_th + g3
+    draw_lines(page, lines, size, y, ROYAL, YARD_W / 2)
     place_dove(page, YARD_W, YARD_H)
 
 
-def sign_vip_parking_arrows(doc):
-    """Double-headed parking directional: an arrow at each edge, type between.
+def sign_vip_parking(doc):
+    """Type-only parking sign: VIP / PARKING / ONLY, as large as the sign allows.
 
-    The type stacks VIP / PARKING / ONLY on three lines rather than two. The
-    arrows eat the width, so a two-line break is width-limited to ~148pt;
-    breaking on the longest single word instead lets the same space carry
-    ~224pt, which is what makes this readable from a moving car.
+    This carried a block arrow at each edge until the arrows were dropped —
+    they were pointing both ways at once, which told a driver nothing the sign
+    was actually placed to say. Losing them hands back the ~570pt of width they
+    ate, so the same three-line stack now sets at ~355pt instead of ~224.
+
+    `glue=False` is what allows the three-line break: with it on, VIP would be
+    glued to PARKING and the block would be width-limited by the longer line.
     """
     page = new_yard(doc)
-    aw, ah = 230, 330
-    margin, gap = 48, 55
-
-    x0 = BAND[0] + margin + aw + gap
-    x1 = BAND[2] - margin - aw - gap
-    size, lines = best_layout('VIP PARKING ONLY', x1 - x0, BAND[3] - BAND[1],
-                              320, 3, glue=False)
+    size, lines = best_layout('VIP PARKING ONLY', BAND[2] - BAND[0],
+                              BAND[3] - BAND[1], 420, 3, glue=False)
     th = block_height(size, lines)
-
-    top = _band_top(max(th, ah))
-    cy = top + max(th, ah) / 2
-    draw_lines(page, lines, size, cy - th / 2, ROYAL, (x0 + x1) / 2)
-
-    draw_block_arrow(page, (BAND[0] + margin, cy - ah / 2,
-                            BAND[0] + margin + aw, cy + ah / 2), 'left', FLAG)
-    draw_block_arrow(page, (BAND[2] - margin - aw, cy - ah / 2,
-                            BAND[2] - margin, cy + ah / 2), 'right', FLAG)
+    draw_lines(page, lines, size, _band_top(th), ROYAL, YARD_W / 2)
     place_dove(page, YARD_W, YARD_H)
 
 
@@ -419,8 +431,15 @@ def sign_employees_vip(doc):
 
 
 # ----------------------------------------------------------------- banner ---
-def build_banner(path, wordmark_svg, bmw_logo):
-    """96 x 18in vinyl: [wordmark] | VIP LUXURY LOUNGE | PRESENTED BY [BMW]."""
+def build_banner(path):
+    """96 x 18in vinyl: VIP LUXURY LOUNGE PRESENTED BY, over the BMW mark.
+
+    One line of type, then the sponsor's mark filling everything beneath it.
+    The 2026 wordmark that used to open this banner came out at the DDA's
+    request — the banner hangs on the VIP lounge itself, so the festival
+    identity is already all around it — and the hero/plaque split that replaced
+    it went too: at 96in it read as two competing signs rather than one.
+    """
     doc = pymupdf.open()
     page = doc.new_page(width=BANNER_W, height=BANNER_H)
     page.insert_font(fontname='OswB', fontfile=BOLD_TTF)
@@ -436,58 +455,56 @@ def build_banner(path, wordmark_svg, bmw_logo):
     right = BANNER_W - BANNER_SAFE
     mid = BANNER_H / 2
 
-    # --- left: true-vector wordmark ---
-    wm = pymupdf.open(wordmark_svg)
-    wm_pdf = pymupdf.open('pdf', wm.convert_to_pdf())
-    wr = wm_pdf[0].rect
-    wm_h = 470
-    wm_w = wm_h * (wr.width / wr.height)
-    page.show_pdf_page(
-        pymupdf.Rect(left, mid - wm_h / 2, left + wm_w, mid + wm_h / 2),
-        wm_pdf, 0)
-    x = left + wm_w + 110
+    # One stacked composition, not a hero on the left and a sponsor plaque on
+    # the right. The split read as two competing signs at 96in; this is a
+    # sponsor-recognition banner, so the line introduces the mark and then gets
+    # out of its way.
+    #
+    # The roundel is true vector (assets/bmw-roundel.pdf, the flat modern mark
+    # matching the dealer's own artwork) and the dealer name is live Oswald.
+    # That split is what let this get big at all: the dealer's 400x168 web asset
+    # bakes mark and name into one raster whose *lettering* sets the resolution
+    # ceiling, and it was placing at 17dpi and looking it.
+    roundel = pymupdf.open(os.path.join(ASSETS, 'bmw-roundel.pdf'))
+    rd = roundel[0].rect
 
-    # --- right: sponsor plaque, laid out from the right edge inward ---
-    prepped, pw, ph = prep_logo(bmw_logo, bg=CREAM_RGB, cache_key='_bmw')
-    # Sized up on request, which costs resolution: this is only a 400px web
-    # asset, so it now lands at ~22dpi effective (was 30). Fine for vinyl read
-    # from 15ft+, but the dealer's approved logo pack would place far cleaner.
-    lw, lh = fit_logo(pw, ph, 1400, 540, min_dpi=22)
-    pad = 46
-    plaque_w, plaque_h = lw + 2 * pad, lh + 2 * pad
-    plaque_x0 = right - plaque_w
-    eyebrow_size = 88
-    eyebrow_gap = 40
-    group_h = eyebrow_size * CAP + eyebrow_gap + plaque_h
-    g_top = mid - group_h / 2
+    # --- the line, across the top ---
+    lead = 'VIP LUXURY LOUNGE PRESENTED BY'
+    lead_size = min(225, (right - left) / bold.text_length(lead, fontsize=1))
+    lead_cap = lead_size * CAP
+    lw_ = bold.text_length(lead, fontsize=lead_size)
+    # +10pt because insert_text places the BASELINE: rounds overshoot the cap
+    # line, so sitting the cap exactly on the safe margin puts ink outside it.
+    page.insert_text(((BANNER_W - lw_) / 2, BANNER_SAFE + 10 + lead_cap), lead,
+                     fontname='OswB', fontsize=lead_size, color=CREAM)
 
-    draw_tracked(page, 'PRESENTED BY', eyebrow_size,
-                 plaque_x0 + plaque_w / 2, g_top, PALE)
+    # --- the mark, filling everything under it ---
+    # Roundel and dealer name sit on ONE line so the lockup runs wide: this
+    # banner is 96in across and 18in tall, so height is the scarce dimension and
+    # anything stacked wastes the abundant one. Sized to whichever of the two
+    # runs out first -- the height left under the line, or the width available.
+    top = BANNER_SAFE + 10 + lead_cap + 62
+    avail_h = (BANNER_H - BANNER_SAFE) - top
+    avail_w = right - left
 
-    p_top = g_top + eyebrow_size * CAP + eyebrow_gap
-    shape = page.new_shape()
-    shape.draw_rect(pymupdf.Rect(plaque_x0, p_top,
-                                 plaque_x0 + plaque_w, p_top + plaque_h))
-    shape.finish(fill=CREAM, color=None)
-    shape.commit()
-    page.insert_image(
-        pymupdf.Rect(plaque_x0 + pad, p_top + pad,
-                     plaque_x0 + pad + lw, p_top + pad + lh),
-        filename=prepped)
+    name = 'BMW of South Atlanta'
+    gap_ratio = 0.10          # gap between mark and name, as a fraction of mark height
+    name_ratio = 0.46         # name cap height, as a fraction of mark height
+    # Width of the whole group when the roundel is 1pt tall, so it can be solved
+    # for directly rather than guessed at.
+    unit_w = (rd.width / rd.height) + gap_ratio \
+        + bold.text_length(name, fontsize=1) * name_ratio / CAP
+    mark_h = min(avail_h, avail_w / unit_w)
+    mark_w = mark_h * (rd.width / rd.height)
+    name_size = mark_h * name_ratio / CAP
+    group_w = mark_h * unit_w
 
-    # --- flag-red rules bracketing the hero ---
-    rule_h = 560
-    for rx in (x, plaque_x0 - 110):
-        shape = page.new_shape()
-        shape.draw_rect(pymupdf.Rect(rx, mid - rule_h / 2, rx + 7, mid + rule_h / 2))
-        shape.finish(fill=FLAG, color=None)
-        shape.commit()
-
-    # --- center: hero ---
-    hero_x0, hero_x1 = x + 110, plaque_x0 - 220
-    size, lines = best_layout('VIP LUXURY LOUNGE', hero_x1 - hero_x0, 620, 460, 2)
-    h = block_height(size, lines)
-    draw_lines(page, lines, size, mid - h / 2, CREAM, (hero_x0 + hero_x1) / 2)
+    gx = (BANNER_W - group_w) / 2
+    gy = top + (avail_h - mark_h) / 2
+    page.show_pdf_page(pymupdf.Rect(gx, gy, gx + mark_w, gy + mark_h), roundel, 0)
+    page.insert_text((gx + mark_w + mark_h * gap_ratio,
+                      gy + mark_h / 2 + name_size * CAP / 2),
+                     name, fontname='OswB', fontsize=name_size, color=CREAM)
 
     doc.save(path, deflate=True)
     doc.close()
@@ -532,7 +549,6 @@ def main():
     ap.add_argument('--outdir',
                     default=os.path.expanduser('~/Downloads/PorchFest_VIP_Signage'))
     ap.add_argument('--peachtree', default=os.path.join(ASSETS, 'logo-peachtree.png'))
-    ap.add_argument('--bmw', default=os.path.join(ASSETS, 'logo-bmw.png'))
     args = ap.parse_args()
     os.makedirs(args.outdir, exist_ok=True)
 
@@ -548,12 +564,11 @@ def main():
 
     emit('01 VIP Management Only', sign_vip_management)
     emit('02 Food Truck Alley', lambda d: sign_food_truck_alley(d, args.peachtree))
-    emit('03 VIP Parking Only', sign_vip_parking_arrows)
+    emit('03 VIP Parking Only', sign_vip_parking)
     emit('04 Employees Only + VIP Parking', sign_employees_vip)
 
     banner = os.path.join(args.outdir, '05 VIP Luxury Lounge Banner 96x18.pdf')
-    build_banner(banner, os.path.join(REPO, 'src/assets/porchfest-wordmark.svg'),
-                 args.bmw)
+    build_banner(banner)
     made.append(banner)
 
     proof_sheet(made, os.path.join(args.outdir, '_proof.png'))

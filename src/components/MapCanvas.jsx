@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom'
 import Panzoom from '@panzoom/panzoom'
 import CategoryIcon from './CategoryIcon.jsx'
 import PinPeekCard from './PinPeekCard.jsx'
-import { toPercent, isWithinMap, ATTRIBUTION } from '../lib/venueGeo.js'
+import { toPercent, isWithinMap, ATTRIBUTION, ATTRIBUTION_HREF } from '../lib/venueGeo.js'
 import { isPoiActiveInSlot } from '../lib/showTime.js'
 
 const BASE_MAP = '/venue-base-2026-web.webp'
@@ -325,7 +325,9 @@ export default function MapCanvas({
         <span>
           {placed.length} of {pois.length} locations pinned — the rest are listed under Find Your Way.
         </span>
-        <span>{ATTRIBUTION}</span>
+        <a href={ATTRIBUTION_HREF} target="_blank" rel="noreferrer" className="hover:underline">
+          {ATTRIBUTION}
+        </a>
       </figcaption>
     </figure>
   )

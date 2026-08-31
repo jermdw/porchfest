@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PorchFest Sign Tower — Side 3: Sponsors</title>
+<style>
+@font-face{font-family:'League Gothic';font-weight:400;font-style:normal;src:url('fonts/league-gothic-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:500;font-style:normal;src:url('fonts/oswald-latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:600;font-style:normal;src:url('fonts/oswald-latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:700;font-style:normal;src:url('fonts/oswald-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Yellowtail';font-weight:400;font-style:normal;src:url('fonts/yellowtail-latin-400-normal.woff2') format('woff2');}
+@page { size: 48in 96in; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --ink:#101d3a; --flag:#c00000; --flag-deep:#a80000; --flag-bright:#c00000;
+  --pale:#cdd3e8; --paper:#ffffff;
+}
+html,body{ width:48in; height:96in; background:var(--ink); }
+.banner{
+  position:relative; width:48in; height:96in; overflow:hidden;
+  background:var(--ink); color:var(--paper);
+  font-family:'Oswald',"Arial Narrow",sans-serif;
+  display:flex; flex-direction:column;
+}
+.topband{ flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:0.4in; padding:1.85in 4in 0; text-align:center; }
+.lockup{ --lockup-cap:7.8in; }
+.title{ font-weight:700; font-size:2.9in; letter-spacing:0.02em; margin-top:0.35in; }
+.rule{ width:16in; height:0.07in; background:var(--flag-bright); margin-top:0.22in; }
+
+.main{ flex:1 1 auto; display:flex; flex-direction:column; align-items:center; gap:0.62in; padding:1.0in 4in 0; }
+
+.tier-label{ font-weight:600; font-size:1.1in; letter-spacing:0.14em; color:var(--flag-bright); text-transform:uppercase; }
+.card-row{ display:flex; flex-wrap:wrap; justify-content:center; align-items:stretch; gap:0.7in; width:100%; }
+.card{
+  background:var(--paper); border-radius:0.4in; display:flex; align-items:center; justify-content:center;
+  padding:0.55in 0.75in;
+}
+.card.dark{ background:var(--ink); border:0.05in solid var(--pale); }
+/* Letterbox: the card is the fixed shape, the logo fits inside it whatever its
+   aspect. Cards used to size only by width and let height follow the logo,
+   which broke the tier ladder in both directions -- silver's wide, short
+   lockups (Renewal by Andersen, Guiding Light) came out SHORTER than the
+   square-ish porch logos below them, and gold's square logos came out TALLER
+   than the wide title-tier ones above. A sponsor's tier has to be legible from
+   card size alone, so both dimensions are now declared and both decrease
+   monotonically down the wall. */
+/* width/height 100% + contain, NOT max-width/auto: with auto dimensions the img
+   falls back to its intrinsic pixel size, and these are 400px web assets, so
+   every logo collapsed to a stamp in the middle of its card. */
+.card img{ display:block; width:100%; height:100%; object-fit:contain; }
+
+/* Widths are capped by how many cards share a row inside the 40in column
+   (48in panel less 2x4in padding); heights are then free, and are what carry
+   the tier hierarchy. Row budgets, gap included:
+     title  2 x 14.5 + 0.7   = 29.7   gold   4 x 9.4 + 3x0.7  = 39.7
+     silver 5 x  7.5 + 4x0.55 = 39.7  porch  5 x 6.8 + 4x0.5  = 36.0
+   Go wider than these and a row wraps one card onto a line of its own. */
+.presenting .card{ width:22in;   height:9.6in; }
+.vip .card{         width:17.5in; height:8.0in; }
+.title-tier .card{  width:14.5in; height:6.8in; }
+.gold .card{        width:9.4in;  height:5.4in; }
+/* Silver went from 4 across to 5 when Trulieve joined, so its cards shed width
+   (5 x 7.5 + 4x0.55 = 39.7in) and porch shed a little with them, to keep silver
+   visibly the larger tier rather than a rounding error above it. */
+.silver .card{      width:7.5in;  height:4.4in; }
+.silver .card-row{ gap:0.55in; }
+.porch .card, .kids .card{ width:6.8in; height:3.6in; padding:0.22in 0.4in; }
+.porch .card-row, .kids .card-row{ gap:0.5in; }
+
+/* A sponsor who needs a line of text under the mark (a reseller's name, a pair
+   of locations). The logo still letterboxes into what is left after the caption
+   takes its slice, so a captioned card stays the same outside size as its
+   uncaptioned neighbours and the tier ladder is unaffected. */
+.card.captioned{ flex-direction:column; gap:0.1in; padding:0.24in 0.35in 0.26in; }
+.card.captioned img{ flex:1 1 auto; min-height:0; }
+/* One line, always: these porch cards are only 3.6in tall, and a caption that
+   wraps to two steals the height the logo needs. Sized to the longest caption
+   on the wall ("Located at Kathleen, GA & Gray, GA"), not to the shortest. */
+.card .cap{ font-weight:600; font-size:0.42in; line-height:1.1; color:var(--ink);
+  text-align:center; white-space:nowrap; flex:0 0 auto; }
+.gold .card.textonly{ color:var(--ink); font-weight:700; font-size:1.7in; line-height:1.15; text-align:center; letter-spacing:0.01em; }
+.porch .card.textonly, .kids .card.textonly{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:0.12in; color:var(--ink);
+  font-weight:600; font-size:0.95in; text-align:center; letter-spacing:0.02em;
+}
+
+.section-group{ width:100%; text-align:center; margin-top:0.15in; }
+.section-group .tier-label{ margin-bottom:0.3in; }
+
+
+.presented{ font-weight:500; font-size:1.4in; letter-spacing:0.05em; color:var(--pale); text-transform:uppercase; text-align:center; margin-top:0.4in; }
+.closing-rule{ width:16in; height:0.07in; background:var(--flag-bright); margin:0.4in auto 0.5in; }
+
+/* --- 2026 lockup ------------------------------------------------------- */
+/* Replaces the arched "PorchFest 2026" wordmark. Set in League Gothic, which
+   is what the 2026 ad banners use: matched letterform-for-letterform against
+   them, and 5% off on SENOIA'S at equal cap height. (Their PORCHFEST is that
+   same face squashed to ~71% to survive a 90px-tall ad slot -- not reproduced
+   here, because a 48in panel has all the width it needs and squashed type
+   reads as a mistake at this size.) */
+.lockup{ font-family:'League Gothic','Oswald',"Arial Narrow",sans-serif;
+  text-transform:uppercase; text-align:center; line-height:0.88;
+  color:var(--paper); display:block; }
+.lockup .lk-top{ font-size:calc(var(--lockup-cap) * 0.40); letter-spacing:0.005em;
+  display:block; white-space:nowrap; }
+.lockup .lk-yr{ color:var(--flag-bright); }
+.lockup .lk-yr sup{ font-size:0.62em; vertical-align:baseline;
+  position:relative; top:-0.42em; }
+.lockup .lk-main{ font-size:var(--lockup-cap); letter-spacing:0.004em;
+  display:block; white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="banner" data-side="3-sponsors">
+  <div class="topband">
+<div class="lockup">
+      <span class="lk-top">Senoia&rsquo;s <span class="lk-yr">5<sup>th</sup> Annual</span></span>
+      <span class="lk-main">PorchFest</span>
+    </div>
+    <div class="title">OUR SPONSORS</div>
+    <div class="rule"></div>
+  </div>
+
+  <div class="main">
+    <div class="presenting">
+      <div class="tier-label">Presenting Sponsor</div>
+      <div class="card-row">
+        <div class="card"><img src="../../src/assets/sponsor-peachtree-omfs.webp" alt="Peachtree Oral &amp; Facial Surgery" /></div>
+      </div>
+    </div>
+
+    <div class="vip">
+      <div class="tier-label">Presenting Sponsor of the VIP Luxury Lounge</div>
+      <div class="card-row">
+        <div class="card"><img src="assets/bmw-transparent.png" alt="BMW of South Atlanta" /></div>
+      </div>
+    </div>
+
+    <div class="title-tier">
+      <div class="tier-label">Title Sponsors</div>
+      <div class="card-row">
+        <div class="card"><img src="../../src/assets/sponsor-progressive-heating-air.webp" alt="Progressive Heating &amp; Air" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-trunorth-pest.webp" alt="TruNorth Pest Control" /></div>
+      </div>
+    </div>
+
+    <div class="gold">
+      <div class="tier-label">Gold Sponsors</div>
+      <div class="card-row">
+        <div class="card"><img src="../../src/assets/sponsor-anytime-fitness.webp" alt="Anytime Fitness" /></div>
+        <div class="card dark"><img src="../../src/assets/sponsor-inspired-wealth-planning.webp" alt="Inspired Wealth Planning" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-turin-pest.webp" alt="Turin Pest Control" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-roof-king-exteriors.webp" alt="Roof King + Exteriors" /></div>
+      </div>
+    </div>
+
+    <div class="silver">
+      <div class="tier-label">Silver Sponsors</div>
+      <div class="card-row">
+        <div class="card"><img src="../../src/assets/sponsor-renewal-by-andersen.webp" alt="Renewal by Andersen" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-bragassa-orthodontics.webp" alt="Bragassa Orthodontics" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-kimberly-peacock.webp" alt="Kimberly Peacock" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-guiding-light-hospice.webp" alt="Guiding Light Hospice" /></div>
+        <div class="card"><img src="assets/logo-trulieve.png" alt="Trulieve" /></div>
+      </div>
+    </div>
+
+    <div class="section-group porch">
+      <div class="tier-label">Porch Sponsors</div>
+      <div class="card-row">
+        <div class="card"><img src="../../src/assets/sponsor-senoia-farmers-market.webp" alt="Senoia Farmers&rsquo; Market" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-andreone-chiropractic.webp" alt="Andreone Sports &amp; Family Chiropractic" /></div>
+        <div class="card dark"><img src="../../src/assets/sponsor-borgo-italia.webp" alt="Borgo Italia" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-a-abby-group.webp" alt="A Abby Group" /></div>
+        <div class="card dark"><img src="../../src/assets/sponsor-senoia-bicycle.webp" alt="Senoia Bicycle" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-senoia-family-dentistry.webp" alt="Senoia Family Dentistry" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-bella-medical-aesthetics.webp" alt="Bella Medical Aesthetics" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-4-rivers-antiques.webp" alt="4 Rivers Antiques" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-knife-and-stone.webp" alt="Knife &amp; Stone" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-mahaffey-linkous-orthodontics.webp" alt="Mahaffey Linkous Orthodontics" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-pollard-waste.webp" alt="Pollard Residential Waste Services" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-senoia-coffee.webp" alt="Senoia Coffee" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-vaulted-vintage.webp" alt="Vaulted Vintage" /></div>
+        <div class="card captioned"><img src="../../src/assets/sponsor-miss-dotties.webp" alt="Miss Dottie&rsquo;s" /><span class="cap">Located at Kathleen, GA &amp; Gray, GA</span></div>
+        <div class="card textonly"><span>DoTerra</span><span class="cap">Cathy Geis</span></div>
+        <div class="card"><img src="../../src/assets/sponsor-crust-and-craft.webp" alt="Crust &amp; Craft" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-nic-and-normans.webp" alt="Nic &amp; Norman&rsquo;s" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-maguires-irish-pub.webp" alt="Maguire&rsquo;s Irish Pub" /></div>
+        <div class="card dark"><img src="../../src/assets/sponsor-filmores-garage.webp" alt="Filmore&rsquo;s Garage" /></div>
+        <div class="card"><img src="assets/senor_taco_logo.png" alt="Senor Taco" /></div>
+      </div>
+    </div>
+
+    <div class="section-group kids">
+      <div class="tier-label">Kid&rsquo;s Corner Sponsors</div>
+      <div class="card-row">
+        <div class="card"><img src="../../src/assets/sponsor-bragassa-orthodontics.webp" alt="Bragassa Orthodontics" /></div>
+        <div class="card"><img src="../../src/assets/sponsor-coweta-charter-academy.webp" alt="Coweta Charter Academy" /></div>
+      </div>
+    </div>
+    <div class="closing-rule"></div>
+  </div>
+</div>
+</body>
+</html>

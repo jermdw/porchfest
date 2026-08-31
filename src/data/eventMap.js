@@ -160,19 +160,19 @@ export const POIS = [
     id: 'merch-tent',
     category: 'merch',
     name: 'Merch Tent & Sponsors',
-    where: 'Pylant Street at Gin Street',
+    where: 'Pylant Street at Travis Street',
     blurb: 'Official PorchFest merchandise — and come meet our sponsors.',
-    lat: 33.3002934, // node: Pylant & Gin
-    lon: -84.5565306,
+    lat: 33.3005299, // node: Pylant & Travis
+    lon: -84.556418,
     confirmed: true,
   },
   {
     id: 'first-aid',
     category: 'aid',
     name: 'First Aid',
-    where: 'Pylant Street at Gin Street, by the merch tent',
+    where: 'Pylant Street at Gin Street',
     blurb: null,
-    lat: 33.3002934, // node: Pylant & Gin (fans out beside the merch pin)
+    lat: 33.3002934, // node: Pylant & Gin (fans out beside the kids-area pin)
     lon: -84.5565306,
     confirmed: true,
   },
@@ -190,10 +190,10 @@ export const POIS = [
     id: 'kids-area',
     category: 'kids',
     name: "Kid's Area",
-    where: 'Pylant Street at Travis Street',
+    where: 'Pylant Street at Gin Street',
     blurb: null,
-    lat: 33.3005299, // node: Pylant & Travis
-    lon: -84.556418,
+    lat: 33.3002934, // node: Pylant & Gin
+    lon: -84.5565306,
     confirmed: true,
   },
   {

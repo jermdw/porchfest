@@ -116,7 +116,9 @@ or use Edit in `/admin`. To add a named pre-registered volunteer: fill columns
   rendered. Each act links to its map pin (`/map?poi=porch-<stage>`; the VIP
   porch at 40 Travis links to `?poi=vip`).
 - **Day-of map** (`/map`): base image is stitched OpenStreetMap tiles at a
-  fixed bounding box (no Mapbox token; the page must show `© OpenStreetMap`);
+  fixed bounding box (no Mapbox token; the page must show
+  `© OpenStreetMap contributors`, and the printed sign-tower map must also name
+  the ODbL — a PDF cannot lean on a licence link the way a web page can);
   `src/lib/venueGeo.js` converts lat/lon to a position on it exactly. Porch
   pins are DERIVED from `schedule.js` (one numbered pin per address, listing
   its sets + genres) in `src/data/eventMap.js`; amenity POIs live there too.
