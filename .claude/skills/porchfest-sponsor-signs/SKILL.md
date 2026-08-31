@@ -110,9 +110,16 @@ Write `spec.json` next to a `logos/` folder holding the prepped files:
   {"name": "Sponsor One", "logo": "logos/sponsor-one.png"},
   {"name": "Sponsor Two", "logo": null},
   {"name": "Sponsor Three", "logo": "logos/sponsor-three-classic.png",
-   "out_name": "Sponsor Three (classic logo)"}
+   "out_name": "Sponsor Three (classic logo)"},
+  {"name": "doTERRA", "logo": "logos/doterra.png", "subtitle": "Cathy Geis"}
 ]
 ```
+
+Use `subtitle` for the second line a sponsor's name needs and the header cannot
+carry -- a reseller's own name under the brand they sell, or the towns a shop
+trades in. It sets at 46% of the name and works on both layouts. Do not put
+"Sponsored by" in `name`: the sign header already reads "This Stage Sponsored
+by:", so it would print the phrase twice.
 
 Use `out_name` when you're handing the user two variants of one sponsor to
 choose between (as happened for Senoia Area Historical Society -- two logos, two

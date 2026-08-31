@@ -117,7 +117,24 @@ def prep_logo(path):
     return out, flat.width, flat.height
 
 
-def make_sign(name, logo_path, outdir, out_name=None):
+SUB_RATIO = 0.46          # subtitle size, as a fraction of the name's size
+SUB_GAP = 0.28            # gap above the subtitle, as a fraction of that size
+
+
+def draw_subtitle(page, text, size, y_top):
+    """One centered line under the sponsor name, in the same ink at ~46%.
+
+    For the second line a sponsor's name sometimes needs and the header cannot
+    carry: a reseller's own name, or the towns a shop trades in. Deliberately
+    not the same weight relationship as the header -- it reads as part of the
+    name block, not as another label.
+    """
+    w = font.text_length(text, fontsize=size)
+    page.insert_text(((W - w) / 2, y_top + size * font.ascender), text,
+                     fontname='OswB', fontsize=size, color=NAVY)
+
+
+def make_sign(name, logo_path, outdir, out_name=None, subtitle=None):
     """Render one sign PDF. Returns (filename, logo_size), where logo_size is
     (placed_w_in, placed_h_in, src_w_px, src_h_px) for a logo sign, or None for
     a name-only sign -- the caller already knows this at creation time, so
@@ -136,22 +153,39 @@ def make_sign(name, logo_path, outdir, out_name=None):
         prepped, lw_px, lh_px = prep_logo(logo_path)
         size, lines = best_layout(name, 0, 225, NAME_MAX_SIZE, 2)
         name_h = block_height(size, lines)
+        sub_size = size * SUB_RATIO if subtitle else 0
+        sub_h = (sub_size * SUB_GAP + sub_size * (font.ascender - font.descender)
+                 if subtitle else 0)
         # Logo takes every point the name leaves behind, capped by the printable
         # width and by native resolution (60dpi effective floor, so low-res marks
         # never get blown up to mush).
-        avail_h = (BAND_BOTTOM - BAND_TOP) - LOGO_NAME_GAP - name_h
+        avail_h = (BAND_BOTTOM - BAND_TOP) - LOGO_NAME_GAP - name_h - sub_h
         scale = min(1428 / lw_px, avail_h / lh_px, (lh_px / 60 * 72) / lh_px)
         w, h = lw_px * scale, lh_px * scale
         logo_size = (w / 72, h / 72, lw_px, lh_px)
         # Logo + name travel as one group, centered in the band, so short/wide
         # logos don't leave a dead gap above their name.
-        group_h = h + LOGO_NAME_GAP + name_h
+        group_h = h + LOGO_NAME_GAP + name_h + sub_h
         top = BAND_TOP + (BAND_BOTTOM - BAND_TOP - group_h) / 2
         page.insert_image(pymupdf.Rect(W/2 - w/2, top, W/2 + w/2, top + h),
                           filename=prepped)
         draw_lines_at(page, size, lines, top + h + LOGO_NAME_GAP)
+        if subtitle:
+            draw_subtitle(page, subtitle, sub_size,
+                          top + h + LOGO_NAME_GAP + name_h + sub_size * SUB_GAP)
     else:
-        draw_name(page, name, BAND_TOP, BAND_BOTTOM, 340, max_lines=3)
+        # Name-only signs reserve the subtitle's slice before centring, so the
+        # pair sits centred in the band as one block rather than the name
+        # centring alone and the subtitle hanging below it.
+        size, lines = best_layout(name, BAND_TOP, BAND_BOTTOM, 340, max_lines=3)
+        name_h = block_height(size, lines)
+        sub_size = size * SUB_RATIO if subtitle else 0
+        sub_h = (sub_size * SUB_GAP + sub_size * (font.ascender - font.descender)
+                 if subtitle else 0)
+        top = BAND_TOP + (BAND_BOTTOM - BAND_TOP - name_h - sub_h) / 2
+        draw_lines_at(page, size, lines, top)
+        if subtitle:
+            draw_subtitle(page, subtitle, sub_size, top + name_h + sub_size * SUB_GAP)
 
     # dove: small, bottom-right, below the name band, mirrored to face into the sign
     bh = 90
