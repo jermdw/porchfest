@@ -10,11 +10,19 @@ Two deliberate house styles, because these are two different objects:
   it is a *print* value, and matching the signs already on the ground beats
   matching the screen palette.
 * **Banner** is sponsor recognition on vinyl, so it follows the brand guide
-  proper (`docs/brand-guide.html`) and the printed sign towers: navy `#101D3A`
-  ground, cream type, flag-red rules.
+  proper (`docs/brand-guide.html`): navy `#101D3A` ground, cream type, flag-red
+  rules.
 
 Flag red `#B02A30` carries the section rules on both — the one brand token that
 is legible on white and navy alike.
+
+NOTE — this banner and the sign towers no longer match. `scripts/signtower/`
+was moved onto the 2026 ad-banner inks (pure red `#C00000`, pure white) at the
+DDA's request; this file still uses the brand tokens (`#B02A30`, cream
+`#F5F1E6`). Both hang at the same event on the same navy, so side by side the
+difference is visible. That may well be fine — the yard signs above already
+diverge from the brand palette on purpose — but it is a live inconsistency, not
+a settled decision, and it needs an answer from the DDA before print.
 
 Fonts are derived from the repo's own `@fontsource/oswald` webfont at run time,
 so nothing here can drift out of sync with the site.
