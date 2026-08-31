@@ -67,7 +67,7 @@ def best_layout(name, zone_top, zone_bottom, max_size, max_lines=3):
     for n in range(1, min(max_lines, len(words)) + 1):
         for part in partitions(words, n):
             lines = [' '.join(p) for p in part]
-            maxw1 = max(font.text_length(l, fontsize=1) for l in lines)
+            maxw1 = max(font.text_length(line, fontsize=1) for line in lines)
             size = min(max_size, MAX_W / maxw1, (zone_bottom - zone_top) / (LEAD * n))
             if best is None or size > best[0] + 0.5 or (abs(size - best[0]) <= 0.5 and maxw1 < best[2]):
                 best = (size, lines, maxw1)
@@ -81,9 +81,9 @@ def block_height(size, lines):
 def draw_lines_at(page, size, lines, y_top):
     """Draw centered lines with the block's top edge at y_top."""
     y = y_top + size * font.ascender
-    for l in lines:
-        lw = font.text_length(l, fontsize=size)
-        page.insert_text(((W - lw) / 2, y), l, fontname='OswB', fontsize=size, color=NAVY)
+    for line in lines:
+        lw = font.text_length(line, fontsize=size)
+        page.insert_text(((W - lw) / 2, y), line, fontname='OswB', fontsize=size, color=NAVY)
         y += size * LEAD
 
 
@@ -118,6 +118,11 @@ def prep_logo(path):
 
 
 def make_sign(name, logo_path, outdir, out_name=None):
+    """Render one sign PDF. Returns (filename, logo_size), where logo_size is
+    (placed_w_in, placed_h_in, src_w_px, src_h_px) for a logo sign, or None for
+    a name-only sign -- the caller already knows this at creation time, so
+    there's no need to re-open the saved PDF and guess which embedded image is
+    the sponsor logo vs. the dove."""
     doc = pymupdf.open()
     page = doc.new_page(width=W, height=H)
     page.insert_font(fontname='OswB', fontfile=FONTFILE)
@@ -126,6 +131,7 @@ def make_sign(name, logo_path, outdir, out_name=None):
     page.insert_text(((W - hw) / 2, 48 + HEADER_SIZE * font.ascender),
                      HEADER, fontname='OswB', fontsize=HEADER_SIZE, color=NAVY)
 
+    logo_size = None
     if logo_path:
         prepped, lw_px, lh_px = prep_logo(logo_path)
         size, lines = best_layout(name, 0, 225, NAME_MAX_SIZE, 2)
@@ -136,6 +142,7 @@ def make_sign(name, logo_path, outdir, out_name=None):
         avail_h = (BAND_BOTTOM - BAND_TOP) - LOGO_NAME_GAP - name_h
         scale = min(1428 / lw_px, avail_h / lh_px, (lh_px / 60 * 72) / lh_px)
         w, h = lw_px * scale, lh_px * scale
+        logo_size = (w / 72, h / 72, lw_px, lh_px)
         # Logo + name travel as one group, centered in the band, so short/wide
         # logos don't leave a dead gap above their name.
         group_h = h + LOGO_NAME_GAP + name_h
@@ -154,7 +161,7 @@ def make_sign(name, logo_path, outdir, out_name=None):
                       filename=_bird_flip_path())
     fname = (out_name or name).replace('/', '-') + '.pdf'
     doc.save(os.path.join(outdir, fname), deflate=True)
-    return fname
+    return fname, logo_size
 
 
 def contact_sheet(outdir, png_out, files=None):
@@ -171,12 +178,21 @@ def contact_sheet(outdir, png_out, files=None):
 
 
 def placed_logo_size(pdf_path):
-    """Return (w_in, h_in, src_w_px, src_h_px) for the sponsor logo in a rendered
-    sign, or None for a name-only sign. Used to sanity-check sizes before delivery."""
+    """Best-effort (w_in, h_in, src_w_px, src_h_px) for the sponsor logo in an
+    already-saved sign PDF, or None for a name-only sign. Prefer the logo_size
+    make_sign() already returns when you have it -- this exists only for
+    inspecting a PDF you didn't just generate. A name-only page has exactly one
+    embedded image (the dove); a logo page has two, and the dove is identified
+    by matching the *current* dove asset's own pixel size rather than a
+    hardcoded constant, so this stays correct if the asset is ever replaced."""
     d = pymupdf.open(pdf_path)
     p = d[0]
-    for im in p.get_images(full=True):
-        if im[2] == 1020:  # the dove, skip
+    images = p.get_images(full=True)
+    if len(images) < 2:
+        return None
+    dove_w, dove_h = Image.open(os.path.join(ASSETS, 'dove.png')).size
+    for im in images:
+        if (im[2], im[3]) == (dove_w, dove_h):
             continue
         for r in p.get_image_rects(im[0]):
             return (r.width/72, r.height/72, im[2], im[3])

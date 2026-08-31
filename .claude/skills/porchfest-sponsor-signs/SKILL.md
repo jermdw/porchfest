@@ -128,8 +128,9 @@ Run it:
 This prints each sponsor's placed logo size in inches -- READ those numbers.
 Anything under ~3in is going to look like an afterthought on a 24x18in sign;
 go back to sourcing (step 2) for a bigger source rather than shipping it small.
-It also writes `<outdir>/proof.png` (a contact sheet, one page per sponsor) and
-`<outdir>.zip` (delivery-ready, PDFs only).
+It also writes `<outdir>/proof.png` (a single contact-sheet PNG, three signs per
+row -- check all sponsors in that one image) and `<outdir>.zip` (delivery-ready,
+PDFs only).
 
 ### 5. Verify visually before delivering
 
