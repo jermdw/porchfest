@@ -457,12 +457,12 @@ def build_banner(path, bmw_logo):
 
     # --- right: sponsor plaque, laid out from the right edge inward ---
     prepped, pw, ph = prep_logo(bmw_logo, bg=CREAM_RGB, cache_key='_bmw')
-    # Sized up twice now, and each pass costs resolution: this is only a 400px
-    # web asset, so it lands at 19dpi effective (was 22, originally 30). That
-    # holds up on vinyl read from 15ft+, which is how this banner is seen, but
-    # the dealer's approved logo pack would place far cleaner — worth one more
-    # ask before print.
-    lw, lh = fit_logo(pw, ph, 1700, 700, min_dpi=19)
+    # Sized up three times now, and every pass costs resolution: this is only a
+    # 400px web asset, so it lands at 17dpi effective (was 19, then 22,
+    # originally 30). Still legible on vinyl read from 15ft+, which is how this
+    # banner is seen, but this is about as far as the web asset stretches —
+    # the dealer's approved logo pack is worth chasing before it goes to print.
+    lw, lh = fit_logo(pw, ph, 2100, 800, min_dpi=17)
     pad = 58
     plaque_w, plaque_h = lw + 2 * pad, lh + 2 * pad
     plaque_x0 = right - plaque_w
@@ -499,8 +499,14 @@ def build_banner(path, bmw_logo):
     # --- center: hero ---
     # With the wordmark gone there is width for one unbroken line, which is the
     # right call at 96in: a two-line stack halves the cap height for no gain.
+    # Capped at 430 rather than filling the width it has: this is a sponsor
+    # recognition banner, and the hero was competing with the mark it exists to
+    # present rather than introducing it. max_lines=1 is load-bearing — once the
+    # cap binds, a two-line break scores the same size and wins the tie-break on
+    # tightness, which is wrong here: this is a 96x18in banner, and stacking the
+    # hero wastes the one dimension it has.
     hero_x0, hero_x1 = left, plaque_x0 - 250
-    size, lines = best_layout('VIP LUXURY LOUNGE', hero_x1 - hero_x0, 900, 600, 2)
+    size, lines = best_layout('VIP LUXURY LOUNGE', hero_x1 - hero_x0, 900, 430, 1)
     h = block_height(size, lines)
     draw_lines(page, lines, size, mid - h / 2, CREAM, (hero_x0 + hero_x1) / 2)
 

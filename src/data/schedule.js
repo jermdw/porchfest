@@ -22,8 +22,7 @@ export const PERFORMANCES = [
   // ---- 3:00 PM ----
   { act: 'Amir Salam', genre: 'Country', stage: 2, address: '1 Main Street', venue: 'Senoia Beer Company', start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'Brain Fog', genre: "70s, 80s, 90s, 00's Covers", stage: 12, address: '180 Seavy Street', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
-  { act: 'Candler Hobbs', genre: 'Classic Rock', stage: 5, address: '60 Main Street', venue: 'Olivia James', start: '15:00', time: '3:00 PM', confirmed: true },
-  { act: "Flint River Rev'lers", genre: 'Americana', stage: 27, address: '31 Morgan Street', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
+  { act: 'Candler Hobbs', genre: 'Classic Rock', stage: 27, address: '31 Morgan Street', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'GRASS', genre: "60's and 70's Rock", stage: 16, address: '89 Lower Creek Trail', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'James & The Georgia Peaches', genre: 'Pop, Rock, Country and Soul', stage: 19, address: '252 Seavy Street', venue: 'Veranda Inn', start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'Mary Martin', genre: 'Indie, Folk, Americana', stage: 7, address: '22 Main Street', venue: 'Pearl & Pine Brewery', start: '15:00', time: '3:00 PM', confirmed: true },

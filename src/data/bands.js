@@ -55,13 +55,6 @@ export const BANDS = [
     links: {},
   },
   {
-    act: "Flint River Rev'lers",
-    composition: 'Americana & roots ensemble (Guitars, bass, percussion & harmonies)',
-    bio: 'A Coweta County favorite serving up foot-stomping Americana, folk gems, and acoustic roots favorites with tight harmonies and porch-ready energy.',
-    photo: null,
-    links: {},
-  },
-  {
     act: 'GRASS',
     composition: '4-piece rock outfit (Vocals, lead guitar, bass, drums)',
     bio: 'Channeling the golden era of Woodstock and psychedelic classic rock, GRASS brings beloved 60s and 70s rock classics to life.',
