@@ -11,10 +11,15 @@ the PorchFest dove mirrored into the bottom-right corner. White background.
 
 Everything the generator needs is bundled in this skill directory:
 - `scripts/gen_sponsor_signs.py` -- the layout engine (import this, don't copy it).
-- `scripts/gen_area_sign.py` -- the 24x36in portrait AREA sign: names a festival
-  area (Kid's Area, Cooling Tent) and stacks the sponsors backing it, one per
-  row. Different object from a stage sign, same ink, type and dove so the two
-  read as one family. `python gen_area_sign.py SPEC.json OUTDIR`.
+- `scripts/gen_area_sign.py` -- the AREA sign: names a festival area (Kid's
+  Area, Cooling Tent) and shows the sponsors backing it. Different object from a
+  stage sign, same ink, type and dove so the two read as one family.
+  `python gen_area_sign.py SPEC.json OUTDIR`. Landscape (36x24in) is the default
+  and puts sponsors in a ROW, which is what makes their logos big -- two
+  sponsors get ~15in of width each. `"orientation": "portrait"` (24x36in) stacks
+  them instead, for when a row would squeeze them thinner than a stack would.
+  It refuses to build a sign whose sponsors would not fit rather than emitting
+  one with logos scaled to nothing.
 - `scripts/build_signs.py` -- CLI driver. Give it a JSON spec + an output dir; it
   writes the PDFs, a contact-sheet proof, and a delivery zip.
 - `assets/Oswald-Bold.ttf`, `assets/dove.png` -- fonts and mascot art, already

@@ -32,6 +32,7 @@ import turinLogo from '../assets/sponsor-turin-pest.webp'
 import roofKingLogo from '../assets/sponsor-roof-king-exteriors.webp'
 import rbaLogo from '../assets/sponsor-renewal-by-andersen.webp'
 import kimPeacockLogo from '../assets/sponsor-kimberly-peacock.webp'
+import trulieveLogo from '../assets/sponsor-trulieve.webp'
 import farmersMarketLogo from '../assets/sponsor-senoia-farmers-market.webp'
 import senoiaDentistryLogo from '../assets/sponsor-senoia-family-dentistry.webp'
 import bellaMedicalLogo from '../assets/sponsor-bella-medical-aesthetics.webp'
@@ -48,6 +49,7 @@ import senoiaBicycleLogo from '../assets/sponsor-senoia-bicycle.webp'
 import bragassaLogo from '../assets/sponsor-bragassa-orthodontics.webp'
 import guidingLightLogo from '../assets/sponsor-guiding-light-hospice.webp'
 import missDottiesLogo from '../assets/sponsor-miss-dotties.webp'
+import senorTacoLogo from '../assets/sponsor-senor-taco.webp'
 import cowetaCharterLogo from '../assets/sponsor-coweta-charter-academy.webp'
 import filmoresGarageLogo from '../assets/sponsor-filmores-garage.webp'
 import crustCraftLogo from '../assets/sponsor-crust-and-craft.webp'
@@ -265,6 +267,13 @@ export const SPONSORS_2026 = [
         h: 137,
         url: 'https://www.renewalbyandersen.com/locations/atlanta-ga',
       },
+      {
+        name: 'Trulieve',
+        logo: trulieveLogo,
+        w: 400,
+        h: 130,
+        url: 'https://www.trulieve.com/',
+      },
       // Bragassa hold BOTH tiers; this was never an upgrade. They took the
       // Kid's Corner and Silver sponsorships separately, and the DDA confirmed
       // both (2026-08-22), so they appear twice — once under each tier. An
@@ -457,11 +466,19 @@ export const SPONSORS_2026 = [
         w: 383,
         h: 384,
       },
+      // Logo from their enjoysenoia partner page (545x525); the copy in
+      // ~/Downloads is 222px and too small to place anywhere but the web.
+      {
+        name: 'Señor Taco',
+        logo: senorTacoLogo,
+        w: 400,
+        h: 385,
+      },
       // The sponsor is an independent doTERRA distributor, not doTERRA the
       // corporation — no website or logo of their own, so this stays name-only
       // rather than linking or bearing the corporate wordmark, which would
       // misattribute a global brand to a local seller.
-      { name: 'DoTerra' },
+      { name: 'DoTerra', note: 'Cathy Geis' },
       // Three Senoia restaurants added straight from the organizers, not from
       // a Ticket Tailor row — same gap-in-the-record situation as the six
       // porch-sign sponsors above.
