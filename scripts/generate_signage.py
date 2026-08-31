@@ -432,13 +432,13 @@ def sign_employees_vip(doc):
 
 # ----------------------------------------------------------------- banner ---
 def build_banner(path):
-    """96 x 18in vinyl: VIP LUXURY LOUNGE | PRESENTED BY / [BMW].
+    """96 x 18in vinyl: VIP LUXURY LOUNGE PRESENTED BY, over the BMW mark.
 
-    The 2026 wordmark used to open the banner on the left. It came out at the
-    DDA's request: the banner hangs on the VIP lounge itself, so the festival
-    identity is already all around it, and the ~1400pt it occupied buys a
-    single-line hero and a much bigger sponsor lockup — which is what a
-    presenting sponsor is paying for.
+    One line of type, then the sponsor's mark filling everything beneath it.
+    The 2026 wordmark that used to open this banner came out at the DDA's
+    request — the banner hangs on the VIP lounge itself, so the festival
+    identity is already all around it — and the hero/plaque split that replaced
+    it went too: at 96in it read as two competing signs rather than one.
     """
     doc = pymupdf.open()
     page = doc.new_page(width=BANNER_W, height=BANNER_H)
@@ -455,85 +455,56 @@ def build_banner(path):
     right = BANNER_W - BANNER_SAFE
     mid = BANNER_H / 2
 
-    # --- right: sponsor plaque, laid out from the right edge inward ---
-    # Built the way the DDA's own VIP flyer builds it: the roundel is the mark,
-    # and "BMW of South Atlanta" is set as type beside it rather than being part
-    # of the picture. That split is what finally let this get big. The dealer's
-    # 400x168 web asset bakes mark and name into one raster whose *lettering*
-    # sets the resolution ceiling — it was placing at 17dpi and looking it.
-    # The roundel alone is true vector (assets/bmw-roundel.pdf, the flat modern
-    # mark matching the dealer's own artwork), so it is sharp at any size, and
-    # the name is now live Oswald rather than 17dpi pixels.
+    # One stacked composition, not a hero on the left and a sponsor plaque on
+    # the right. The split read as two competing signs at 96in; this is a
+    # sponsor-recognition banner, so the line introduces the mark and then gets
+    # out of its way.
+    #
+    # The roundel is true vector (assets/bmw-roundel.pdf, the flat modern mark
+    # matching the dealer's own artwork) and the dealer name is live Oswald.
+    # That split is what let this get big at all: the dealer's 400x168 web asset
+    # bakes mark and name into one raster whose *lettering* sets the resolution
+    # ceiling, and it was placing at 17dpi and looking it.
     roundel = pymupdf.open(os.path.join(ASSETS, 'bmw-roundel.pdf'))
     rd = roundel[0].rect
 
-    pad = 62
-    rh = 720                                   # roundel height inside the plaque
-    rw = rh * (rd.width / rd.height)
-    name_gap = 58
-    bmw_size = 330
-    dealer_size = 145
-    bmw_w = bold.text_length('BMW', fontsize=bmw_size)
-    dealer_w = med.text_length('of South Atlanta', fontsize=dealer_size)
-    text_w = max(bmw_w, dealer_w)
-    inner_w = rw + name_gap + text_w
+    # --- the line, across the top ---
+    lead = 'VIP LUXURY LOUNGE PRESENTED BY'
+    lead_size = min(225, (right - left) / bold.text_length(lead, fontsize=1))
+    lead_cap = lead_size * CAP
+    lw_ = bold.text_length(lead, fontsize=lead_size)
+    # +10pt because insert_text places the BASELINE: rounds overshoot the cap
+    # line, so sitting the cap exactly on the safe margin puts ink outside it.
+    page.insert_text(((BANNER_W - lw_) / 2, BANNER_SAFE + 10 + lead_cap), lead,
+                     fontname='OswB', fontsize=lead_size, color=CREAM)
 
-    plaque_w, plaque_h = inner_w + 2 * pad, rh + 2 * pad
-    plaque_x0 = right - plaque_w
-    eyebrow_size = 132
-    eyebrow_gap = 48
-    group_h = eyebrow_size * CAP + eyebrow_gap + plaque_h
-    g_top = mid - group_h / 2
+    # --- the mark, filling everything under it ---
+    # Roundel and dealer name sit on ONE line so the lockup runs wide: this
+    # banner is 96in across and 18in tall, so height is the scarce dimension and
+    # anything stacked wastes the abundant one. Sized to whichever of the two
+    # runs out first -- the height left under the line, or the width available.
+    top = BANNER_SAFE + 10 + lead_cap + 62
+    avail_h = (BANNER_H - BANNER_SAFE) - top
+    avail_w = right - left
 
-    draw_tracked(page, 'PRESENTED BY', eyebrow_size,
-                 plaque_x0 + plaque_w / 2, g_top, PALE)
+    name = 'BMW of South Atlanta'
+    gap_ratio = 0.10          # gap between mark and name, as a fraction of mark height
+    name_ratio = 0.46         # name cap height, as a fraction of mark height
+    # Width of the whole group when the roundel is 1pt tall, so it can be solved
+    # for directly rather than guessed at.
+    unit_w = (rd.width / rd.height) + gap_ratio \
+        + bold.text_length(name, fontsize=1) * name_ratio / CAP
+    mark_h = min(avail_h, avail_w / unit_w)
+    mark_w = mark_h * (rd.width / rd.height)
+    name_size = mark_h * name_ratio / CAP
+    group_w = mark_h * unit_w
 
-    p_top = g_top + eyebrow_size * CAP + eyebrow_gap
-    shape = page.new_shape()
-    shape.draw_rect(pymupdf.Rect(plaque_x0, p_top,
-                                 plaque_x0 + plaque_w, p_top + plaque_h))
-    shape.finish(fill=CREAM, color=None)
-    shape.commit()
-
-    page.show_pdf_page(
-        pymupdf.Rect(plaque_x0 + pad, p_top + pad,
-                     plaque_x0 + pad + rw, p_top + pad + rh),
-        roundel, 0)
-
-    # Name block, optically centred on the roundel rather than on the box.
-    tx = plaque_x0 + pad + rw + name_gap
-    block_h = bmw_size * CAP + 22 + dealer_size * CAP
-    ty = p_top + pad + (rh - block_h) / 2
-    page.insert_text((tx, ty + bmw_size * CAP), 'BMW',
-                     fontname='OswB', fontsize=bmw_size, color=INK)
-    page.insert_text((tx, ty + bmw_size * CAP + 22 + dealer_size * CAP),
-                     'of South Atlanta', fontname='OswM', fontsize=dealer_size,
-                     color=INK)
-
-    # --- flag-red rule dividing hero from sponsor ---
-    # There used to be a matching rule on the far left, bracketing the hero
-    # against the wordmark. With the wordmark gone it brackets nothing and just
-    # reads as a stray mark near the hem, so only the divider remains.
-    rule_h = 760
-    rx = plaque_x0 - 130
-    shape = page.new_shape()
-    shape.draw_rect(pymupdf.Rect(rx, mid - rule_h / 2, rx + 9, mid + rule_h / 2))
-    shape.finish(fill=FLAG, color=None)
-    shape.commit()
-
-    # --- center: hero ---
-    # With the wordmark gone there is width for one unbroken line, which is the
-    # right call at 96in: a two-line stack halves the cap height for no gain.
-    # Capped at 430 rather than filling the width it has: this is a sponsor
-    # recognition banner, and the hero was competing with the mark it exists to
-    # present rather than introducing it. max_lines=1 is load-bearing — once the
-    # cap binds, a two-line break scores the same size and wins the tie-break on
-    # tightness, which is wrong here: this is a 96x18in banner, and stacking the
-    # hero wastes the one dimension it has.
-    hero_x0, hero_x1 = left, plaque_x0 - 250
-    size, lines = best_layout('VIP LUXURY LOUNGE', hero_x1 - hero_x0, 900, 380, 1)
-    h = block_height(size, lines)
-    draw_lines(page, lines, size, mid - h / 2, CREAM, (hero_x0 + hero_x1) / 2)
+    gx = (BANNER_W - group_w) / 2
+    gy = top + (avail_h - mark_h) / 2
+    page.show_pdf_page(pymupdf.Rect(gx, gy, gx + mark_w, gy + mark_h), roundel, 0)
+    page.insert_text((gx + mark_w + mark_h * gap_ratio,
+                      gy + mark_h / 2 + name_size * CAP / 2),
+                     name, fontname='OswB', fontsize=name_size, color=CREAM)
 
     doc.save(path, deflate=True)
     doc.close()
