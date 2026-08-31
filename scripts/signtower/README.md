@@ -51,6 +51,16 @@ here that lays them out the way the browser preview did.
 - `assets/guitar-bird-final.png` (2040 × 4752) is the **only high-resolution copy
   of the flag-guitar-with-dove illustration that exists anywhere.** Do not
   regenerate it from a smaller source.
+- **The pale gray squares behind some map pins are not an artifact.** They are
+  OpenStreetMap parking lots — `#eeeeee` fill, dashed gray outline — baked into
+  `assets/venue-base-crop-z19.png`, and the solid tan shapes are buildings. They
+  sit behind amenity pins because the beverage stations, restrooms and kids area
+  really are in those lots. Checked in 2026-08: present in the PNG proof and the
+  PDF alike, rendered identically by poppler and mupdf, and unaffected by
+  washing the base image toward white. Removing them means re-stitching the base
+  from a fill-free tile style (Positron, Toner Lite) — and `BBOX` in
+  `src/lib/venueGeo.js` must be regenerated in the same pass or every pin moves,
+  on the live `/map` as well as here. Left as-is deliberately.
 - **The lockup is live type in League Gothic** (`fonts/`, SIL OFL), sized by one
   `--lockup-cap` per panel. That is the face the 2026 ad banners use — matched
   letterform-for-letterform, within 5% on SENOIA'S at equal cap height. Note
