@@ -26,3 +26,16 @@ export function pushPageView(title) {
     page_location: window.location.origin + window.location.pathname,
   })
 }
+
+// Fires once a shift signup succeeds, for GTM's "Custom Event -
+// volunteer_signup" trigger (GA4 key event). Shift metadata only — never the
+// volunteer's name/email/phone, which must not reach Google Analytics.
+export function pushVolunteerSignup(shift) {
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push({
+    event: 'volunteer_signup',
+    shift_role: shift.role,
+    shift_day: shift.day,
+    shift_category: shift.category,
+  })
+}
