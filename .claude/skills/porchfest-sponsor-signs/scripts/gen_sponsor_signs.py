@@ -129,6 +129,20 @@ SUB_RATIO = 0.46          # subtitle size, as a fraction of the name's size
 SUB_GAP = 0.28            # gap above the subtitle, as a fraction of that size
 
 
+def subtitle_size(text, size):
+    """Shrink `size` until `text` fits the printable width.
+
+    A subtitle is free text -- a reseller's name, a list of towns -- so nothing
+    stops it being longer than the sign is wide. Centring an over-wide line puts
+    its left edge at a negative x and the PDF clips BOTH ends, which reads as a
+    mangled sign rather than an obvious error. Scaling down instead keeps the
+    whole line on the sign; if that leaves it too small to read, that is visible
+    in the proof, which is the point of the proof.
+    """
+    w = font.text_length(text, fontsize=size)
+    return size * MAX_W / w if w > MAX_W else size
+
+
 def draw_subtitle(page, text, size, y_top, color=None):
     """One centered line under the sponsor name, in the same ink at ~46%.
 
@@ -137,6 +151,7 @@ def draw_subtitle(page, text, size, y_top, color=None):
     not the same weight relationship as the header -- it reads as part of the
     name block, not as another label.
     """
+    size = subtitle_size(text, size)
     w = font.text_length(text, fontsize=size)
     page.insert_text(((W - w) / 2, y_top + size * font.ascender), text,
                      fontname='OswB', fontsize=size, color=color or NAVY)
@@ -165,7 +180,7 @@ def make_sign(name, logo_path, outdir, out_name=None, subtitle=None, ink=None):
         prepped, lw_px, lh_px = prep_logo(logo_path)
         size, lines = best_layout(name, 0, 225, NAME_MAX_SIZE, 2)
         name_h = block_height(size, lines)
-        sub_size = size * SUB_RATIO if subtitle else 0
+        sub_size = subtitle_size(subtitle, size * SUB_RATIO) if subtitle else 0
         sub_h = (sub_size * SUB_GAP + sub_size * (font.ascender - font.descender)
                  if subtitle else 0)
         # Logo takes every point the name leaves behind, capped by the printable
@@ -192,7 +207,7 @@ def make_sign(name, logo_path, outdir, out_name=None, subtitle=None, ink=None):
         # centring alone and the subtitle hanging below it.
         size, lines = best_layout(name, BAND_TOP, BAND_BOTTOM, 340, max_lines=3)
         name_h = block_height(size, lines)
-        sub_size = size * SUB_RATIO if subtitle else 0
+        sub_size = subtitle_size(subtitle, size * SUB_RATIO) if subtitle else 0
         sub_h = (sub_size * SUB_GAP + sub_size * (font.ascender - font.descender)
                  if subtitle else 0)
         top = BAND_TOP + (BAND_BOTTOM - BAND_TOP - name_h - sub_h) / 2

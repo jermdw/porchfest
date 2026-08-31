@@ -28,18 +28,34 @@ HERE = Path(__file__).parent
 
 # What each face actually has to draw across the four panels. Kept as literal
 # text rather than a range so the failure message names the missing character.
+#
+# The punctuation here is not decoration. The lockup sets Senoia&rsquo;s, so it
+# needs U+2019 and NOT the ASCII apostrophe; side 4 sets Greg &ldquo;Rogan&rdquo;
+# Rogers, so Oswald needs U+201C/U+201D. Checking the ASCII lookalike instead
+# passes while Chrome quietly falls back for the character actually rendered --
+# the exact failure this script exists to catch.
+#
+# To re-derive after editing a panel: strip <style> and tags, html.unescape the
+# rest, and collect every character above U+007F plus the curly quotes.
+_OSWALD = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+           " &.,:;!?'\"-()/" "—’“”©·")
+
 REQUIRED = {
-    'league-gothic-latin-400-normal.woff2':
-        "SENOIA'S5THANNUALPORCHFEST ",
-    'oswald-latin-700-normal.woff2':
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 &.,:'-—’",
-    'oswald-latin-600-normal.woff2':
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 &.,:'-—’",
-    'oswald-latin-500-normal.woff2':
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 &.,:'-—’",
+    'league-gothic-latin-400-normal.woff2': "SENOIA’S5THANNUALPORCHFEST ",
+    'oswald-latin-700-normal.woff2': _OSWALD,
+    'oswald-latin-600-normal.woff2': _OSWALD,
+    'oswald-latin-500-normal.woff2': _OSWALD,
     'yellowtail-latin-400-normal.woff2':
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .",
 }
+
+# Side 2's amenity pins are drawn with these dingbats, and Oswald has none of
+# them -- they resolve through a system font on the rendering machine. That is
+# a real dependency on the box doing the rendering, not something this script
+# can require, so it is reported rather than enforced. If a pin ever prints as
+# a blank or a tofu box, this is why: the fix is to swap that pin to an inline
+# SVG, the way the beverage-station pin already works.
+SYSTEM_FALLBACK = "★♪✚❄❖☀"
 
 fail = False
 for name, required in REQUIRED.items():
@@ -56,5 +72,13 @@ for name, required in REQUIRED.items():
         fail = True
     else:
         print(f'ok            {name} ({len(cmap)} glyphs)')
+
+osw = HERE / 'fonts' / 'oswald-latin-700-normal.woff2'
+if osw.exists():
+    cmap = TTFont(osw).getBestCmap()
+    missing = ''.join(c for c in SYSTEM_FALLBACK if ord(c) not in cmap)
+    if missing:
+        print(f'note          map pin glyphs {missing!r} are not in Oswald and '
+              f'resolve via a system font on the rendering machine')
 
 sys.exit(1 if fail else 0)

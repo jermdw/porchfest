@@ -19,10 +19,20 @@ both.
 So: measure.sh proves nothing overflows the *document*, this proves nothing is
 clipped at the *trim*, and only the pair is a real check.
 
-A 0.00 reading is not automatically a fault -- side 4's hour bands are
-full-bleed white by design, and side 1 (alt) bleeds the guitar off the top on
-purpose. Read it as "ink reaches this edge", then decide whether that edge is
-meant to bleed.
+What it measures, precisely: the distance from each trim edge to the nearest
+pixel that differs from the panel's GROUND colour, which is sampled from the
+corner. On these panels the ground is the full-bleed navy, and that navy is
+meant to run off the trim -- so it is the thing being measured against, not a
+finding. The number to read is "how far in does the content start".
+
+Two consequences of that choice, both deliberate:
+  * A 0.00 is not automatically a fault. Side 4's hour bands are full-bleed
+    white by design, side 1 (alt) bleeds the guitar off the top, and the footer
+    rule spans the full width. Read 0.00 as "something reaches this edge", then
+    decide whether that something is meant to.
+  * An element painted in the ground colour itself would not register. Nothing
+    on these panels is, and a navy-on-navy element would be invisible anyway,
+    but it is the blind spot of a ground-relative measurement.
 """
 import sys
 from pathlib import Path
@@ -51,20 +61,24 @@ for f in pdfs:
     pm = page.get_pixmap(matrix=pymupdf.Matrix(0.25, 0.25))
     W, H = pm.width, pm.height
     inches_per_px = (page.rect.width / 72) / W
-    bg = pm.pixel(2, 2)
-    ink = lambda x, y: sum(abs(a - b) for a, b in zip(pm.pixel(x, y), bg)) > 45
+    ground = pm.pixel(2, 2)
 
-    cols = [x for x in range(W) if any(ink(x, y) for y in range(H))]
-    rows = [y for y in range(H) if any(ink(x, y) for x in range(W))]
+    def differs(x, y, _pm=pm, _ground=ground):
+        px = _pm.pixel(x, y)
+        return sum(abs(a - b) for a, b in zip(px, _ground, strict=True)) > 45
+
+    cols = [x for x in range(W) if any(differs(x, y) for y in range(H))]
+    rows = [y for y in range(H) if any(differs(x, y) for x in range(W))]
     if not cols:
-        print(f'{f.name[:33]:<34}  (no ink found)')
+        print(f'{f.name[:33]:<34}  (nothing differs from the ground colour)')
         continue
-    l, r = min(cols) * inches_per_px, (W - 1 - max(cols)) * inches_per_px
-    t, b = min(rows) * inches_per_px, (H - 1 - max(rows)) * inches_per_px
+    left, right = min(cols) * inches_per_px, (W - 1 - max(cols)) * inches_per_px
+    top, bottom = min(rows) * inches_per_px, (H - 1 - max(rows)) * inches_per_px
+    closest = min(left, right, top, bottom)
     note = ''
-    if safe is not None and min(l, r, t, b) < safe:
-        note = f'   <-- ink within {safe:g}in of trim'
-        worst = min(worst, min(l, r, t, b)) if worst is not None else min(l, r, t, b)
-    print(f'{f.name[:33]:<34}{l:7.2f}{r:7.2f}{t:7.2f}{b:8.2f}{note}')
+    if safe is not None and closest < safe:
+        note = f'   <-- content within {safe:g}in of trim'
+        worst = closest if worst is None else min(worst, closest)
+    print(f'{f.name[:33]:<34}{left:7.2f}{right:7.2f}{top:7.2f}{bottom:8.2f}{note}')
 
 sys.exit(0)
