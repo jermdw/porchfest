@@ -39,7 +39,7 @@ import gen_sponsor_signs as g
 SIZES = {'landscape': (36 * 72, 24 * 72), 'portrait': (24 * 72, 36 * 72)}
 
 TITLE_MAX = 320
-EYEBROW_SIZE = 84
+EYEBROW_SIZE = 140
 RULE_TH = 14
 MARGIN = 130                     # side margin; matches the stage signs' band
 TOP = 150
