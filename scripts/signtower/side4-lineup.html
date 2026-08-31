@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PorchFest Sign Tower — Side 4: Lineup</title>
+<style>
+@font-face{font-family:'Oswald';font-weight:500;font-style:normal;src:url('fonts/oswald-latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:600;font-style:normal;src:url('fonts/oswald-latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Oswald';font-weight:700;font-style:normal;src:url('fonts/oswald-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Yellowtail';font-weight:400;font-style:normal;src:url('fonts/yellowtail-latin-400-normal.woff2') format('woff2');}
+@page { size: 48in 96in; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --ink:#101d3a; --flag:#b02a30; --flag-deep:#8c1f24; --flag-bright:#e35a55;
+  --pale:#cdd3e8; --cream:#f5f1e6;
+}
+html,body{ width:48in; height:96in; background:var(--ink); }
+.banner{
+  position:relative; width:48in; height:96in; overflow:hidden;
+  background:var(--ink); color:var(--cream);
+  font-family:'Oswald',"Arial Narrow",sans-serif;
+  display:flex; flex-direction:column;
+}
+.topband{ flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:0.4in; padding:1.7in 4in 0; text-align:center; }
+.mini-wordmark{ width:9.2in; height:auto; display:block; }
+.title{ font-weight:700; font-size:2.9in; letter-spacing:0.02em; margin-top:0.35in; }
+.subtitle{ font-weight:500; font-size:1.5in; color:var(--pale); letter-spacing:0.04em; }
+.rule{ width:16in; height:0.07in; background:var(--flag-bright); margin-top:0.25in; }
+
+.main{ flex:1 1 auto; display:flex; flex-direction:column; align-items:stretch; gap:0.42in; padding:1.05in 4.5in 0; }
+
+.block{ display:flex; flex-direction:column; gap:0.3in; padding:0.26in 0.9in; border-radius:0.4in; }
+.block-head{
+  display:flex; align-items:baseline; gap:0.6in; border-bottom:0.06in solid var(--flag); padding-bottom:0.18in;
+}
+.block-time{ font-weight:700; font-size:2.1in; color:var(--flag-bright); letter-spacing:0.02em; }
+.grid2{ display:grid; grid-template-columns:1fr 1fr; column-gap:1.5in; row-gap:0.26in; }
+/* An hour with a single act shouldn't wrap inside a half-width column
+   while the other half sits empty (2:00 PM VIP kickoff). */
+.grid2:has(> .act:only-child){ grid-template-columns:1fr; }
+.act{ display:flex; align-items:baseline; gap:0.32in; font-weight:500; font-size:1.22in; line-height:1.28; }
+.act .stagepill{
+  flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center;
+  width:1.5in; height:1.5in; border-radius:50%; background:var(--flag); color:var(--cream);
+  font-weight:700; font-size:0.9in;
+}
+.act .stagepill.none{ background:transparent; }
+.act .actname{ overflow-wrap:anywhere; }
+.act .subnote{ color:var(--pale); font-weight:500; }
+
+/* Finale — deliberately unlike the hourly blocks: no left-aligned head rule,
+   everything centred, name set as the largest type on the sign. Cream is set
+   explicitly here rather than inherited from the nth-child checker, so adding
+   or removing an hour block can never flip the finale to navy. */
+.block.finale{
+  background:var(--cream); color:var(--ink);
+  margin:0.4in -4.5in 0; padding:0.85in 3in 0.95in;
+  border-radius:0; align-items:center; text-align:center; gap:0;
+}
+.finale-eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:1.1in; width:100%;
+  font-weight:600; font-size:1.05in; letter-spacing:0.24em; text-transform:uppercase;
+  color:var(--flag-deep);
+}
+.finale-eyebrow::before, .finale-eyebrow::after{
+  content:""; flex:1 1 0; max-width:7in; height:0.07in; background:var(--flag-deep); opacity:0.5;
+}
+.finale-name{
+  font-weight:700; font-size:4.0in; line-height:1.02; letter-spacing:0.005em;
+  color:var(--ink); margin:0.45in 0 0.32in;
+}
+.finale-stage{
+  font-weight:600; font-size:1.3in; letter-spacing:0.13em; text-transform:uppercase; color:var(--flag);
+}
+.finale-where{
+  font-weight:500; font-size:0.95in; letter-spacing:0.05em; color:#5b5142; margin-top:0.2in;
+}
+
+/* Checkering: 1st, 3rd, 5th, 7th time blocks get a full-bleed cream band for readability.
+   The finale is excluded: it lands on an odd index today, and since `.block.finale` and
+   `.block:nth-child(odd)` have identical specificity, this later rule would otherwise win
+   and silently override the finale's own margin/padding. */
+.block:nth-child(odd):not(.finale){
+  background:var(--cream); color:var(--ink);
+  margin:0 -4.5in; padding:0.26in 5.4in;
+  border-radius:0;   /* full-bleed bands must meet the banner edge square */
+}
+.block:nth-child(odd):not(.finale) .block-time{ color:var(--flag-deep); border-bottom-color:var(--flag-deep); }
+.block:nth-child(odd):not(.finale) .block-head{ border-bottom-color:var(--flag-deep); }
+.block:nth-child(odd):not(.finale) .act .subnote{ color:#5b5142; }
+
+</style>
+</head>
+<body>
+<div class="banner" data-side="4-lineup">
+  <div class="topband">
+    <svg class="mini-wordmark" viewBox="-285.3 -141.0 570.6 264.0" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#F5F1E6">
+        <path transform="translate(-192.72,63.95) rotate(-36.715) scale(0.140000,-0.140000) translate(-232.5,0)" d="M69 -17Q65 96 65.0 254.5Q65 413 75 678Q159 709 247.5 709.0Q336 709 405.5 643.5Q475 578 475.0 478.5Q475 379 399.5 306.5Q324 234 202 200Q202 88 205 -30ZM249 592Q240 592 208 587Q203 446 202 314Q265 334 301.5 377.0Q338 420 338.0 473.0Q338 526 310.5 559.0Q283 592 249 592Z"/>
+        <path transform="translate(-141.83,32.88) rotate(-26.102) scale(0.140000,-0.140000) translate(-184.0,0)" d="M141 180Q141 67 191 67Q213 67 228.0 130.5Q243 194 243 252Q243 380 201 380Q174 380 157.5 311.5Q141 243 141 180ZM24 189Q24 282 62 371Q82 416 118.5 444.5Q155 473 200.0 473.0Q245 473 277.5 452.5Q310 432 327 398Q360 331 360 252Q360 143 315.5 58.5Q271 -26 191 -26Q24 -26 24 189Z"/>
+        <path transform="translate(-97.10,14.97) rotate(-17.530) scale(0.140000,-0.140000) translate(-150.5,0)" d="M239 361Q197 361 176 255Q178 185 178.0 121.0Q178 57 174 -23L58 -13Q61 134 61 149Q61 334 43 432L118 424Q125 395 134 373Q183 478 233 478Q274 478 305 442L279 350Q263 361 239 361Z"/>
+        <path transform="translate(-51.16,4.09) rotate(-9.132) scale(0.140000,-0.140000) translate(-177.0,0)" d="M232 256Q234 270 234.0 292.0Q234 314 225.0 337.0Q216 360 202 360Q174 360 161.5 295.5Q149 231 149 177Q149 86 186 86Q216 86 271 191L345 138Q318 65 277.5 22.0Q237 -21 180.0 -21.0Q123 -21 77.5 24.0Q32 69 32 161Q32 259 64 356Q82 409 117.5 443.0Q153 477 208.0 477.0Q263 477 299.5 421.0Q336 365 336 297Q336 268 327 247Z"/>
+        <path transform="translate(4.55,0.03) rotate(0.809) scale(0.140000,-0.140000) translate(-212.5,0)" d="M181 407Q227 464 271.5 464.0Q316 464 344 434Q393 382 393 302Q393 157 382 -1L266 10Q273 157 273 299Q273 352 246 352Q214 352 177 212Q175 112 167 -15L50 -4Q63 168 63.0 380.0Q63 592 56 721L173 710Q181 569 181 407Z"/>
+        <path transform="translate(64.80,6.58) rotate(11.595) scale(0.140000,-0.140000) translate(-211.0,0)" d="M421 688V565Q309 565 211 558Q209 529 207.5 455.5Q206 382 205 365Q317 380 385 380L405 270Q293 267 204 256Q204 100 208 -19L73 -4Q71 158 71.0 297.0Q71 436 87 662Q258 688 421 688Z"/>
+        <path transform="translate(118.99,22.76) rotate(21.661) scale(0.140000,-0.140000) translate(-183.5,0)" d="M184 72Q222 72 265 145L341 100Q322 67 304.5 44.0Q287 21 252.0 0.0Q217 -21 174 -21Q111 -21 68.0 32.5Q25 86 25 177Q25 281 62 371Q82 418 119.5 447.5Q157 477 196.5 477.0Q236 477 260.0 464.5Q284 452 298.5 436.5Q313 421 324.0 391.0Q335 361 339.5 342.0Q344 323 347 287Q351 239 351 200Q271 178 144 160Q147 120 158.0 96.0Q169 72 184 72ZM206 379Q184 379 166.5 335.0Q149 291 146 233Q199 244 238 254Q238 379 206 379Z"/>
+        <path transform="translate(165.03,45.45) rotate(30.793) scale(0.140000,-0.140000) translate(-173.5,0)" d="M237 315Q237 375 207 375Q192 375 179.5 360.5Q167 346 167.0 321.5Q167 297 176.5 281.0Q186 265 211.5 249.5Q237 234 251.5 224.5Q266 215 286 198Q327 162 327.0 105.5Q327 49 284.5 14.0Q242 -21 189.0 -21.0Q136 -21 93.5 7.5Q51 36 25 79L79 140Q119 71 163 71Q178 71 189.0 79.5Q200 88 200 103Q200 135 154 162Q105 189 77.0 222.0Q49 255 49.0 315.5Q49 376 99.0 424.5Q149 473 206.5 473.0Q264 473 297.5 433.5Q331 394 331 327Q331 300 325 269L234 277Q237 300 237 315Z"/>
+        <path transform="translate(202.56,71.59) rotate(38.929) scale(0.140000,-0.140000) translate(-143.5,0)" d="M285 418V323Q237 323 211 322Q208 222 208 -14L90 -3Q90 172 93 314Q78 314 36 309L21 391Q45 396 96 404Q98 478 104 620L223 609Q217 510 214 417Q239 418 285 418Z"/>
+      </g>
+      <g fill="#E35A55" transform="translate(0,97.6)">
+        <path transform="translate(-66.10,8.42) rotate(-14.527) scale(0.085000,-0.085000) translate(-242.0,0)" d="M289 647Q368 647 410.5 597.0Q453 547 453 471Q453 420 397.0 323.5Q341 227 255 129Q277 137 345.5 137.0Q414 137 451 130L439 17Q377 22 335 22Q220 22 79 -26L36 61Q145 152 239.0 284.0Q333 416 333.0 471.5Q333 527 289 527Q253 527 214.5 485.5Q176 444 132 370L32 440Q162 647 289 647Z"/>
+        <path transform="translate(-22.24,0.94) rotate(-4.842) scale(0.085000,-0.085000) translate(-242.0,0)" d="M254 92Q281 92 304.5 161.5Q328 231 328 318Q328 533 257 533Q222 533 200.0 446.0Q178 359 178.0 269.5Q178 180 198.5 136.0Q219 92 254 92ZM48 252Q48 347 71.5 434.5Q95 522 144.0 582.5Q193 643 260.0 643.0Q327 643 373 598Q458 513 458 318Q458 233 428.0 154.5Q398 76 351.0 29.0Q304 -18 254 -18Q158 -18 103.0 56.0Q48 130 48 252Z"/>
+        <path transform="translate(22.24,0.94) rotate(4.842) scale(0.085000,-0.085000) translate(-242.0,0)" d="M289 647Q368 647 410.5 597.0Q453 547 453 471Q453 420 397.0 323.5Q341 227 255 129Q277 137 345.5 137.0Q414 137 451 130L439 17Q377 22 335 22Q220 22 79 -26L36 61Q145 152 239.0 284.0Q333 416 333.0 471.5Q333 527 289 527Q253 527 214.5 485.5Q176 444 132 370L32 440Q162 647 289 647Z"/>
+        <path transform="translate(66.80,8.42) rotate(14.527) scale(0.085000,-0.085000) translate(-242.0,0)" d="M299 388Q361 388 408.0 343.0Q455 298 455.0 205.0Q455 112 395.5 40.5Q336 -31 250.0 -31.0Q164 -31 112.5 38.0Q61 107 61 220Q61 346 113 450Q141 507 164.5 545.0Q188 583 233 649L387 636Q252 495 207 369Q255 388 299 388ZM187 248 186 220Q186 157 205.0 118.0Q224 79 254.5 79.0Q285 79 307.5 113.0Q330 147 330.0 191.5Q330 236 313.5 257.0Q297 278 269.0 278.0Q241 278 187 248Z"/>
+      </g>
+    </svg>
+    <div class="title">LINEUP</div>
+    <div class="rule"></div>
+  </div>
+
+  <div class="main">
+    <div class="block">
+      <div class="block-head"><div class="block-time">2:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">1</div><div class="actname">Kellar McCoy <span class="subnote">— VIP Lounge</span></div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">3:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">2</div><div class="actname">Amir Salam</div></div>
+        <div class="act"><div class="stagepill">12</div><div class="actname">Brain Fog</div></div>
+        <div class="act"><div class="stagepill">5</div><div class="actname">Candler Hobbs</div></div>
+        <div class="act"><div class="stagepill">27</div><div class="actname">Flint River Rev&rsquo;lers</div></div>
+        <div class="act"><div class="stagepill">16</div><div class="actname">GRASS</div></div>
+        <div class="act"><div class="stagepill">19</div><div class="actname">James &amp; The Georgia Peaches</div></div>
+        <div class="act"><div class="stagepill">7</div><div class="actname">Mary Martin</div></div>
+        <div class="act"><div class="stagepill">22</div><div class="actname">Tyler Lowman Band</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">4:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">11</div><div class="actname">David Pippin Group</div></div>
+        <div class="act"><div class="stagepill">15</div><div class="actname">Ladega</div></div>
+        <div class="act"><div class="stagepill">8</div><div class="actname">Last Signal Home</div></div>
+        <div class="act"><div class="stagepill">17</div><div class="actname">Luke Morgan &amp; The Redliners</div></div>
+        <div class="act"><div class="stagepill">2</div><div class="actname">Russ Gordon &amp; The Rattletrap</div></div>
+        <div class="act"><div class="stagepill">1</div><div class="actname">Tim McGee</div></div>
+        <div class="act"><div class="stagepill">21</div><div class="actname">Whiskey River Saints</div></div>
+        <div class="act"><div class="stagepill">22</div><div class="actname">Wholly Smokes</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">5:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">13</div><div class="actname">Brian Rivers Band</div></div>
+        <div class="act"><div class="stagepill">4</div><div class="actname">Highway 54</div></div>
+        <div class="act"><div class="stagepill">3</div><div class="actname">Joel Bridges</div></div>
+        <div class="act"><div class="stagepill">23</div><div class="actname">Lucas Smith</div></div>
+        <div class="act"><div class="stagepill">14</div><div class="actname">Luke Brown &amp; The Jubilee</div></div>
+        <div class="act"><div class="stagepill">24</div><div class="actname">Rob Harlan</div></div>
+        <div class="act"><div class="stagepill">25</div><div class="actname">Wildcat</div></div>
+        <div class="act"><div class="stagepill">28</div><div class="actname">Wyatt Band</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">6:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">26</div><div class="actname">Brian Collins</div></div>
+        <div class="act"><div class="stagepill">6</div><div class="actname">Cowboy Noyz</div></div>
+        <div class="act"><div class="stagepill">20</div><div class="actname">Greg &ldquo;Rogan&rdquo; Rogers</div></div>
+        <div class="act"><div class="stagepill">23</div><div class="actname">Jake and The Naysayers</div></div>
+        <div class="act"><div class="stagepill">9</div><div class="actname">Sarah &amp; Morgan Hendrix</div></div>
+        <div class="act"><div class="stagepill">18</div><div class="actname">Souls Hill</div></div>
+        <div class="act"><div class="stagepill">21</div><div class="actname">Tyler Caldwell</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head"><div class="block-time">7:00 PM</div></div>
+      <div class="grid2">
+        <div class="act"><div class="stagepill">1</div><div class="actname">Ashton Dooley Band</div></div>
+        <div class="act"><div class="stagepill">7</div><div class="actname">Atticus Roness</div></div>
+        <div class="act"><div class="stagepill">26</div><div class="actname">Duncan Brothers Band</div></div>
+        <div class="act"><div class="stagepill">2</div><div class="actname">Gradient</div></div>
+        <div class="act"><div class="stagepill">10</div><div class="actname">Grateful To Be</div></div>
+        <div class="act"><div class="stagepill">19</div><div class="actname">Joey Thurmond &amp; The Select Orchestra</div></div>
+        <div class="act"><div class="stagepill">29</div><div class="actname">Rock Soldered Blues</div></div>
+        <div class="act"><div class="stagepill">12</div><div class="actname">Tavis Lance Mapp</div></div>
+      </div>
+    </div>
+
+    <div class="block finale">
+      <div class="finale-eyebrow">Closing Act</div>
+      <div class="finale-name">Chuck X Nick</div>
+      <div class="finale-stage">Main Stage</div>
+      <div class="finale-where">Bottom of Main Street</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
