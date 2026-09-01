@@ -1,7 +1,7 @@
 // Senoia PorchFest 2026 — Performer Bios, Composition, Photos, and Media Links.
 //
 // Source of truth for sets, stages, times and addresses: `src/data/schedule.js`.
-// This module provides enriched profiles for all 41 confirmed acts,
+// This module provides enriched profiles for all confirmed acts,
 // joined with their scheduled performance slots and verified media links.
 
 import { PERFORMANCES } from './schedule.js'
