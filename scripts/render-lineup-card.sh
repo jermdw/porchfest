@@ -17,20 +17,15 @@ cd "$(dirname "$0")"
 CHROME=$(. ./signtower/chrome.sh)
 OUT="${OUT:-../public/senoia-porchfest-2026-lineup-card.pdf}"
 
-# --virtual-time-budget lets the webfonts finish loading; without it Chrome
-# prints the card in a fallback face.
-"$CHROME" --headless --disable-gpu \
-  --no-pdf-header-footer --print-to-pdf-no-header \
-  --print-to-pdf="$OUT" \
-  --virtual-time-budget=20000 \
-  "file://$PWD/lineup_card_template.html" 2>/dev/null
-
-echo "wrote $OUT"
-
+# Checked BEFORE rendering, so a template that fails never reaches $OUT -- that
+# path is the live download, and the whole reason this script exists is that a
+# bad card once landed there and shipped.
+#
 # The template carries its own hardcoded copy of the lineup (it is not built from
 # src/data/schedule.js), so it has drifted twice already -- once when Flint River
 # Rev'lers pulled out, once when David Pippin moved to stage 5. Any lineup change
-# means editing this template by hand, including the per-hour "N Acts" pills.
+# means editing this template by hand, including the per-hour "N Acts" pills,
+# which are separate literals from the act lists and drift on their own.
 python3 - <<'PY'
 import re, sys
 h = open('lineup_card_template.html').read()
@@ -47,3 +42,13 @@ for i in range(1, len(parts), 2):
 sys.exit(1 if bad else 0)
 PY
 echo "per-hour act counts check out"
+
+# --virtual-time-budget lets the webfonts finish loading; without it Chrome
+# prints the card in a fallback face.
+"$CHROME" --headless --disable-gpu \
+  --no-pdf-header-footer --print-to-pdf-no-header \
+  --print-to-pdf="$OUT" \
+  --virtual-time-budget=20000 \
+  "file://$PWD/lineup_card_template.html" 2>/dev/null
+
+echo "wrote $OUT"
