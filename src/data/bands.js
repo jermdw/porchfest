@@ -1,7 +1,7 @@
 // Senoia PorchFest 2026 — Performer Bios, Composition, Photos, and Media Links.
 //
 // Source of truth for sets, stages, times and addresses: `src/data/schedule.js`.
-// This module provides enriched profiles for all 41 confirmed acts,
+// This module provides enriched profiles for all confirmed acts,
 // joined with their scheduled performance slots and verified media links.
 
 import { PERFORMANCES } from './schedule.js'
@@ -51,13 +51,6 @@ export const BANDS = [
     act: 'Candler Hobbs',
     composition: 'Solo classic rock acoustic artist (Guitar & vocals)',
     bio: 'A staple of the Georgia acoustic circuit delivering timeless classic rock favorites and folk rock staples with gritty, passionate delivery.',
-    photo: null,
-    links: {},
-  },
-  {
-    act: "Flint River Rev'lers",
-    composition: 'Americana & roots ensemble (Guitars, bass, percussion & harmonies)',
-    bio: 'A Coweta County favorite serving up foot-stomping Americana, folk gems, and acoustic roots favorites with tight harmonies and porch-ready energy.',
     photo: null,
     links: {},
   },
