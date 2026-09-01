@@ -9,20 +9,16 @@ Two deliberate house styles, because these are two different objects:
   blue was picked off physical ink samples rather than from the brand tokens —
   it is a *print* value, and matching the signs already on the ground beats
   matching the screen palette.
-* **Banner** is sponsor recognition on vinyl, so it follows the brand guide
-  proper (`docs/brand-guide.html`): navy `#101D3A` ground, cream type, flag-red
-  rules.
+* **Banner** is sponsor recognition on vinyl: navy `#101D3A` ground with pure
+  white type. It hangs beside the sign towers, which the DDA moved onto the
+  2026 ad-banner inks, so the type is `#FFFFFF` rather than the brand's cream
+  `#F5F1E6` — resolved 2026-09-01 at the DDA's request. Cream against the
+  towers' pure white read as a dinge rather than a warm neutral. Do not
+  "restore" it to the brand token; matching the object hanging next to it wins,
+  the same way the yard signs' royal blue beats the brand navy.
 
-Flag red `#B02A30` carries the section rules on both — the one brand token that
-is legible on white and navy alike.
-
-NOTE — this banner and the sign towers no longer match. `scripts/signtower/`
-was moved onto the 2026 ad-banner inks (pure red `#C00000`, pure white) at the
-DDA's request; this file still uses the brand tokens (`#B02A30`, cream
-`#F5F1E6`). Both hang at the same event on the same navy, so side by side the
-difference is visible. That may well be fine — the yard signs above already
-diverge from the brand palette on purpose — but it is a live inconsistency, not
-a settled decision, and it needs an answer from the DDA before print.
+Flag red `#B02A30` carries the section rules on the yard signs — the one brand
+token legible on white and navy alike. The banner carries no red at all.
 
 Fonts are derived from the repo's own `@fontsource/oswald` webfont at run time,
 so nothing here can drift out of sync with the site.
@@ -52,6 +48,7 @@ ROYAL = (0x00 / 255, 0x2F / 255, 0xA7 / 255)   # #002FA7
 INK = (0x10 / 255, 0x1D / 255, 0x3A / 255)     # #101D3A  brand navy
 FLAG = (0xB0 / 255, 0x2A / 255, 0x30 / 255)    # #B02A30  brand flag red
 CREAM = (0xF5 / 255, 0xF1 / 255, 0xE6 / 255)   # #F5F1E6  brand warm white
+WHITE = (1.0, 1.0, 1.0)                        # #FFFFFF  banner type, matches the towers
 PALE = (0xCD / 255, 0xD3 / 255, 0xE8 / 255)    # #CDD3E8  brand muted-on-navy
 CREAM_RGB = (0xF5, 0xF1, 0xE6)
 
@@ -476,7 +473,7 @@ def build_banner(path):
     # +10pt because insert_text places the BASELINE: rounds overshoot the cap
     # line, so sitting the cap exactly on the safe margin puts ink outside it.
     page.insert_text(((BANNER_W - lw_) / 2, BANNER_SAFE + 10 + lead_cap), lead,
-                     fontname='OswB', fontsize=lead_size, color=CREAM)
+                     fontname='OswB', fontsize=lead_size, color=WHITE)
 
     # --- the mark, filling everything under it ---
     # Roundel and dealer name sit on ONE line so the lockup runs wide: this
@@ -504,7 +501,7 @@ def build_banner(path):
     page.show_pdf_page(pymupdf.Rect(gx, gy, gx + mark_w, gy + mark_h), roundel, 0)
     page.insert_text((gx + mark_w + mark_h * gap_ratio,
                       gy + mark_h / 2 + name_size * CAP / 2),
-                     name, fontname='OswB', fontsize=name_size, color=CREAM)
+                     name, fontname='OswB', fontsize=name_size, color=WHITE)
 
     doc.save(path, deflate=True)
     doc.close()
