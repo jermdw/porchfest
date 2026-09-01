@@ -23,13 +23,13 @@ export const PERFORMANCES = [
   { act: 'Amir Salam', genre: 'Country', stage: 2, address: '1 Main Street', venue: 'Senoia Beer Company', start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'Brain Fog', genre: "70s, 80s, 90s, 00's Covers", stage: 12, address: '180 Seavy Street', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'Candler Hobbs', genre: 'Classic Rock', stage: 27, address: '31 Morgan Street', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
+  { act: 'David Pippin Group', genre: 'Rock and Blues', stage: 5, address: '60 Main Street', venue: 'Olivia James', start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'GRASS', genre: "60's and 70's Rock", stage: 16, address: '89 Lower Creek Trail', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'James & The Georgia Peaches', genre: 'Pop, Rock, Country and Soul', stage: 19, address: '252 Seavy Street', venue: 'Veranda Inn', start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'Mary Martin', genre: 'Indie, Folk, Americana', stage: 7, address: '22 Main Street', venue: 'Pearl & Pine Brewery', start: '15:00', time: '3:00 PM', confirmed: true },
   { act: 'Tyler Lowman Band', genre: 'Country, Southern Rock', stage: 22, address: '239 Pylant Street', venue: null, start: '15:00', time: '3:00 PM', confirmed: true },
 
   // ---- 4:00 PM ----
-  { act: 'David Pippin Group', genre: 'Rock and Blues', stage: 11, address: '30 Barnes Street', venue: 'Zackie Hart', start: '16:00', time: '4:00 PM', confirmed: true },
   { act: 'Ladega', genre: 'Jam Band, Indie, Classic Rock', stage: 15, address: '97 Lower Creek Trail', venue: null, start: '16:00', time: '4:00 PM', confirmed: true },
   { act: 'Last Signal Home', genre: 'Rock', stage: 8, address: '42 Main Street', venue: '404 Celsius', start: '16:00', time: '4:00 PM', confirmed: true },
   { act: 'Luke Morgan & The Redliners', genre: 'Country Rock', stage: 17, address: '55 Lower Creek Trail', venue: null, start: '16:00', time: '4:00 PM', confirmed: true },
