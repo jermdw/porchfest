@@ -43,12 +43,35 @@ sys.exit(1 if bad else 0)
 PY
 echo "per-hour act counts check out"
 
+# Rendered to a temp file so the font check below also gets to veto a bad build
+# before it reaches the published path -- that check can only run on a finished
+# PDF, so staging is the only way to keep it a precondition like the one above.
+TMP=$(mktemp -t lineup-card).pdf
+trap 'rm -f "$TMP"' EXIT
+
 # --virtual-time-budget lets the webfonts finish loading; without it Chrome
 # prints the card in a fallback face.
 "$CHROME" --headless --disable-gpu \
   --no-pdf-header-footer --print-to-pdf-no-header \
-  --print-to-pdf="$OUT" \
+  --print-to-pdf="$TMP" \
   --virtual-time-budget=20000 \
   "file://$PWD/lineup_card_template.html" 2>/dev/null
 
+# Every face must embed as a real outline font. Chrome emits Type 3 -- glyphs as
+# path procedures -- whenever it cannot embed the source face, and macOS Preview
+# and many RIPs render Type 3 badly enough to look blurry on screen. Two ways in,
+# both of which have bitten this card:
+#   * a VARIABLE font (Google Fonts serves Oswald as one) -> self-host a static
+#     weight from signtower/fonts instead
+#   * a glyph missing from the face, falling through to a system font (U+2605
+#     BLACK STAR is not in Oswald) -> draw it as inline SVG
+# AppleColorEmoji is exempt: the one decorative emoji is a colour bitmap face and
+# is Type 3 by nature.
+if pdffonts "$TMP" | awk 'NR>2 && $0 ~ /Type 3/ && $1 !~ /AppleColorEmoji/ {print; f=1} END{exit !f}'; then
+  echo "ABORT: the faces above embedded as Type 3; \$OUT left untouched" >&2
+  exit 1
+fi
+echo "all faces embedded as outline fonts"
+
+mv "$TMP" "$OUT"
 echo "wrote $OUT"

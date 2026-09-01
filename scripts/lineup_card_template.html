@@ -3,10 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Senoia PorchFest 2026 Official Lineup Card</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Yellowtail&display=swap" rel="stylesheet">
   <style>
+    /* Self-hosted STATIC weights, not the Google Fonts <link> this used to carry.
+       Google serves Oswald as a VARIABLE font, and Chrome cannot embed an
+       instanced variable font in a PDF -- it falls back to Type 3, drawing every
+       glyph as a path procedure. That still prints, but macOS Preview and many
+       RIPs render Type 3 badly, which is what made the card look blurry on
+       screen. Yellowtail came through the same <link> as CID TrueType because it
+       is static -- that contrast is how this was diagnosed.
+       Same fix, same files, as scripts/signtower (see its README); shared rather
+       than duplicated. Also makes the render work offline. */
+    @font-face{font-family:'Oswald';font-weight:500;font-style:normal;src:url('signtower/fonts/oswald-latin-500-normal.woff2') format('woff2');}
+    @font-face{font-family:'Oswald';font-weight:600;font-style:normal;src:url('signtower/fonts/oswald-latin-600-normal.woff2') format('woff2');}
+    @font-face{font-family:'Oswald';font-weight:700;font-style:normal;src:url('signtower/fonts/oswald-latin-700-normal.woff2') format('woff2');}
+    @font-face{font-family:'Yellowtail';font-weight:400;font-style:normal;src:url('signtower/fonts/yellowtail-latin-400-normal.woff2') format('woff2');}
     @page {
       size: 11in 8.5in;
       margin: 0;
@@ -26,7 +36,7 @@
       overflow: hidden;
       background-color: #F5F1E6;
       color: #101D3A;
-      font-family: 'Oswald', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Oswald', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     .page-container {
       width: 11in;
@@ -126,6 +136,17 @@
       text-transform: uppercase;
       color: var(--flag);
       letter-spacing: 0.5px;
+    }
+    /* Drawn, not typed. U+2605 BLACK STAR is absent from Oswald, so as a
+       character it fell through to whatever the rendering Mac happened to have
+       -- Hiragino Sans, embedded as Type 3, and tofu on a machine without it.
+       An inline path owes nothing to the host's fonts. */
+    .star {
+      width: 0.85em;
+      height: 0.85em;
+      fill: currentColor;
+      vertical-align: -0.06em;
+      margin-right: 0.15em;
     }
     .callout-act {
       font-size: 13.5px;
@@ -264,7 +285,11 @@
       overflow: hidden;
       text-overflow: ellipsis;
       margin-top: 1px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      /* Deliberately NOT condensed -- addresses read better here than in Oswald
+         at this size. Static faces only: -apple-system resolves to SF Pro, which
+         is variable and so embedded as Type 3, and it made these (the smallest
+         type on the card) the blurriest thing on it. */
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     /* Footer */
@@ -306,7 +331,7 @@
   <div class="callouts-row">
     <div class="callout-card">
       <div>
-        <div class="callout-title">&starf; VIP Kickoff &mdash; 2:00 PM</div>
+        <div class="callout-title"><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.6l3.09 6.26 6.91 1-5 4.87 1.18 6.87L12 17.35l-6.18 3.25L7 13.73l-5-4.87 6.91-1z"/></svg> VIP Kickoff &mdash; 2:00 PM</div>
         <div class="callout-act">Kellar McCoy <span style="font-weight: normal; font-size: 10.5px; color: var(--flag);">&bull; VIP Luxury Lounge</span></div>
       </div>
       <div class="callout-detail">40 Travis St (Farmers' Market)</div>
@@ -314,7 +339,7 @@
 
     <div class="callout-card main-stage">
       <div>
-        <div class="callout-title">&starf; Main Stage Closing Act &mdash; 8:00 PM</div>
+        <div class="callout-title"><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.6l3.09 6.26 6.91 1-5 4.87 1.18 6.87L12 17.35l-6.18 3.25L7 13.73l-5-4.87 6.91-1z"/></svg> Main Stage Closing Act &mdash; 8:00 PM</div>
         <div class="callout-act">Chuck X Nick <span style="font-weight: normal; font-size: 10.5px; color: var(--flag);">&bull; Closing Headliner</span></div>
       </div>
       <div class="callout-detail">Bottom of Main St at Travis & Gin</div>
