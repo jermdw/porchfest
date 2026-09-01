@@ -31,8 +31,8 @@ STONE_800 = hex_color('292524')
 SETS_3PM = [
     {"stage": 2, "act": "Amir Salam", "genre": "Country", "address": "1 Main St", "venue": "Senoia Beer Co"},
     {"stage": 12, "act": "Brain Fog", "genre": "70s-00s Covers", "address": "180 Seavy St", "venue": None},
-    {"stage": 5, "act": "Candler Hobbs", "genre": "Classic Rock", "address": "60 Main St", "venue": "Olivia James"},
-    {"stage": 27, "act": "Flint River Rev'lers", "genre": "Americana", "address": "31 Morgan St", "venue": None},
+    {"stage": 27, "act": "Candler Hobbs", "genre": "Classic Rock", "address": "31 Morgan St", "venue": None},
+    {"stage": 5, "act": "David Pippin Group", "genre": "Rock & Blues", "address": "60 Main St", "venue": "Olivia James"},
     {"stage": 16, "act": "GRASS", "genre": "60s/70s Rock", "address": "89 Lower Creek Trl", "venue": None},
     {"stage": 19, "act": "James & GA Peaches", "genre": "Pop/Rock/Country", "address": "252 Seavy St", "venue": "Veranda Inn"},
     {"stage": 7, "act": "Mary Martin", "genre": "Indie/Folk/Americana", "address": "22 Main St", "venue": "Pearl & Pine"},
@@ -40,7 +40,6 @@ SETS_3PM = [
 ]
 
 SETS_4PM = [
-    {"stage": 11, "act": "David Pippin Group", "genre": "Rock & Blues", "address": "30 Barnes St", "venue": "Zackie Hart"},
     {"stage": 15, "act": "Ladega", "genre": "Jam/Indie/Classic Rock", "address": "97 Lower Creek Trl", "venue": None},
     {"stage": 8, "act": "Last Signal Home", "genre": "Rock", "address": "42 Main St", "venue": "404 Celsius"},
     {"stage": 17, "act": "Luke Morgan & Redliners", "genre": "Country Rock", "address": "55 Lower Creek Trl", "venue": None},
