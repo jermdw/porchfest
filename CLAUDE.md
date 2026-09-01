@@ -189,8 +189,12 @@ or deployed).
   canonical host — never link or promote the `.web.app`/`.firebaseapp.com`
   mirrors.
 - **Ports are offset from the car show** so both run side by side: dev 5174,
-  firestore 8081, functions 5002, auth 9098, emulator UI 4002 (car show holds
-  the defaults). Start emulators with `--project senoiaporchfest` or functions
+  firestore 8081, functions 5002, auth 9098, hosting 5055, emulator UI 4002 (car
+  show holds the defaults). The hosting emulator is the only way to test
+  `firebase.json` `headers` rules before they reach production —
+  `npx firebase-tools emulators:start --only hosting --project senoiaporchfest`,
+  then check `curl -sI` on a route, a hashed asset, and a file with an
+  extension. Start emulators with `--project senoiaporchfest` or functions
   register under the machine's ADC project. Port 5000 is unusable on this Mac
   (AirPlay).
 - The old enjoysenoia.com PorchFest page now redirects here; anything else it
