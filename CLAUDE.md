@@ -134,12 +134,25 @@ or use Edit in `/admin`. To add a named pre-registered volunteer: fill columns
   `cancelSignup` callables. All volunteer writes go through them (volunteers
   have no auth; Admin SDK bypasses rules). Resend confirmation emails are
   best-effort by design — email failure must never fail a signup.
+  `getOrganizerRoster` is the read path for scoped volunteer organizers (see
+  below) — it exists because a rules-only version would need the org→shift
+  mapping denormalized onto every `signups` doc just so a client query could
+  mirror it (Firestore list rules can't filter per-document on a `get()`
+  indirection; the whole query fails unless the client's `where` clauses let
+  Firestore prove every match passes).
 - **Firestore**: `events/2026` (`signupOpen: false` closes sign-ups),
   `events/2026/shifts/{id}` (`role, time, day, category, spotsTotal,
-  spotsFilled, sortOrder`), `signups/{id}` (volunteer PII + `status` +
-  `cancelToken`; seeded ones carry `seededFrom: 'organizer-sheet'`),
-  `admins/{email}` (organizer allowlist; doc ID = lowercase email; data-only,
-  no deploy needed to change).
+  spotsFilled, sortOrder` — `category` also scopes organizer read access, set
+  per shift in `/admin`'s shift editor), `signups/{id}` (volunteer PII +
+  `status` + `cancelToken`; seeded ones carry `seededFrom: 'organizer-sheet'`),
+  `admins/{email}` (full-access organizer allowlist; doc ID = lowercase email;
+  data-only, no deploy needed to change),
+  `organizers/{email}` (scoped, **read-only** volunteer-organizer allowlist;
+  doc ID = lowercase email; `categories: string[]`; data-only, console-managed
+  like `admins/{email}`; never read by rules or client — only by
+  `getOrganizerRoster`, which grants read access to shifts/signups whose
+  `category` is in the list. `/admin` tries the full admin listeners first
+  and falls back to this callable on `permission-denied`).
 
 ## Invariants
 
@@ -148,8 +161,10 @@ or use Edit in `/admin`. To add a named pre-registered volunteer: fill columns
   it with a bare update/batch — a double-click or race corrupts the count. (The
   seed script's increments are the one exception, run pre-launch only.)
 - Volunteer PII (`signups`) is never publicly readable; only allowlisted admins
-  (verified email matching an `admins/{email}` doc) read it. Public reads are
-  limited to event + shift docs (counts, no PII).
+  (verified email matching an `admins/{email}` doc) read it directly via
+  rules, plus allowlisted `organizers/{email}` read a `category`-scoped subset
+  via the `getOrganizerRoster` callable (read-only, no rules grant). Public
+  reads are limited to event + shift docs (counts, no PII).
 - Duplicate signup emails are **allowed by design** (households share addresses).
 - Admin sign-in: Google popup or email magic link. Both rely on
   `email_verified` in rules.
