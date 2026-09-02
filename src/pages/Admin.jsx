@@ -6,7 +6,8 @@ import {
   GoogleAuthProvider, isSignInWithEmailLink, onAuthStateChanged, sendSignInLinkToEmail,
   signInWithEmailLink, signInWithPopup, signOut,
 } from 'firebase/auth'
-import { db, auth, EVENT_ID } from '../firebase'
+import { httpsCallable } from 'firebase/functions'
+import { db, auth, functions, EVENT_ID } from '../firebase'
 import usePageMeta from '../lib/usePageMeta.js'
 
 const EMAIL_LINK_KEY = 'spfEmailForSignIn'
@@ -183,16 +184,28 @@ function Dashboard({ user }) {
   const [signups, setSignups] = useState(null)
   const [denied, setDenied] = useState(false)
   const [loadError, setLoadError] = useState(false)
+  // A scoped, read-only organizer (in `organizers/{email}` but not
+  // `admins/{email}`) can't read `signups` under Firestore rules, so a denied
+  // signups listener falls back to this callable before giving up.
+  const [organizerRoster, setOrganizerRoster] = useState(null) // { shifts, roster }
   const [editing, setEditing] = useState(null) // shift object or 'new'
   const [openRoster, setOpenRoster] = useState(null) // shiftId
+  const organizerCheckStarted = useRef(false)
 
   useEffect(() => {
-    // Only permission-denied means "not an organizer" — anything else
+    // Only permission-denied means "not a full admin" — anything else
     // (offline, missing index, backend outage) is a load failure.
     const onError = (err) => {
       console.error('admin listener failed', err)
-      if (err.code === 'permission-denied') setDenied(true)
-      else setLoadError(true)
+      if (err.code !== 'permission-denied') { setLoadError(true); return }
+      if (organizerCheckStarted.current) return
+      organizerCheckStarted.current = true
+      httpsCallable(functions, 'getOrganizerRoster')({ eventId: EVENT_ID })
+        .then(({ data }) => setOrganizerRoster(data))
+        .catch((e) => {
+          console.error('organizer check failed', e)
+          setDenied(true)
+        })
     }
     const unsub1 = onSnapshot(
       query(collection(db, 'events', EVENT_ID, 'shifts')),
@@ -217,6 +230,8 @@ function Dashboard({ user }) {
     () => [...(shifts ?? [])].sort((a, b) => a.day.localeCompare(b.day) || a.sortOrder - b.sortOrder),
     [shifts],
   )
+
+  if (organizerRoster) return <OrganizerDashboard user={user} data={organizerRoster} />
 
   if (denied) {
     return (
@@ -418,6 +433,81 @@ function Dashboard({ user }) {
   )
 }
 
+// Read-only roster view for a scoped organizer — no edit, delete, add-shift,
+// or remove-volunteer controls, and only the shifts their category covers.
+function OrganizerDashboard({ user, data }) {
+  const { shifts, roster } = data
+
+  const rosterByShift = useMemo(() => {
+    const m = {}
+    for (const s of roster) (m[s.shiftId] ||= []).push(s)
+    return m
+  }, [roster])
+
+  const sorted = useMemo(
+    () => [...shifts].sort((a, b) => a.day.localeCompare(b.day) || a.sortOrder - b.sortOrder),
+    [shifts],
+  )
+
+  const totalFilled = roster.length
+  const totalSpots = shifts.reduce((n, s) => n + s.spotsTotal, 0)
+
+  return (
+    <div className="min-h-screen bg-cream">
+      <header className="bg-ink text-white px-6 py-4 flex flex-wrap items-center gap-3">
+        <h1 className="font-bold text-lg flex-1">Senoia PorchFest — Volunteer Roster</h1>
+        <span className="text-stone-300 text-sm">{totalFilled} / {totalSpots} spots filled</span>
+        <button onClick={() => signOut(auth)} className="text-stone-400 underline text-sm">Sign out</button>
+      </header>
+
+      <main className="max-w-4xl mx-auto p-4">
+        <p className="text-stone-500 text-sm mb-3">Signed in as {user.email}</p>
+        {sorted.length === 0 ? (
+          <p className="text-center text-stone-500 py-12">No shifts are assigned to you yet.</p>
+        ) : (
+          <ul className="space-y-2">
+            {sorted.map((shift) => {
+              const shiftRoster = rosterByShift[shift.id] ?? []
+              return (
+                <li key={shift.id} className="bg-white rounded-lg border border-stone-200">
+                  <div className="p-3 flex flex-wrap items-center gap-2">
+                    <div className="flex-1 min-w-[14rem]">
+                      <span className="font-semibold text-ink">{shift.role}</span>
+                      <span className="text-stone-500 text-sm ml-2">{shift.time}</span>
+                    </div>
+                    <span className={`text-sm font-semibold rounded-full px-3 py-1 ${
+                      shiftRoster.length >= shift.spotsTotal ? 'bg-green-100 text-green-800' : 'bg-pale text-flag'
+                    }`}>
+                      {shiftRoster.length} / {shift.spotsTotal}
+                    </span>
+                  </div>
+                  <div className="border-t border-stone-100 p-3">
+                    {shiftRoster.length === 0 ? (
+                      <p className="text-stone-400 text-sm">No signups yet.</p>
+                    ) : (
+                      <table className="w-full text-sm">
+                        <tbody>
+                          {shiftRoster.map((v) => (
+                            <tr key={v.id} className="border-b border-stone-50 last:border-0">
+                              <td className="py-1 pr-3 font-medium text-stone-800">{v.firstName} {v.lastName}</td>
+                              <td className="py-1 pr-3 text-stone-500">{v.email}</td>
+                              <td className="py-1 text-stone-500">{v.phone}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </main>
+    </div>
+  )
+}
+
 function ShiftEditor({ shift, activeCount, maxSortOrder, onClose }) {
   const [form, setForm] = useState(
     shift ?? { role: '', time: '', day: '2026-09-06', spotsTotal: 2, category: '' },
@@ -491,6 +581,11 @@ function ShiftEditor({ shift, activeCount, maxSortOrder, onClose }) {
         <label className="block">
           <span className="text-sm font-medium text-stone-700">Time (shown to volunteers)</span>
           <input required value={form.time} onChange={set('time')} placeholder="9/6 - 1:00PM - 4:00PM"
+            className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2" />
+        </label>
+        <label className="block">
+          <span className="text-sm font-medium text-stone-700">Category (controls organizer access)</span>
+          <input value={form.category ?? ''} onChange={set('category')} placeholder="e.g. VIP, Merch, Barricade"
             className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-2" />
         </label>
         <div className="grid grid-cols-2 gap-3">

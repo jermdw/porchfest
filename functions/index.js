@@ -147,6 +147,52 @@ export const cancelSignup = onCall(callOpts, async (req) => {
   return { ok: true }
 })
 
+// Read path for scoped, read-only "organizer" access: unlike admins, an
+// organizer isn't in `admins/{email}` and can't read `signups` directly under
+// Firestore rules (a rules-only version would need the org→shift mapping
+// denormalized onto every signup so a client query could mirror it). Going
+// through the Admin SDK here sidesteps that.
+export const getOrganizerRoster = onCall(callOpts, async (req) => {
+  if (!req.auth || req.auth.token.email_verified !== true) {
+    throw new HttpsError('permission-denied', 'Sign in required.')
+  }
+  const email = String(req.auth.token.email).toLowerCase()
+  const eventId = requireString(req.data, 'eventId', 20)
+  if (!DOC_ID_RE.test(eventId)) {
+    throw new HttpsError('invalid-argument', 'Unknown event.')
+  }
+
+  const orgSnap = await db.doc(`organizers/${email}`).get()
+  const categories = orgSnap.exists ? (orgSnap.data().categories ?? []) : []
+  if (categories.length === 0) {
+    throw new HttpsError('permission-denied', `${email} doesn't have organizer access.`)
+  }
+
+  const shiftsSnap = await db.collection(`events/${eventId}/shifts`)
+    .where('category', 'in', categories.slice(0, 30))
+    .get()
+  const shifts = shiftsSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
+
+  const shiftIds = shifts.map((s) => s.id)
+  let roster = []
+  if (shiftIds.length > 0) {
+    // 'in' caps at 30 values; chunk in case an organizer's categories span
+    // more shifts than that.
+    const chunks = []
+    for (let i = 0; i < shiftIds.length; i += 30) chunks.push(shiftIds.slice(i, i + 30))
+    const results = await Promise.all(chunks.map((chunk) =>
+      db.collection('signups')
+        .where('eventId', '==', eventId)
+        .where('status', '==', 'active')
+        .where('shiftId', 'in', chunk)
+        .get(),
+    ))
+    roster = results.flatMap((snap) => snap.docs.map((d) => ({ id: d.id, ...d.data() })))
+  }
+
+  return { shifts, roster }
+})
+
 function escapeHtml(s) {
   return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
 }
