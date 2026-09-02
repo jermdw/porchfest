@@ -14,7 +14,11 @@
 #     (hosting admin; rules admin so a security-rule change ships with the page
 #     that depends on it; functions developer + serviceAccountUser to act as the
 #     runtime SA; read-only on secrets/APIs/registry so the CLI's pre-deploy
-#     checks pass). No editor/owner.
+#     checks pass; run admin because deploying a *new* 2nd-gen function makes
+#     the CLI set the invoker IAM policy directly on the underlying Cloud Run
+#     service, which needs run.services.setIamPolicy — run.viewer isn't enough
+#     and the deploy fails only on brand-new functions, not updates to
+#     existing ones). No editor/owner.
 #
 #     Re-run this script after adding a role — it is idempotent, and the deploy
 #     workflow fails loudly on the missing permission until you do.
@@ -73,7 +77,7 @@ for role in \
   roles/secretmanager.viewer \
   roles/serviceusage.serviceUsageViewer \
   roles/artifactregistry.reader \
-  roles/run.viewer
+  roles/run.admin
 do
   bind_project_role "$role"
   echo "   $role"
