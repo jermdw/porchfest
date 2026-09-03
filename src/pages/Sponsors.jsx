@@ -67,10 +67,14 @@ export default function Sponsors() {
                       // These were eager on the argument that a lazy image which
                       // never intersects stays invisible. Measured on a 390 px
                       // phone, 32 of the 34 logos start below the fold and the
-                      // grid pulls 530 kB up front — on the congested network
-                      // outside the festival. Lazy images still load on scroll,
-                      // and both Chrome and Safari force-load them before
-                      // printing, so nothing is actually lost.
+                      // grid pulls 539 kB up front — on the congested network
+                      // outside the festival. Verified that scrolling still
+                      // brings all 34 in, so nothing is lost on screen.
+                      // Printing is the one case NOT verified: the spec does
+                      // not require a lazy image to load for print. This page
+                      // has no print styles and is not a print target, but test
+                      // it before printing the grid — and drop the attribute
+                      // here if the roster ever needs to print reliably.
                       <img
                         src={logo}
                         alt={name}

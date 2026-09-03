@@ -43,15 +43,21 @@ export default function MapCanvas({
   //
   // Sized from the pin, not picked by eye. The offset below is divided by the
   // stage scale and the pin is then scaled by its inverse, so a fanned pin sits
-  // a constant FAN_RADIUS_PX from its true position on screen at every zoom —
-  // and two fanned pins are always 2R apart. At R=11 that was 22 px between the
-  // centres of two 36 px pins, i.e. a 14 px overlap: their tap targets were
-  // partly the same pixels, so a tap near the seam hit whichever happened to be
-  // on top. R=22 puts the centres 44 px apart, clearing the 36 px mobile pin
-  // with room to spare and leaving the 44 px sm:+ pin exactly touching rather
-  // than overlapping. Larger would start to misplace the pin: at default zoom
-  // one screen pixel is roughly 2 m of Senoia.
-  const FAN_RADIUS_PX = 22
+  // a constant number of screen pixels from its true position at every zoom.
+  //
+  // Members sit on a circle, so adjacent centres are 2R*sin(PI/N) apart — that
+  // shrinks as N grows, and a radius tuned for a pair silently under-separates
+  // a trio. Solving for the pin width instead (R = W / (2*sin(PI/N))) keeps
+  // every adjacent pair at least one pin apart whatever N turns out to be.
+  // W is the widest the pin gets (44 px at sm:+), so the 36 px mobile pin has
+  // room to spare. Today only one pair is affected — First Aid and the Kid's
+  // Area at Pylant & Gin — where this yields R=22, replacing an R=11 that put
+  // two 36 px pins 22 px apart: a 14 px overlap, so a tap near the seam hit
+  // whichever pin happened to be stacked on top. Kept to a floor of 22 so a
+  // pair never fans tighter than that, and no larger than it must be: at
+  // default zoom one screen pixel is roughly 2 m of Senoia.
+  const PIN_WIDTH_PX = 44
+  const MIN_FAN_RADIUS_PX = 22
   const groups = new Map()
   placed.forEach((p) => {
     const key = `${p.pos.x.toFixed(4)},${p.pos.y.toFixed(4)}`
@@ -61,11 +67,15 @@ export default function MapCanvas({
   })
   groups.forEach((members) => {
     if (members.length < 2) return
+    const radius = Math.max(
+      MIN_FAN_RADIUS_PX,
+      PIN_WIDTH_PX / (2 * Math.sin(Math.PI / members.length)),
+    )
     members.forEach((m, i) => {
       const angle = (i / members.length) * 2 * Math.PI - Math.PI / 2
       m.fan = {
-        dx: Math.cos(angle) * FAN_RADIUS_PX,
-        dy: Math.sin(angle) * FAN_RADIUS_PX,
+        dx: Math.cos(angle) * radius,
+        dy: Math.sin(angle) * radius,
       }
     })
   })
