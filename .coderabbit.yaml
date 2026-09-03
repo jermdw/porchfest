@@ -12,13 +12,18 @@ reviews:
   poem: false
   sequence_diagrams: true
   
+  # Allowlist: once any non-"!" pattern is present, only matching paths are
+  # reviewed. Scoped to the app code that actually carries risk (React/
+  # Firebase client, Cloud Functions) -- everything else (scripts/, docs,
+  # data/, public/, the sign-tower/print tooling, etc.) is skipped.
   path_filters:
+    - "src/**"
+    - "functions/**"
+    - "!src/assets/**"
     - "!**/node_modules/**"
     - "!**/dist/**"
-    - "!**/emulator-data/**"
     - "!**/*.lock"
     - "!**/package-lock.json"
-    - "!**/public/assets/**"
 
   instructions: |
     - We use React 19, TypeScript, Tailwind CSS v4, and Firebase.
