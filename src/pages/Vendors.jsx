@@ -53,6 +53,8 @@ export default function Vendors() {
                       alt={name}
                       width={w}
                       height={h}
+                      loading="lazy"
+                      decoding="async"
                       className="max-h-full max-w-full w-auto h-auto object-contain"
                     />
                   )

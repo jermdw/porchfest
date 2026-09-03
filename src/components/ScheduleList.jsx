@@ -1,8 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
-import { formatTime, isShowDay, getCurrentSlot } from '../lib/showTime.js'
+import { formatTime, isShowDay, getCurrentSlot, NOW_TICK_MS } from '../lib/showTime.js'
 import { publishedPerformances } from '../data/schedule.js'
-
-const TICK_MS = 30_000
 
 export default function ScheduleList({ onSelectPoi, now }) {
   const [clock, setClock] = useState(() => now ?? new Date())
@@ -11,7 +9,7 @@ export default function ScheduleList({ onSelectPoi, now }) {
 
   useEffect(() => {
     if (now) return undefined
-    const id = setInterval(() => setClock(new Date()), TICK_MS)
+    const id = setInterval(() => setClock(new Date()), NOW_TICK_MS)
     return () => clearInterval(id)
   }, [now])
 

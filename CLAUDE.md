@@ -192,6 +192,24 @@ or deployed).
   `src/firebase.js`, and flip `enforceAppCheck` in `functions/index.js` in the
   same deploy — enforcing before the client has a key breaks every signup.
 - **New Hosting domains** must be added to Firebase Auth authorized domains.
+- **`firebase.json` cache rules, in order.** `/assets/**` is content-hashed by
+  Vite, so it is `immutable`. Root-level artwork (`/*.@(webp|png|jpg|jpeg|gif|svg|pdf|ico)`)
+  keeps stable filenames, so it gets `max-age=86400, stale-while-revalidate=604800`
+  and NOT `immutable` — a corrected file would otherwise be stranded in caches.
+  A single `*` never crosses a slash, so that rule cannot reach `/assets`. Routes
+  and the shell stay `no-cache` via `^/[^.]*$` (matches only dot-free paths) and
+  the explicit `/index.html`. **Replacing artwork in place does not propagate
+  quickly:** for the first day a phone serves its cached copy without asking,
+  and for the seven days after that `stale-while-revalidate` lets it serve the
+  stale copy *immediately* while refreshing in the background — so a returning
+  visitor sees the old file once more before the new one appears. (Safari does
+  not implement `stale-while-revalidate`, so it revalidates once the day is up.)
+  To publish corrected artwork immediately, **rename the file** and update the
+  reference; that is the only way to bust it for everyone at once.
+- **No comment keys in `firebase.json`.** The Firebase config schema sets
+  `additionalProperties: false` on header entries, so a `"//": "..."` key fails
+  validation *at deploy time* — the hosting emulator accepts it happily, so this
+  passes local testing and then breaks CI. Explain header rules here instead.
 - `RESEND_API_KEY` is a Functions secret; sending is skipped when the value
   starts with `placeholder`. Rebind requires a functions deploy.
 - `html` background is `ink` on purpose — iOS overscroll must match the footer.
