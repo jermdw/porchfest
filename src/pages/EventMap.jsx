@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
@@ -7,7 +7,7 @@ import MapCanvas from '../components/MapCanvas.jsx'
 import PoiList from '../components/PoiList.jsx'
 import ScheduleList from '../components/ScheduleList.jsx'
 import usePageMeta from '../lib/usePageMeta.js'
-import { TIME_SLOT_OPTIONS } from '../lib/showTime.js'
+import { TIME_SLOT_OPTIONS, NOW_TICK_MS } from '../lib/showTime.js'
 import {
   CATEGORIES,
   publishedPois,
@@ -32,6 +32,19 @@ export default function EventMap() {
 
   const [active, setActive] = useState(() => categories.map((c) => c.id))
   const [timeSlot, setTimeSlot] = useState('all')
+
+  // `⚡ Playing Now` resolves the live slot inside isPoiActiveInSlot at render
+  // time, so with nothing re-rendering the map it keeps lighting whichever hour
+  // was current when the page opened — someone who opened it at 3:50 still sees
+  // the 3pm porches at 4:10. ScheduleList already ticks for the same reason.
+  // Only runs while that filter is selected, so a map left open on any other
+  // filter stays completely idle.
+  const [, setNowTick] = useState(0)
+  useEffect(() => {
+    if (timeSlot !== 'now') return undefined
+    const id = setInterval(() => setNowTick((n) => n + 1), NOW_TICK_MS)
+    return () => clearInterval(id)
+  }, [timeSlot])
 
   // ?poi=<id> lets a QR code on a sign deep-link straight to one location.
   const [searchParams, setSearchParams] = useSearchParams()

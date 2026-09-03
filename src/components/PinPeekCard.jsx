@@ -19,7 +19,7 @@ export default function PinPeekCard({ poi, onClose, activeTimeSlot }) {
       ref={cardRef}
       role="region"
       aria-label={`${poi.name} details`}
-      className="absolute bottom-3 left-3 right-3 z-30 bg-ink text-cream rounded-xl shadow-2xl p-4 border border-pale/25 max-h-[60%] flex flex-col pointer-events-auto transition-all animate-in fade-in slide-in-from-bottom-3 duration-200"
+      className="absolute bottom-3 left-3 right-3 z-30 bg-ink text-cream rounded-xl shadow-2xl p-4 border border-pale/25 max-h-[60%] flex flex-col pointer-events-auto pf-slide-up"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-3 pb-2 border-b border-pale/20">

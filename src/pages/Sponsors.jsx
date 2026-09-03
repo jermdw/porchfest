@@ -69,6 +69,7 @@ export default function Sponsors() {
                         alt={name}
                         width={w}
                         height={h}
+                        decoding="async"
                         className="max-h-full max-w-full w-auto h-auto object-contain"
                       />
                     ) : (

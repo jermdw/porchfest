@@ -47,6 +47,11 @@ export function currentEntryIndex(schedule, now = new Date()) {
   return index
 }
 
+// How often anything showing "⚡ Playing Now" must re-read the clock. The slot
+// helpers below resolve `now` at call time, so a component that never re-renders
+// keeps rendering the slot that was live when it mounted.
+export const NOW_TICK_MS = 30_000
+
 export const TIME_SLOT_OPTIONS = [
   { id: 'all', label: 'All Sets' },
   { id: 'now', label: '⚡ Playing Now' },

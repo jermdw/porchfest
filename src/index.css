@@ -51,6 +51,34 @@ html {
   background-color: var(--color-ink);
 }
 
+/* The pin peek sheet and the map's toast were written with `animate-in`,
+   `fade-in` and `slide-in-from-bottom-3` — tailwindcss-animate utilities. That
+   plugin was never a dependency, so the classes compiled to nothing and both
+   elements simply popped in. These are the equivalents, in brand-local names so
+   nothing shadows a real Tailwind utility. Both respect reduced-motion: the peek
+   sheet appears over a map the visitor is actively panning, which is exactly the
+   context motion sensitivity cares about. */
+@keyframes pf-fade-in {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+@keyframes pf-slide-up {
+  from { opacity: 0; transform: translateY(0.75rem) }
+  to { opacity: 1; transform: none }
+}
+.pf-fade-in {
+  animation: pf-fade-in 200ms ease-out both;
+}
+.pf-slide-up {
+  animation: pf-slide-up 200ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-fade-in,
+  .pf-slide-up {
+    animation: none;
+  }
+}
+
 /* Utilities for touch devices & map UI */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

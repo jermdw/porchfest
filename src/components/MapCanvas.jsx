@@ -184,11 +184,19 @@ export default function MapCanvas({
         className="relative overflow-hidden rounded-xl border border-stone-200 bg-white aspect-[1478/1339] select-none"
       >
         <div ref={stageRef} className="relative w-full h-full origin-center">
+          {/* fetchPriority: this is /map's LCP element, and the browser cannot
+              discover it until React has mounted — measured at ~650 ms of load
+              delay on Slow 4G. The hint lets it outrank the fonts and GTM. It
+              needs no <link rel=preload>: the path is static and unhashed, so a
+              hand-written preload could not go stale, but the hint alone is
+              enough once the tag is in the DOM. */}
           <img
             src={BASE_MAP}
             alt="Street map of historic Senoia showing Main Street and the surrounding PorchFest neighborhoods."
             className="w-full h-full object-cover select-none pointer-events-none"
             draggable="false"
+            fetchPriority="high"
+            decoding="async"
           />
 
           {/* User Location Pulsing Dot */}
@@ -314,7 +322,7 @@ export default function MapCanvas({
         {/* Geolocation & Touch Hints Toast */}
         {(locationToast || showTouchHint) && (
           <div className="absolute top-3 right-3 left-16 sm:left-20 pointer-events-none z-20 transition-all">
-            <div className="bg-ink/90 text-cream text-xs px-3 py-2 rounded-lg shadow-lg border border-pale/20 backdrop-blur text-center animate-in fade-in">
+            <div className="bg-ink/90 text-cream text-xs px-3 py-2 rounded-lg shadow-lg border border-pale/20 backdrop-blur text-center pf-fade-in">
               {locationToast || '💡 Tip: Use two fingers to pinch & zoom map'}
             </div>
           </div>
