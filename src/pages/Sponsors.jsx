@@ -61,14 +61,22 @@ export default function Sponsors() {
                       // Logos vary widely in aspect ratio; contain them in a
                       // fixed-height cell so the rows stay tidy. width/height
                       // carry the intrinsic ratio so the grid doesn't shift as
-                      // they load. Deliberately not lazy: these are the whole
-                      // point of the page and ~400 kB in total, and a lazy image
-                      // that never intersects stays invisible.
+                      // they load — which is also what keeps lazy loading free
+                      // of layout shift.
+                      //
+                      // These were eager on the argument that a lazy image which
+                      // never intersects stays invisible. Measured on a 390 px
+                      // phone, 32 of the 34 logos start below the fold and the
+                      // grid pulls 530 kB up front — on the congested network
+                      // outside the festival. Lazy images still load on scroll,
+                      // and both Chrome and Safari force-load them before
+                      // printing, so nothing is actually lost.
                       <img
                         src={logo}
                         alt={name}
                         width={w}
                         height={h}
+                        loading="lazy"
                         decoding="async"
                         className="max-h-full max-w-full w-auto h-auto object-contain"
                       />

@@ -38,8 +38,20 @@ export default function MapCanvas({
     .filter((p) => isWithinMap(p.lat, p.lon))
     .map((p) => ({ poi: p, pos: toPercent(p.lat, p.lon) }))
 
-  // Pin fan-out for items sharing exact coordinates (e.g. first aid and merch tent at Pylant & Gin)
-  const FAN_RADIUS_PX = 11
+  // Pin fan-out for items sharing exact coordinates (e.g. first aid and the
+  // kid's area at Pylant & Gin).
+  //
+  // Sized from the pin, not picked by eye. The offset below is divided by the
+  // stage scale and the pin is then scaled by its inverse, so a fanned pin sits
+  // a constant FAN_RADIUS_PX from its true position on screen at every zoom —
+  // and two fanned pins are always 2R apart. At R=11 that was 22 px between the
+  // centres of two 36 px pins, i.e. a 14 px overlap: their tap targets were
+  // partly the same pixels, so a tap near the seam hit whichever happened to be
+  // on top. R=22 puts the centres 44 px apart, clearing the 36 px mobile pin
+  // with room to spare and leaving the 44 px sm:+ pin exactly touching rather
+  // than overlapping. Larger would start to misplace the pin: at default zoom
+  // one screen pixel is roughly 2 m of Senoia.
+  const FAN_RADIUS_PX = 22
   const groups = new Map()
   placed.forEach((p) => {
     const key = `${p.pos.x.toFixed(4)},${p.pos.y.toFixed(4)}`
