@@ -116,7 +116,7 @@ export default function Bands() {
               to="/map"
               className="inline-flex items-center gap-1.5 border border-pale/40 hover:border-cream text-pale hover:text-cream font-display uppercase tracking-wider px-4 py-2.5 rounded-lg text-xs transition-colors"
             >
-              <span>🗺️ Interactive Day-Of Map</span>
+              <span>🗺️ Interactive Map</span>
             </Link>
           </div>
         </div>

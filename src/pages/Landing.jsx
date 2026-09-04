@@ -18,7 +18,7 @@ const SECTIONS = [
   },
   {
     to: '/map',
-    title: 'Day Of',
+    title: 'Map',
     text: 'The interactive festival map: porch stages, food, parking, and more.',
   },
   {
