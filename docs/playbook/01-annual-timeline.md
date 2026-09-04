@@ -10,7 +10,7 @@ First commit 2026-08-14; the event was Sunday 2026-09-06.
 | Date | T-minus | What landed |
 | --- | --- | --- |
 | Aug 14 | T-23 | Site stood up (adapted from the Senoia Car Show), lineup, day-of map, brand inks, volunteer shifts |
-| Aug 14–15 | T-23 | **First 13 stage-sponsor yard signs** generated and sent to print |
+| Aug 14–15 | T-23 | **First 13 stage-sponsor yard signs** generated and sent to print (from working notes — the generator itself was not committed until Aug 31) |
 | Aug 15 | T-22 | SEO plumbing: robots, sitemap, per-route meta, Event JSON-LD, social cards |
 | Aug 16 | T-21 | `/vip` ticketing live; mobile map overhaul; first printable lineup card |
 | Aug 18 | T-19 | `/sponsors` page; CI auto-deploy on merge to `main`; day-of map PDF |

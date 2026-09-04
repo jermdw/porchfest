@@ -160,6 +160,68 @@ rotated 90°.
 
 ---
 
+## Who already has a stage-sponsor sign
+
+Built across five batches in 2026. **Check this before sourcing anything** — most
+of the roster is already done, and the delivered PDFs and zips should be archived
+in the DDA's Drive rather than left in one person's Downloads folder.
+
+| Sponsor | Notes |
+| --- | --- |
+| Senoia Farmers' Market | |
+| Andreone Sports & Family Chiropractic | |
+| Senoia Bicycle | |
+| 4 Rivers Antiques | Teal field is load-bearing — keep it, crop to a plaque |
+| A Abby Group | |
+| Bella Medical Aesthetics | |
+| Mahaffey Linkous Orthodontics | |
+| Bragassa Orthodontics | True vector on their own site — see below |
+| Senoia Family Dentistry | |
+| Vaulted Vintage | |
+| Senoia Coffee | |
+| Knife & Stone | |
+| Pollard Residential Waste Services | |
+| Filmore's Garage | White knockout on solid black; pre-crop to a plaque. One `l` |
+| The Veranda Inn | Facebook Graph rescued this one (nothing else existed) |
+| Senoia Area Historical Society | **Two variants shipped** — the DDA picks |
+| Senoia Downtown Development Authority | |
+| Senoia Beer Co | Pure-white knockout, shape in alpha |
+| Pearl & Pine Brewery | Facebook Graph |
+| Crust & Craft | Best straight-from-source of the batch (2000 × 2000 roundel) |
+| Nic & Norman's | Facebook Graph; fit an ellipse and composite outside it |
+| Borgo Italia | Pure-white knockout |
+| Maguire's Irish Pub | Facebook Graph; threshold out the green field |
+| doTERRA | True vector SVG on doterra.com; reseller name as `subtitle` |
+| Senoia Enterprises | enjoysenoia partner page, 2400 × 1200 CMYK |
+| Miss Dottie's | Only a 488 × 488 source — a bigger one would be worth finding |
+| Señor Taco | Spelled with the ñ, matching their own logo |
+| Kimberly Peacock | Use the 2000 × 2000 JPEG (see the warning below) |
+| PorchFest Co-Chairs | Name-only by nature — people, not a business. Set in **flag red**, which supersedes an earlier blue version |
+| Kid's Area (area sign, 24 × 36) | Bragassa + Coweta Charter Academy |
+| Cooling Tent (area sign) | Progressive Heating, Air & Plumbing |
+
+### Sources worth not re-finding
+
+- **Bragassa Orthodontics** — `bragassaorthodontics.com/wp-content/uploads/2025/06/Bragassa-Horizontal-Color.svg`,
+  true vector, full colour. Do **not** use `Brand-Logo.svg` / `Brand-Logo-1.svg`
+  from the same site despite the promising names: those are an Invisalign
+  provider badge, not the practice's logo.
+- **doTERRA** — `doterra.com/_ui/desktop/common/images/wqa/doTERRA Essential Oil.svg`.
+  The `-small.svg` beside it is a fragment (a lone "o"), not a mark.
+- **Crust & Craft** — a 2000 × 2000 black-on-white roundel on their menu platform's CDN.
+- **Coweta Charter Academy** — enjoysenoia partner page, 584 × 360. Better than
+  the repo's 400 × 215.
+- **Peachtree Oral & Facial Surgery** — `peachtreeomfs.com/wp-content/uploads/2021/05/Peachtree-Full-logo.png`
+  (546 × 202). Their media library holds nothing larger. Two-colour: navy
+  `#104B7D` + olive `#737B35`.
+- **Progressive Heating, Air & Plumbing** — `progressiveac.com/.../header-logo@3x.png`
+  (858 × 465). Prefer it over enjoysenoia's higher-pixel photo of a van decal:
+  crisp edges print better than a noisy JPEG at any real size. Their Facebook
+  slug does **not** resolve through the Graph trick — don't retry that path.
+
+Print-resolution copies of the marks the in-repo generators use are committed in
+`scripts/assets/` and `scripts/signtower/assets/`.
+
 ## Recording what you find
 
 When you finish a batch, write down **the source for each logo** — the exact URL
