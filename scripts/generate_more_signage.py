@@ -121,37 +121,39 @@ def sign_vip_sold_out(doc):
 
 
 def sign_cooling_tent(doc):
-    """PROVIDED BY / [Progressive logo] / rule / COOLING TENT -- the same
-    eyebrow-logo-rule-headline stack as `base.sign_food_truck_alley`, just
-    with different words and a different sponsor. Kept as its own function
-    (rather than calling that one with swapped strings) because that one is
-    documented as a one-off inversion done at the DDA's specific request;
-    duplicating its ~25 lines here keeps that reasoning from silently
-    applying to a sign nobody asked to invert.
+    """COOLING TENT / PROVIDED BY: / rule / [Progressive logo] -- headline
+    first, sponsor logo last: the standard porch-sponsor sign order ("This
+    Stage Sponsored by:" then the name/logo), not the Food Truck Alley
+    sign's logo-first inversion this originally copied. Changed on request
+    after the first version shipped with the logo above the words.
     """
     page = base.new_yard(doc)
-    g1, g2, rule_th, g3 = 54, 62, 13, 48
+    line1, line2 = 'COOLING TENT', 'PROVIDED BY:'
+    aw = base.BAND[2] - base.BAND[0]
+    band_h = base.BAND[3] - base.BAND[1]
 
-    sb_size = 80
-    sb_h = sb_size * base.CAP
+    # One size across both lines so they read as a matched pair.
+    h_size = min(base.best_layout(t, aw, 460, 300, 1, glue=False)[0]
+                 for t in (line1, line2))
+    head_h = base.block_height(h_size, [line1, line2])
+
+    g1, rule_th, g2 = 40, 13, 44
+    logo_h_avail = band_h - head_h - g1 - rule_th - g2
 
     prepped, pw, ph = base.prep_logo(PROGRESSIVE_LOGO, cache_key='_progressive')
-    lw, lh = base.fit_logo(pw, ph, base.BAND[2] - base.BAND[0], 560, min_dpi=52)
+    lw, lh = base.fit_logo(pw, ph, aw, logo_h_avail, min_dpi=52)
 
-    size, lines = base.best_layout('COOLING TENT', lw, 420, 200, 1)
-    th = base.block_height(size, lines)
-
-    top = base._band_top(sb_h + g1 + lh + g2 + rule_th + g3 + th)
+    group_h = head_h + g1 + rule_th + g2 + lh
+    top = base._band_top(group_h)
     cx = base.YARD_W / 2
-    base.draw_tracked(page, 'PROVIDED BY', sb_size, cx, top, base.ROYAL)
-    y = top + sb_h + g1
+
+    base.draw_lines(page, [line1, line2], h_size, top, base.ROYAL, cx)
+    y = top + head_h + g1
+    base.draw_rule(page, cx, y, 460, base.FLAG, rule_th)
+    y += rule_th + g2
     page.insert_image(
         pymupdf.Rect(cx - lw / 2, y, cx + lw / 2, y + lh),
         filename=prepped)
-    y += lh + g2
-    base.draw_rule(page, cx, y, 720, base.FLAG, rule_th)
-    y += rule_th + g3
-    base.draw_lines(page, lines, size, y, base.ROYAL, cx)
     base.place_dove(page, base.YARD_W, base.YARD_H)
 
 
