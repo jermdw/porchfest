@@ -1,0 +1,593 @@
+<title>PorchFest Organizer's Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" />
+<meta charset="utf-8" />
+<style>
+:root{
+  --ground:#F5F1E6; --surface:#FFFCF2; --raised:#EFE9D8;
+  --ink:#101D3A; --ink-soft:#55608A; --ink-faint:#7C8099;
+  --flag:#B02A30; --flag-soft:#F0DEDA;
+  --rule:#DCD5C0; --code-bg:#EBE4D1;
+  --shadow:0 1px 2px rgba(16,29,58,.06);
+}
+:root:not([data-theme="light"]){ color-scheme:light; }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0C1730; --surface:#132145; --raised:#1B2C57;
+    --ink:#F2EEE2; --ink-soft:#B9C1DC; --ink-faint:#8A93B4;
+    --flag:#E97B74; --flag-soft:#3A1D22;
+    --rule:#2A3A66; --code-bg:#081128;
+    --shadow:0 1px 2px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0C1730; --surface:#132145; --raised:#1B2C57;
+  --ink:#F2EEE2; --ink-soft:#B9C1DC; --ink-faint:#8A93B4;
+  --flag:#E97B74; --flag-soft:#3A1D22;
+  --rule:#2A3A66; --code-bg:#081128;
+  --shadow:0 1px 2px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){ *{transition-duration:.01ms !important; scroll-behavior:auto !important;} }
+html{scroll-behavior:smooth;}
+
+.wrap{max-width:1180px; margin:0 auto; padding:0 24px; display:grid; gap:48px;
+      grid-template-columns:224px minmax(0,1fr); align-items:start;}
+@media (max-width:900px){ .wrap{grid-template-columns:minmax(0,1fr); gap:0;} }
+
+/* ---- masthead ---- */
+.mast{border-bottom:2px solid var(--ink); background:var(--surface);}
+.mast-in{max-width:1180px; margin:0 auto; padding:40px 24px 28px;}
+.eyebrow{font-family:Oswald,"Arial Narrow",sans-serif; font-weight:600; font-size:12px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--flag); margin:0 0 10px;}
+h1.title{font-family:Oswald,"Arial Narrow",sans-serif; font-weight:700;
+  font-size:clamp(34px,6vw,56px); line-height:1.02; letter-spacing:-.01em;
+  text-transform:uppercase; margin:0; text-wrap:balance;}
+.standfirst{margin:14px 0 0; max-width:60ch; color:var(--ink-soft); font-size:17px;}
+
+/* ---- chapter rail ---- */
+nav.rail{position:sticky; top:24px; padding:32px 0; font-size:13.5px;}
+@media (max-width:900px){ nav.rail{position:static; padding:24px 0 0; border-bottom:1px solid var(--rule);} }
+nav.rail h2{font-family:Oswald,"Arial Narrow",sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 12px;}
+nav.rail ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px;}
+nav.rail a{display:grid; grid-template-columns:26px 1fr; gap:6px; padding:5px 8px;
+  border-radius:4px; text-decoration:none; color:var(--ink-soft); border-left:2px solid transparent;}
+nav.rail a:hover{background:var(--raised); color:var(--ink);}
+nav.rail a .n{font-family:Oswald,"Arial Narrow",sans-serif; font-weight:600; color:var(--flag);
+  font-variant-numeric:tabular-nums;}
+
+/* ---- content ---- */
+main{padding:32px 0 96px; min-width:0;}
+.chapter{padding-top:28px;}
+.chapter + .chapter{margin-top:56px; border-top:1px solid var(--rule);}
+.chapter > .ch-head{display:flex; align-items:baseline; gap:12px; margin:0 0 4px;}
+.ch-num{font-family:Oswald,"Arial Narrow",sans-serif; font-weight:700; font-size:13px;
+  letter-spacing:.14em; color:var(--flag); font-variant-numeric:tabular-nums;}
+h2.ch-title{font-family:Oswald,"Arial Narrow",sans-serif; font-weight:700;
+  font-size:clamp(26px,3.4vw,36px); text-transform:uppercase; letter-spacing:-.005em;
+  margin:0 0 20px; line-height:1.08; text-wrap:balance;}
+
+main h2:not(.ch-title){font-family:Oswald,"Arial Narrow",sans-serif; font-weight:600;
+  font-size:23px; text-transform:uppercase; letter-spacing:.01em;
+  margin:38px 0 12px; padding-bottom:6px; border-bottom:1px solid var(--rule); text-wrap:balance;}
+main h3{font-family:Oswald,"Arial Narrow",sans-serif; font-weight:600; font-size:18px;
+  margin:28px 0 8px; text-wrap:balance;}
+main h4{font-size:15px; font-weight:700; margin:20px 0 6px; color:var(--ink-soft);}
+main p, main li{max-width:70ch;}
+main p{margin:0 0 14px;}
+main ul, main ol{margin:0 0 16px; padding-left:22px; display:flex; flex-direction:column; gap:7px;}
+li.task{list-style:none; margin-left:-22px; display:flex; gap:9px; align-items:flex-start;}
+li.task input{margin-top:5px;}
+hr{border:0; border-top:1px solid var(--rule); margin:34px 0;}
+a{color:var(--flag); text-underline-offset:2px;}
+a:focus-visible, nav.rail a:focus-visible{outline:2px solid var(--flag); outline-offset:2px; border-radius:3px;}
+strong{font-weight:700;}
+
+.anchor{opacity:0; text-decoration:none; margin-left:-16px; padding-right:6px;
+  color:var(--ink-faint); font-weight:400;}
+h2:hover .anchor, h3:hover .anchor, h4:hover .anchor, .anchor:focus{opacity:1;}
+
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.875em;
+  background:var(--code-bg); padding:.1em .35em; border-radius:3px; word-break:break-word;}
+pre{background:var(--code-bg); border:1px solid var(--rule); border-left:3px solid var(--flag);
+  border-radius:4px; padding:13px 15px; overflow-x:auto; margin:0 0 18px;}
+pre code{background:none; padding:0; font-size:13px; line-height:1.55;}
+
+blockquote{margin:0 0 18px; padding:13px 16px; background:var(--flag-soft);
+  border-left:3px solid var(--flag); border-radius:0 4px 4px 0;}
+blockquote p:last-child, blockquote ul:last-child, blockquote ol:last-child{margin-bottom:0;}
+blockquote p{max-width:66ch;}
+
+.scroll{overflow-x:auto; margin:0 0 20px; border:1px solid var(--rule);
+  border-radius:5px; background:var(--surface); box-shadow:var(--shadow);}
+table{border-collapse:collapse; width:100%; font-size:14.5px;}
+th,td{text-align:left; padding:9px 13px; border-bottom:1px solid var(--rule); vertical-align:top;}
+th{font-family:Oswald,"Arial Narrow",sans-serif; font-weight:600; font-size:12px;
+  letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft);
+  background:var(--raised); white-space:nowrap;}
+tbody tr:last-child td{border-bottom:0;}
+td code{white-space:nowrap;}
+
+details{border:1px solid var(--rule); border-radius:5px; padding:11px 15px;
+  margin:0 0 18px; background:var(--surface);}
+summary{cursor:pointer; font-weight:600; font-family:Oswald,"Arial Narrow",sans-serif;
+  letter-spacing:.02em;}
+details[open] summary{margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--rule);}
+
+footer{border-top:2px solid var(--ink); background:var(--surface); padding:26px 0 40px;}
+footer .fin{max-width:1180px; margin:0 auto; padding:0 24px; color:var(--ink-soft); font-size:14px;}
+footer code{font-size:13px;}
+</style>
+
+<header class="mast"><div class="mast-in">
+  <p class="eyebrow">Senoia PorchFest &middot; Internal reference</p>
+  <h1 class="title">The Organizer's Playbook</h1>
+  <p class="standfirst">How the festival gets built each year — the website, the
+  volunteer system, the ticketing, and every piece of print artwork. Written so
+  next year's planners can pick it up cold.</p>
+</div></header>
+<div class="wrap">
+  <nav class="rail" aria-label="Chapters">
+    <h2>Contents</h2>
+    <ol><li><a href="#top"><span class="n">00</span><span>Start here</span></a></li>
+    <li><a href="#ch01"><span class="n">01</span><span>Annual Timeline</span></a></li><li><a href="#ch02"><span class="n">02</span><span>Rollover Checklist</span></a></li><li><a href="#ch03"><span class="n">03</span><span>Website Operations</span></a></li><li><a href="#ch04"><span class="n">04</span><span>Volunteer System</span></a></li><li><a href="#ch05"><span class="n">05</span><span>Print &amp; Signage</span></a></li><li><a href="#ch06"><span class="n">06</span><span>Logo Sourcing</span></a></li><li><a href="#ch07"><span class="n">07</span><span>Accounts &amp; Access</span></a></li><li><a href="#ch08"><span class="n">08</span><span>Open Decisions &amp; Known Issues</span></a></li></ol>
+  </nav>
+  <main><section class="chapter" id="top"><p>How this festival gets built each year: the website, the volunteer system, the ticketing, and every piece of print artwork — written so that next year's planners can pick it up cold, a full year later, without re-deriving any of it.</p>
+<hr />
+<h2 id="top-two-rules-that-keep-this-document-alive"><a class="anchor" href="#top-two-rules-that-keep-this-document-alive" aria-label="Link to this section">#</a>Two rules that keep this document alive</h2>
+<h3 id="top-1-this-playbook-does-not-restate-event-facts"><a class="anchor" href="#top-1-this-playbook-does-not-restate-event-facts" aria-label="Link to this section">#</a>1. This playbook does not restate event facts</h3>
+<p>No act counts, porch counts, prices, dates, lineups, or rosters live in these pages. Those change, and a copy of them here would be a <strong>fifth</strong> hand-maintained copy of data that already drifts (see <a href="#ch08-the-four-hand-kept-copies-of-the-lineup">08 — the four hand-kept lineup copies</a>).</p>
+<p>This playbook records <strong>process, decisions, and traps</strong>. When you need a fact, it tells you which file owns it. If you find yourself pasting a lineup or a sponsor list in here, stop — put it in the file that owns it and link to that instead.</p>
+<h3 id="top-2-this-is-a-public-document"><a class="anchor" href="#top-2-this-is-a-public-document" aria-label="Link to this section">#</a>2. This is a public document</h3>
+<p>The repository is public, so everything here is world-readable. Keep it that way by keeping personal information out:</p>
+<ul><li><strong>No porch host names, and never a host name next to a home address.</strong> Porch hosts are private individuals lending their houses.</li><li><strong>No volunteer or organizer personal names</strong>, and no email addresses or phone numbers. Refer to roles: "the DDA coordinator," "the co-chairs."</li><li><strong>Sponsor and vendor businesses are fine</strong> — they are publicly listed on the site already. Their <em>contact people</em> are not.</li><li>Names, emails, the admin roster and vendor contacts belong in the <strong>private companion document</strong> kept in the DDA's Google Drive, not here. See <a href="#ch07">07 — Accounts &amp; Access</a>.</li></ul>
+<blockquote><p>lists five organizers' personal email addresses. See <a href="#ch08-pii-currently-public">08 — Open Decisions</a> for the decision to make.</p></blockquote>
+<hr />
+<h2 id="top-how-to-keep-this-current"><a class="anchor" href="#top-how-to-keep-this-current" aria-label="Link to this section">#</a>How to keep this current</h2>
+<p>This playbook is version-controlled next to the code it describes, which is the whole point: a change to the site and the change to its documentation go in the</p>
+<p>Google Doc or a wiki page silently does.</p>
+<p>So the maintenance rule is simply:</p>
+<blockquote></blockquote>
+<p>Practically, that means when you finish a piece of work, ask whether the next person would have needed twenty minutes to rediscover something you now know. If so, add it to the relevant chapter in the same PR. Most of this document was written that way.</p>
+<h3 id="top-where-each-kind-of-knowledge-goes"><a class="anchor" href="#top-where-each-kind-of-knowledge-goes" aria-label="Link to this section">#</a>Where each kind of knowledge goes</h3>
+<div class="scroll"><table><thead><tr><th>Kind of thing</th><th>Where it belongs</th></tr></thead><tbody><tr><td>How to do a recurring job</td><td>This playbook</td></tr><tr><td>Why the code is shaped the way it is</td><td><code>CLAUDE.md</code> (architecture, invariants, gotchas)</td></tr><tr><td>The brand's colours, type, logo rules</td><td><code>docs/brand-guide.html</code></td></tr><tr><td>How to build stage-sponsor signs, step by step</td><td><code>.claude/skills/porchfest-sponsor-signs/SKILL.md</code></td></tr><tr><td>Sign tower panel specifics</td><td><code>scripts/signtower/README.md</code></td></tr><tr><td>Event facts (lineup, map, sponsors, vendors, FAQ)</td><td><code>src/data/*.js</code></td></tr><tr><td>Names, emails, phone numbers, contracts</td><td>The DDA's private Drive — <strong>never this repo</strong></td></tr></tbody></table></div></section><section class="chapter" id="ch01"><div class="ch-head"><span class="ch-num">CHAPTER 01</span></div><h2 class="ch-title">Annual Timeline</h2><h2 id="ch01-what-actually-happened-in-2026"><a class="anchor" href="#ch01-what-actually-happened-in-2026" aria-label="Link to this section">#</a>What actually happened in 2026</h2>
+<p>The entire digital and print operation was built in <strong>three weeks and two days</strong>. First commit 2026-08-14; the event was Sunday 2026-09-06.</p>
+<div class="scroll"><table><thead><tr><th>Date</th><th>T-minus</th><th>What landed</th></tr></thead><tbody><tr><td>Aug 14</td><td>T-23</td><td>Site stood up (adapted from the Senoia Car Show), lineup, day-of map, brand inks, volunteer shifts</td></tr><tr><td>Aug 14–15</td><td>T-23</td><td><strong>First 13 stage-sponsor yard signs</strong> generated and sent to print</td></tr><tr><td>Aug 15</td><td>T-22</td><td>SEO plumbing: robots, sitemap, per-route meta, Event JSON-LD, social cards</td></tr><tr><td>Aug 16</td><td>T-21</td><td><code>/vip</code> ticketing live; mobile map overhaul; first printable lineup card</td></tr><tr><td>Aug 18</td><td>T-19</td><td><code>/sponsors</code> page; CI auto-deploy on merge to <code>main</code>; day-of map PDF</td></tr><tr><td>Aug 20</td><td>T-17</td><td>Google Tag Manager + GA4</td></tr><tr><td>Aug 21–26</td><td>T-16 → T-11</td><td>Nine PRs of sponsor/vendor roster churn as the roster kept changing</td></tr><tr><td>Aug 23–24</td><td>T-14</td><td><code>/vendors</code>, <code>/faq</code></td></tr><tr><td>Aug 28</td><td>T-9</td><td>Brand guide; <strong>VIP/wayfinding signage generator</strong>; personal data scrubbed from source comments</td></tr><tr><td>Aug 31</td><td>T-6</td><td>Sponsor-sign skill; <strong>sign tower (4 × 48×96in panels)</strong>; lineup changed twice; lineup card font fix</td></tr><tr><td>Sep 1–2</td><td>T-5 → T-4</td><td>Tower amenity icons; two late volunteer shifts; read-only organizer roster view</td></tr><tr><td>Sep 3</td><td>T-3</td><td>Two more yard signs; mobile + congested-network review</td></tr><tr><td>Sep 4</td><td>T-2</td><td><strong>Volunteer roster PDF</strong>; two more yard signs (VIP Sold Out, Cooling Tent)</td></tr><tr><td><strong>Sep 6</strong></td><td><strong>0</strong></td><td><strong>Festival</strong></td></tr></tbody></table></div>
+<h3 id="ch01-what-that-timeline-cost"><a class="anchor" href="#ch01-what-that-timeline-cost" aria-label="Link to this section">#</a>What that timeline cost</h3>
+<p>Read the right-hand column again. <strong>Print artwork was still being generated two days before the event</strong>, and the lineup changed at T-6 — after the first sponsor signs had already been printed and after tower panels had been laid out. Sponsor roster churn consumed nine separate pull requests because the roster was still moving while the pages were being built.</p>
+<p>None of that was a mistake by the people doing it; it was the consequence of starting at T-23. The single highest-leverage change for next year is <strong>starting the digital and print work earlier</strong>, and specifically <strong>locking the lineup before any artwork is generated</strong>.</p>
+<hr />
+<h2 id="ch01-recommended-timeline-for-next-year"><a class="anchor" href="#ch01-recommended-timeline-for-next-year" aria-label="Link to this section">#</a>Recommended timeline for next year</h2>
+<p>Anchor everything to event day. The dates below assume a Sunday event in early September; shift them wholesale if the date moves.</p>
+<h3 id="ch01-t-6-months-march-foundations"><a class="anchor" href="#ch01-t-6-months-march-foundations" aria-label="Link to this section">#</a>T-6 months (March) — Foundations</h3>
+<ul><li>Confirm the date with the City of Senoia; confirm DDA budget.</li><li>Decide whether the footprint changes (new streets, new porches). <strong>If the venue boundary moves, the map base image and its bounding box must be regenerated together</strong> — see <a href="#ch02-the-map-base-image">02 — Rollover</a>.</li></ul>
+<h3 id="ch01-t-5-months-april-money-in"><a class="anchor" href="#ch01-t-5-months-april-money-in" aria-label="Link to this section">#</a>T-5 months (April) — Money in</h3>
+<ul><li>Open sponsorship sales. Create the year's Ticket Tailor events (a <strong>new event per year</strong>, so new IDs and new URLs — see <a href="#ch02-6-ticketing">02</a>).</li><li>Start the sponsor roster as a spreadsheet the DDA owns. It will change all season; the website should read from it late, not early.</li></ul>
+<h3 id="ch01-t-4-to-t-3-months-mayjune-recruiting"><a class="anchor" href="#ch01-t-4-to-t-3-months-mayjune-recruiting" aria-label="Link to this section">#</a>T-4 to T-3 months (May–June) — Recruiting</h3>
+<ul><li>Recruit porch hosts and book bands. This is the long pole.</li><li>Begin collecting sponsor logos <strong>as sponsors sign</strong>, not in August. Ask every sponsor for print-resolution or vector artwork at signing — one line in the sponsorship agreement removes most of the work in <a href="#ch06">06 — Logo Sourcing</a>.</li></ul>
+<h3 id="ch01-t-2-months-july-roll-the-site-over"><a class="anchor" href="#ch01-t-2-months-july-roll-the-site-over" aria-label="Link to this section">#</a>T-2 months (July) — Roll the site over</h3>
+<ul><li>Run the whole of <a href="#ch02">02 — Rollover Checklist</a>.</li><li>Draft the volunteer shift CSV. Publish the site with the new date even if the lineup is still provisional.</li></ul>
+<h3 id="ch01-t-6-weeks-lineup-lock"><a class="anchor" href="#ch01-t-6-weeks-lineup-lock" aria-label="Link to this section">#</a>T-6 weeks — <strong>Lineup lock</strong></h3>
+<ul><li>This is the deadline that matters most. Every piece of print artwork derives from the lineup, and each late change means re-generating the lineup card, the tower lineup panel, the tower map panel, and possibly reprinting.</li><li>Communicate the lock date to the DDA and to band bookers explicitly, as a print deadline rather than a preference.</li></ul>
+<h3 id="ch01-t-4-weeks-print"><a class="anchor" href="#ch01-t-4-weeks-print" aria-label="Link to this section">#</a>T-4 weeks — Print</h3>
+<ul><li>Generate all artwork: stage-sponsor signs, wayfinding and VIP signs, the sign tower panels, the lineup card. See <a href="#ch05">05 — Print &amp; Signage</a>.</li><li>Send to the printer. Confirm the printer's own lead time and build backwards from it — this is the real constraint.</li><li>After lineup lock, run the drift check in <a href="#ch08-the-four-hand-kept-copies-of-the-lineup">08</a> against every hand-kept copy.</li></ul>
+<h3 id="ch01-t-3-weeks-open-volunteer-sign-ups"><a class="anchor" href="#ch01-t-3-weeks-open-volunteer-sign-ups" aria-label="Link to this section">#</a>T-3 weeks — Open volunteer sign-ups</h3>
+<ul><li>Seed shifts to production, confirm confirmation emails actually send (<a href="#ch04-confirmation-emails">04</a>), then publicise.</li><li>Verify admin sign-in works for every organizer <em>before</em> they need it.</li></ul>
+<h3 id="ch01-t-1-week-day-of-readiness"><a class="anchor" href="#ch01-t-1-week-day-of-readiness" aria-label="Link to this section">#</a>T-1 week — Day-of readiness</h3>
+<ul><li>Print the volunteer roster (<a href="#ch04-printable-roster">04</a>).</li><li>Walk the site with the printed map; check every pin against reality.</li><li>Test the live site on a phone on cellular data, not office wifi.</li></ul>
+<h3 id="ch01-event-day"><a class="anchor" href="#ch01-event-day" aria-label="Link to this section">#</a>Event day</h3>
+<ul><li>Keep one person able to deploy. Content changes to the SPA shell are served <code>no-cache</code>, so a corrected page appears immediately — but <strong>replacing artwork in place does not propagate</strong>; you must rename the file (<a href="#ch03-caching">03</a>).</li></ul>
+<h3 id="ch01-t1-week-close-the-loop"><a class="anchor" href="#ch01-t1-week-close-the-loop" aria-label="Link to this section">#</a>T+1 week — Close the loop</h3>
+<ul><li>Update this playbook while it is fresh. Record what changed, what broke, and what you had to figure out.</li><li>Archive the year's artwork somewhere durable, and note in <a href="#ch08">08</a> anything left unresolved.</li></ul>
+<hr />
+<h2 id="ch01-the-one-line-version"><a class="anchor" href="#ch01-the-one-line-version" aria-label="Link to this section">#</a>The one-line version</h2>
+<blockquote><p>Lock the lineup six weeks out. Everything painful in 2026 traces back to artwork being generated before the lineup stopped moving.</p></blockquote></section><section class="chapter" id="ch02"><div class="ch-head"><span class="ch-num">CHAPTER 02</span></div><h2 class="ch-title">Rollover Checklist</h2><p>Turning last year's site into this year's. Work top to bottom; the ordering matters where noted. Do this at <strong>T-2 months</strong>, before the lineup is final — the site can go live with the new date and a provisional lineup.</p>
+<p>Everything here is a code change, so it goes through a pull request and deploys on merge to <code>main</code>. See <a href="#ch03">03 — Website Operations</a>.</p>
+<hr />
+<h2 id="ch02-1-the-event-identifier"><a class="anchor" href="#ch02-1-the-event-identifier" aria-label="Link to this section">#</a>1. The event identifier</h2>
+<p><code>EVENT_ID</code> is the Firestore document under <code>events/</code> that holds the year's shifts. It appears in <strong>two</strong> files and they must agree, or the website and the seed script will read and write different years:</p>
+<ul><li><code>src/firebase.js</code> — <code>export const EVENT_ID = '2026'</code></li><li><code>scripts/seed-shifts.mjs</code> — <code>const EVENT_ID = '2026'</code></li></ul>
+<p>Changing it creates a fresh, empty event. Last year's shifts and sign-ups stay where they are, which is what you want: the previous year becomes an archive rather than being overwritten.</p>
+<h2 id="ch02-2-the-show-date"><a class="anchor" href="#ch02-2-the-show-date" aria-label="Link to this section">#</a>2. The show date</h2>
+<p><code>src/lib/showTime.js</code>:</p>
+<pre class="lang-js"><code>export const SHOW_DATE = { year: 2026, month: 8, day: 6 } // month is 0-indexed: Sept 6</code></pre>
+<blockquote><p>wrong and the "now playing" logic on <code>/map</code> silently never activates, which you will not notice until event day.</p></blockquote>
+<p>This drives the live "now playing" filters and the day-of behaviour. The timezone is fixed at <code>America/New_York</code>.</p>
+<h2 id="ch02-3-volunteer-days"><a class="anchor" href="#ch02-3-volunteer-days" aria-label="Link to this section">#</a>3. Volunteer days</h2>
+<p>Two places hardcode the three event dates, and both must match the CSV:</p>
+<ul><li><code>scripts/seed-shifts.mjs</code> — <code>DATE_MAP</code>, which maps the CSV's short day tokens to ISO dates: <code>`js const DATE_MAP = { '9/5': '2026-09-05', '9/6': '2026-09-06', '9/7': '2026-09-07' }</code>`</li><li><code>src/pages/Volunteer.jsx</code> — <code>DAY_LABELS</code>, the headings volunteers see (<code>'2026-09-06': 'Sunday, Sept 6 — PorchFest'</code>).</li><li><code>src/pages/Admin.jsx</code> — the day <code>&lt;select&gt;</code> options.</li></ul>
+<p>Rename <code>data/shifts_2026.csv</code> to the new year and update the day tokens inside.</p>
+<h2 id="ch02-4-the-lineup"><a class="anchor" href="#ch02-4-the-lineup" aria-label="Link to this section">#</a>4. The lineup</h2>
+<p><code>src/data/schedule.js</code> is the source of truth for <code>/schedule</code> and <code>/map</code> — and</p>
+<p>are a working checklist and are never rendered, so you can stage the lineup publicly-safely as bookings firm up.</p>
+<p>Four other copies of the lineup are maintained <strong>by hand</strong> and do not read this file. After any lineup edit, reconcile all of them — see <a href="#ch08-the-four-hand-kept-copies-of-the-lineup">08 — the four hand-kept copies</a>.</p>
+<h2 id="ch02-5-the-map"><a class="anchor" href="#ch02-5-the-map" aria-label="Link to this section">#</a>5. The map</h2>
+<p><code>src/data/eventMap.js</code>:</p>
+<ul><li><strong>Porch pins are derived</strong> from <code>schedule.js</code> — one numbered pin per address, listing its sets and genres. You do not hand-edit these.</li><li><strong>Amenity points of interest</strong> (restrooms, beverage stations, kids' area, parking, first aid, merch) <em>are</em> hand-maintained here. Re-check each against the current year's plan.</li></ul>
+<p>Coordinates come from Nominatim / TIGER house-number interpolation, or from OSM intersection nodes for street corners.</p>
+<h3 id="ch02-the-map-base-image"><a class="anchor" href="#ch02-the-map-base-image" aria-label="Link to this section">#</a>The map base image</h3>
+<p><code>src/lib/venueGeo.js</code> holds <code>BBOX</code>, the exact bounding box of the base image:</p>
+<pre class="lang-js"><code>export const BBOX = { west: -84.5595526, south: 33.2972713, east: -84.5516224, north: 33.303274 }</code></pre>
+<p>The base image (<code>public/venue-base-2026-web.webp</code>) is stitched OpenStreetMap tiles. <code>BBOX</code> is <strong>exact, not a calibration</strong> — the projection math converts latitude/longitude to a position on that image directly.</p>
+<blockquote><p>change.** Change one without the other and <em>every pin moves</em>, on the live <code>/map</code> and on the printed tower map alike.</p></blockquote>
+<p>Only regenerate if the festival footprint outgrows the current frame (~760 × 670 m: Main Street from Johnson to Broad, west through the Pylant / Morgan / Lower Creek Trail porches). Remote parking at the library sits outside the frame on purpose and gets directions rather than a pin.</p>
+<p><code>© OpenStreetMap contributors</code> as a link to the licence. The printed tower map spells the ODbL out in words, because a PDF has nothing to click.</p>
+<h2 id="ch02-6-ticketing"><a class="anchor" href="#ch02-6-ticketing" aria-label="Link to this section">#</a>6. Ticketing</h2>
+<p>Ticket Tailor is the DDA's account, and <strong>each year is a new event with new IDs and new URLs</strong>. Update <code>src/pages/Vip.jsx</code>.</p>
+<ul><li>The VIP Luxury Lounge checkout is embedded inline via <code>TicketTailorWidget</code>.</li><li>Sponsorships are a link-out.</li><li>Checkout happens on tickettailor.com — there is no payment code in this repo, and there should never be.</li></ul>
+<blockquote><p>whose <strong>parent element</strong> carries the class <code>tt-widget</code>. Restructure the markup around it and the widget silently fails to render.</p></blockquote>
+<h2 id="ch02-7-content-pages"><a class="anchor" href="#ch02-7-content-pages" aria-label="Link to this section">#</a>7. Content pages</h2>
+<p>Hand-edited data files, all under <code>src/data/</code>:</p>
+<div class="scroll"><table><thead><tr><th>File</th><th>Page</th></tr></thead><tbody><tr><td><code>sponsors.js</code></td><td><code>/sponsors</code></td></tr><tr><td><code>foodVendors.js</code></td><td><code>/vendors</code></td></tr><tr><td><code>faq.js</code></td><td><code>/faq</code></td></tr><tr><td><code>bands.js</code></td><td><code>/bands</code> (currently unpublished)</td></tr></tbody></table></div>
+<p>Reconcile the sponsor roster against the Ticket Tailor export rather than against email threads — that is how 2026 finally settled it.</p>
+<p>Also update the dates in the site footer and on the landing page.</p>
+<h2 id="ch02-8-seo-and-social"><a class="anchor" href="#ch02-8-seo-and-social" aria-label="Link to this section">#</a>8. SEO and social</h2>
+<ul><li><code>index.html</code> — the Event JSON-LD block (dates, location, offers) and the social-card meta tags.</li><li><code>public/sitemap.xml</code> — update <code>lastmod</code> on every page, and <strong>add any new route</strong>. The SPA rewrite answers unknown paths with the app shell, so a route missing from the sitemap is invisible to search engines.</li><li><code>public/robots.txt</code> — same: list new public routes.</li><li><code>src/lib/usePageMeta.js</code> — every new page must call this for its title and canonical URL. Use <code>noindex: true</code> for anything private.</li><li><code>public/share-card-*.png</code> — regenerate for the new year.</li></ul>
+<blockquote><p>senoiaporchfest.org is the canonical host. Never link or promote the <code>.web.app</code> / <code>.firebaseapp.com</code> mirrors.</p></blockquote>
+<h2 id="ch02-9-print-artwork"><a class="anchor" href="#ch02-9-print-artwork" aria-label="Link to this section">#</a>9. Print artwork</h2>
+<p>Regenerate everything in <a href="#ch05">05 — Print &amp; Signage</a>, and replace the posters in <code>public/</code>.</p>
+<blockquote><p>is cached for a day, then served stale-while-revalidate for a week. To publish corrected artwork immediately you must <strong>rename the file</strong> and update the reference. See <a href="#ch03-caching">03 — Caching</a>.</p></blockquote>
+<hr />
+<h2 id="ch02-final-sweep"><a class="anchor" href="#ch02-final-sweep" aria-label="Link to this section">#</a>Final sweep</h2>
+<p>Search the repo for the outgoing year as a literal string and read every hit:</p>
+<pre class="lang-bash"><code>grep -rn "2026" src/ public/ scripts/ index.html data/ --exclude-dir=node_modules</code></pre>
+<p>Some hits are correct history (an archived poster filename); most are things you have missed. Do this last, after working the list above.</p></section><section class="chapter" id="ch03"><div class="ch-head"><span class="ch-num">CHAPTER 03</span></div><h2 class="ch-title">Website Operations</h2><p>Everything about running senoiaporchfest.org. Architecture and code-level invariants live in <code>CLAUDE.md</code>; this chapter covers the operational picture.</p>
+<hr />
+<h2 id="ch03-what-it-is"><a class="anchor" href="#ch03-what-it-is" aria-label="Link to this section">#</a>What it is</h2>
+<p>A React 19 + Vite + Tailwind v4 single-page app on Firebase Hosting, project <code>senoiaporchfest</code> (Blaze plan), with Firestore, Cloud Functions and Auth.</p>
+<div class="scroll"><table><thead><tr><th>Route</th><th>What it is</th><th>Public</th></tr></thead><tbody><tr><td><code>/</code></td><td>Landing</td><td>✅</td></tr><tr><td><code>/schedule</code></td><td>Full lineup</td><td>✅</td></tr><tr><td><code>/map</code></td><td>Interactive day-of map</td><td>✅</td></tr><tr><td><code>/vip</code></td><td>Ticket + sponsorship checkout</td><td>✅</td></tr><tr><td><code>/sponsors</code>, <code>/vendors</code>, <code>/faq</code></td><td>Rosters and FAQ</td><td>✅</td></tr><tr><td><code>/volunteer</code></td><td>Shift board</td><td>✅ (no login)</td></tr><tr><td><code>/cancel?token=</code></td><td>Cancellation link from confirmation emails</td><td>✅</td></tr><tr><td><code>/admin</code></td><td>Organizer dashboard</td><td>🔒 allowlisted</td></tr></tbody></table></div>
+<blockquote><p><code>/cancel</code> and <code>/admin</code> are behind <code>React.lazy</code> specifically so the Firebase SDK is not in the bundle that a visitor to <code>/</code> downloads. A stray import collapses that code split and every visitor pays for it — on cellular, on a crowded street, on event day.</p></blockquote>
+<p>Page content is deliberately hardcoded. There is no CMS, and adding one would trade a two-minute pull request for a year-round subscription and an authentication surface.</p>
+<hr />
+<h2 id="ch03-deploying"><a class="anchor" href="#ch03-deploying" aria-label="Link to this section">#</a>Deploying</h2>
+<p>build → Firestore rules (only when <code>firestore.rules</code> changed) → Hosting → a smoke check of the live site.</p>
+<p>Rules deploy <strong>before</strong> Hosting on purpose: a page whose reads depend on a new rule must not reach users ahead of the rule. If the rules deploy fails the release stops with the old site still serving.</p>
+<p>Pushing a branch does <strong>not</strong> deploy. Only <code>main</code> does.</p>
+<h3 id="ch03-functions-are-different"><a class="anchor" href="#ch03-functions-are-different" aria-label="Link to this section">#</a>Functions are different</h3>
+<p>Cloud Functions deploy <strong>only</strong> when the push touched <code>functions/</code> or <code>firebase.json</code>, or when you trigger the workflow by hand with <em>"Also deploy Cloud Functions"</em> ticked. A functions deploy is slow and rebinds secrets, so it is not done for a copy change.</p>
+<blockquote><p>This is why <strong>setting the real <code>RESEND_API_KEY</code> requires a manual workflow run</strong> — the secret value is only picked up by a functions deploy.</p></blockquote>
+<p>Authentication to GCP is keyless (Workload Identity Federation); no service-account key lives in the repo. One-time setup is in <code>scripts/setup-ci-deploy.sh</code>, which is idempotent — re-run it after adding a role.</p>
+<h3 id="ch03-deploying-by-hand"><a class="anchor" href="#ch03-deploying-by-hand" aria-label="Link to this section">#</a>Deploying by hand</h3>
+<pre class="lang-bash"><code>npm run build
+npx firebase-tools deploy --only hosting --project senoiaporchfest</code></pre>
+<p><code>npm run build</code> is required before any hosting deploy — it deploys <code>dist/</code>.</p>
+<hr />
+<h2 id="ch03-local-development"><a class="anchor" href="#ch03-local-development" aria-label="Link to this section">#</a>Local development</h2>
+<pre class="lang-bash"><code>npm install
+(cd functions &amp;&amp; npm install)
+npx firebase-tools emulators:start --only auth,functions,firestore --project senoiaporchfest
+node scripts/seed-shifts.mjs data/shifts_2026.csv    # seed the emulator, idempotent
+npm run dev                                           # http://localhost:5174</code></pre>
+<p>Dev builds auto-connect to the emulators.</p>
+<p>functions register under whatever project the machine's application-default credentials point at.</p>
+<h3 id="ch03-ports-are-offset-from-the-senoia-car-show"><a class="anchor" href="#ch03-ports-are-offset-from-the-senoia-car-show" aria-label="Link to this section">#</a>Ports are offset from the Senoia Car Show</h3>
+<p>So both sites run side by side. The car show holds the defaults.</p>
+<div class="scroll"><table><thead><tr><th>Service</th><th>PorchFest</th><th>Car show</th></tr></thead><tbody><tr><td>Vite dev</td><td>5174</td><td>5173</td></tr><tr><td>Firestore</td><td>8081</td><td>8080</td></tr><tr><td>Functions</td><td>5002</td><td>5001</td></tr><tr><td>Auth</td><td>9098</td><td>9099</td></tr><tr><td>Hosting</td><td>5055</td><td>5000</td></tr><tr><td>Emulator UI</td><td>4002</td><td>4000</td></tr></tbody></table></div>
+<p>Port 5000 is unusable on this Mac — AirPlay Receiver holds it.</p>
+<hr />
+<h2 id="ch03-caching"><a class="anchor" href="#ch03-caching" aria-label="Link to this section">#</a>Caching</h2>
+<p><code>firebase.json</code> <code>headers</code> rules, <strong>in order</strong> — the ordering is load-bearing:</p>
+<div class="scroll"><table><thead><tr><th>Rule</th><th>Applies to</th><th>Policy</th></tr></thead><tbody><tr><td><code>/assets/**</code></td><td>Vite's content-hashed bundles</td><td><code>max-age=31536000, immutable</code></td></tr><tr><td><code>/*.@(webp\|png\|jpg\|jpeg\|gif\|svg\|pdf\|ico)</code></td><td>Root-level artwork</td><td><code>max-age=86400, stale-while-revalidate=604800</code></td></tr><tr><td><code>^/[^.]*$</code> (regex)</td><td>Routes — dot-free paths only</td><td><code>no-cache</code></td></tr><tr><td><code>/index.html</code></td><td>The app shell</td><td><code>no-cache</code></td></tr></tbody></table></div>
+<p>Why each is what it is:</p>
+<ul><li>Bundles under <code>/assets/</code> are content-hashed by Vite, so a changed file has a changed name. Safe to freeze forever.</li><li>Root-level artwork keeps <strong>stable filenames</strong>, so it must not be <code>immutable</code> — a corrected file would be stranded in caches permanently.</li><li>A single <code>*</code> never crosses a slash, so the artwork rule cannot reach <code>/assets</code>.</li><li><code>^/[^.]*$</code> matches only paths without a dot, which is how routes are distinguished from files.</li></ul>
+<h3 id="ch03-the-rule-that-will-catch-you-out"><a class="anchor" href="#ch03-the-rule-that-will-catch-you-out" aria-label="Link to this section">#</a>The rule that will catch you out</h3>
+<p>phone serves its cached copy without asking. For the seven days after that, <code>stale-while-revalidate</code> lets it serve the stale copy <em>immediately</em> while refreshing in the background — so a returning visitor sees the <strong>old file once more</strong> before the new one appears. (Safari does not implement <code>stale-while-revalidate</code>, so it revalidates once the day is up.)</p>
+<blockquote><p>To publish corrected artwork immediately, <strong>rename the file</strong> and update the reference. That is the only way to bust it for everyone at once. This matters most in the last week, when corrections are most likely.</p></blockquote>
+<h3 id="ch03-never-put-comment-keys-in-firebasejson"><a class="anchor" href="#ch03-never-put-comment-keys-in-firebasejson" aria-label="Link to this section">#</a>Never put comment keys in <code>firebase.json</code></h3>
+<p>The Firebase config schema sets <code>additionalProperties: false</code> on header entries, so a <code>"//": "..."</code> key <strong>fails validation at deploy time</strong>. The hosting emulator accepts it happily, so this passes local testing and then breaks CI. Explain header rules in this playbook or in <code>CLAUDE.md</code> instead.</p>
+<h3 id="ch03-testing-header-rules"><a class="anchor" href="#ch03-testing-header-rules" aria-label="Link to this section">#</a>Testing header rules</h3>
+<p>The hosting emulator is the only way to test <code>firebase.json</code> <code>headers</code> before they reach production:</p>
+<pre class="lang-bash"><code>npx firebase-tools emulators:start --only hosting --project senoiaporchfest</code></pre>
+<p>Then <code>curl -sI</code> a route, a hashed asset, and a file with an extension, and check all three.</p>
+<hr />
+<h2 id="ch03-domains-and-dns"><a class="anchor" href="#ch03-domains-and-dns" aria-label="Link to this section">#</a>Domains and DNS</h2>
+<p><code>senoiaporchfest.org</code> is claimed on the <code>senoiaporchfest</code> Firebase project with correct DNS at Namecheap.</p>
+<blockquote><p>Authorized domains.** Otherwise Google sign-in fails from that domain with a generic, unhelpful error.</p></blockquote>
+<p><code>www.senoiaporchfest.org</code> has no DNS record. Add one in Hosting + Namecheap if wanted.</p>
+<p>A stray Firebase project <code>porchfest-6e7dc</code> exists (created by mistake; the domain was briefly claimed there). It is unused and safe to delete.</p>
+<p>The old enjoysenoia.com PorchFest page now redirects here. Anything else it hosted beyond tickets and sponsorships is gone.</p>
+<hr />
+<h2 id="ch03-analytics"><a class="anchor" href="#ch03-analytics" aria-label="Link to this section">#</a>Analytics</h2>
+<p>Google Tag Manager with GA4 pageview tracking (<code>src/lib/gtm.js</code>), plus a <code>volunteer_signup</code> GA4 event marked as a key event.</p>
+<hr />
+<h2 id="ch03-app-check-is-not-enforced"><a class="anchor" href="#ch03-app-check-is-not-enforced" aria-label="Link to this section">#</a>App Check is NOT enforced</h2>
+<p>Unlike the car show. Enabling it is a <strong>paired change</strong> that must ship in one deploy:</p>
+<ol><li>Register a reCAPTCHA Enterprise key,</li><li>set <code>APP_CHECK_SITE_KEY</code> in <code>src/firebase.js</code>,</li><li>flip <code>enforceAppCheck</code> in <code>functions/index.js</code>.</li></ol>
+<p>Enforcing before the client has a key <strong>breaks every signup</strong>.</p></section><section class="chapter" id="ch04"><div class="ch-head"><span class="ch-num">CHAPTER 04</span></div><h2 class="ch-title">Volunteer System</h2><p>The shift board at <code>/volunteer</code>, the organizer dashboard at <code>/admin</code>, and the pipeline that fills them.</p>
+<hr />
+<h2 id="ch04-how-it-fits-together"><a class="anchor" href="#ch04-how-it-fits-together" aria-label="Link to this section">#</a>How it fits together</h2>
+<pre><code>data/shifts_&lt;year&gt;.csv  ──seed──▶  events/&lt;year&gt;/shifts/{id}   ──▶  /volunteer
+                                            │                          │
+                                            │                     signUp callable
+                                            ▼                          ▼
+                                   /admin  ◀──────────────────  signups/{id}
+                                            │
+                                            └──▶ scripts/generate_volunteer_roster.py ──▶ printed roster</code></pre>
+<p>Volunteers have <strong>no login</strong>. Every write goes through a Cloud Function (<code>signUp</code>, <code>cancelSignup</code>) using the Admin SDK, which bypasses Firestore rules. That is deliberate: it keeps volunteer personal information unreadable to the public while still letting anyone sign up.</p>
+<hr />
+<h2 id="ch04-the-shift-csv"><a class="anchor" href="#ch04-the-shift-csv" aria-label="Link to this section">#</a>The shift CSV</h2>
+<p><code>data/shifts_&lt;year&gt;.csv</code>, <strong>one row per slot</strong> — three spots on a shift means three identical rows.</p>
+<div class="scroll"><table><thead><tr><th>Column</th><th>Meaning</th></tr></thead><tbody><tr><td><code>What</code></td><td>Role text, shown to volunteers</td></tr><tr><td><code>When</code></td><td><code>9/6 - 7:00AM - 8:00AM</code> — the day token must exist in <code>DATE_MAP</code></td></tr><tr><td><code>Credits</code></td><td>Unused</td></tr><tr><td><code>Volunteer First Name</code>, <code>Volunteer Last Name</code>, <code>Email</code>, <code>Phone</code></td><td>Optional pre-registration</td></tr></tbody></table></div>
+<p>Fill the last four columns to seed someone who signed up on paper. Leave them empty for an open slot.</p>
+<blockquote><p><a href="#ch08-pii-currently-public">08 — PII currently public</a>; the current CSV already carries names that should be reconsidered.</p></blockquote>
+<h3 id="ch04-seeding"><a class="anchor" href="#ch04-seeding" aria-label="Link to this section">#</a>Seeding</h3>
+<pre class="lang-bash"><code># Emulator
+node scripts/seed-shifts.mjs data/shifts_2026.csv
+
+# Production
+GCLOUD_ACCESS_TOKEN=$(gcloud auth print-access-token --account &lt;ops-account&gt;) \
+  node scripts/seed-shifts.mjs data/shifts_2026.csv --prod</code></pre>
+<p>The seed is <strong>idempotent</strong>: it updates shift text and <code>spotsTotal</code>, never clobbers <code>spotsFilled</code>, and creates only pre-registered volunteers that do not already exist. It is run <strong>by hand, never by CI</strong>.</p>
+<hr />
+<h2 id="ch04-the-trap-that-matters-most-shift-ids-hash-the-role-text"><a class="anchor" href="#ch04-the-trap-that-matters-most-shift-ids-hash-the-role-text" aria-label="Link to this section">#</a>The trap that matters most: shift IDs hash the role text</h2>
+<p>A shift's Firestore document ID is:</p>
+<pre><code>sha1(`${role}|${time}`).hex.slice(0, 10)</code></pre>
+<p>the CSV — even a pure copy-edit, even fixing a typo — does not rename anything. The next production seed computes a <em>new</em> ID, creates a fresh shift with <code>spotsFilled: 0</code>, and leaves the old document in place with all of its sign-ups still pointing at it. <code>/volunteer</code> then shows <strong>both</strong>.</p>
+<p>The damage is invisible until someone notices the duplicates.</p>
+<p>Pre-registered volunteer IDs have the same property one level down — <code>sha1(`${shiftId}|${first}|${last}`).hex.slice(0, 20)</code> — so a role edit changes those too, and the de-duplication lookup misses, duplicating the person.</p>
+<h3 id="ch04-renaming-a-role-safely"><a class="anchor" href="#ch04-renaming-a-role-safely" aria-label="Link to this section">#</a>Renaming a role safely</h3>
+<p>Migrate <strong>before</strong> seeding, in this order. Create first: a sign-up pointing at a missing shift is worse than a few seconds of duplicates on <code>/volunteer</code>.</p>
+<ol><li><strong>Create</strong> the new shift document at <code>sha1(newRole|time)[:10]</code>, copying every field verbatim — especially <code>spotsFilled</code> and <code>sortOrder</code>.</li><li><strong>Repoint</strong> <code>shiftId</code> on every sign-up, cancelled ones included.</li><li><strong>Delete</strong> the old shift document.</li></ol>
+<blockquote><p><code>batchWrite</code> is <strong>non-atomic</strong>: HTTP 200 can still carry per-write failures in <code>body.status[]</code>. Check it — a partial success leaves sign-ups half-repointed. Re-query the old IDs afterwards in case someone signed up mid-flight.</p></blockquote>
+<p>This was done successfully in 2026 for three shifts (11 sign-ups moved, spot counts preserved) after a role gained a parenthetical.</p>
+<h3 id="ch04-the-check-worth-running-after-any-csv-edit"><a class="anchor" href="#ch04-the-check-worth-running-after-any-csv-edit" aria-label="Link to this section">#</a>The check worth running after any CSV edit</h3>
+<p>Recompute all IDs from the CSV and diff them against production. This proves the next seed is a no-op and catches any role text that drifted:</p>
+<ul><li><strong>In CSV, not in production</strong> → a seed would <em>create</em> these.</li><li><strong>In production, not in CSV</strong> → a seed would <em>orphan</em> these.</li></ul>
+<p>Because the seed is manual, a mismatch sits harmless until someone seeds. That window is when to fix it.</p>
+<hr />
+<h2 id="ch04-the-spotsfilled-invariant"><a class="anchor" href="#ch04-the-spotsfilled-invariant" aria-label="Link to this section">#</a>The <code>spotsFilled</code> invariant</h2>
+<blockquote><p><code>spotsFilled</code> changes <strong>only</strong> inside a transaction that re-checks state — capacity on sign-up, <code>status === 'active'</code> on any cancel or remove.</p></blockquote>
+<p>Never write it with a bare update or batch. A double-click or a race corrupts the count. The seed script's increments are the single exception, and they run pre-launch only.</p>
+<hr />
+<h2 id="ch04-data-model"><a class="anchor" href="#ch04-data-model" aria-label="Link to this section">#</a>Data model</h2>
+<div class="scroll"><table><thead><tr><th>Collection</th><th>Contents</th></tr></thead><tbody><tr><td><code>events/&lt;year&gt;</code></td><td><code>signupOpen: false</code> closes sign-ups site-wide</td></tr><tr><td><code>events/&lt;year&gt;/shifts/{id}</code></td><td><code>role, time, day, category, spotsTotal, spotsFilled, sortOrder</code></td></tr><tr><td><code>signups/{id}</code></td><td>Volunteer details, <code>status</code>, <code>cancelToken</code>; seeded ones carry <code>seededFrom: 'organizer-sheet'</code></td></tr><tr><td><code>admins/{email}</code></td><td>Full-access organizer allowlist; document ID is the lowercase email</td></tr><tr><td><code>organizers/{email}</code></td><td>Scoped, <strong>read-only</strong> allowlist; <code>categories: string[]</code></td></tr></tbody></table></div>
+<p><code>category</code> on a shift does double duty: it groups shifts and it <strong>scopes organizer read access</strong>. Set it per shift in <code>/admin</code>'s shift editor.</p>
+<hr />
+<h2 id="ch04-access-control"><a class="anchor" href="#ch04-access-control" aria-label="Link to this section">#</a>Access control</h2>
+<ul><li><strong>Volunteer personal information is never publicly readable.</strong> Public reads are limited to event and shift documents — counts, no personal data.</li><li><strong>Admins</strong> (<code>admins/{email}</code>) read sign-ups directly via Firestore rules, which check <code>email_verified</code>.</li><li><strong>Scoped organizers</strong> (<code>organizers/{email}</code>) get a category-limited subset through the <code>getOrganizerRoster</code> callable — read-only, with no rules grant. <code>/admin</code> tries the full admin listeners first and falls back to this callable on <code>permission-denied</code>.</li></ul>
+<p>Both allowlists are <strong>data, not code</strong>: add or remove a document in Firestore and it takes effect immediately. No deploy needed.</p>
+<h3 id="ch04-why-getorganizerroster-is-a-cloud-function"><a class="anchor" href="#ch04-why-getorganizerroster-is-a-cloud-function" aria-label="Link to this section">#</a>Why <code>getOrganizerRoster</code> is a Cloud Function</h3>
+<p>A rules-only version would need the organizer-to-shift mapping denormalized onto every <code>signups</code> document, purely so a client query could mirror it. Firestore list rules cannot filter per-document through a <code>get()</code> indirection — the whole query fails unless the client's <code>where</code> clauses let Firestore prove every match passes. The callable was the smaller change.</p>
+<h3 id="ch04-duplicate-sign-up-emails-are-allowed-by-design"><a class="anchor" href="#ch04-duplicate-sign-up-emails-are-allowed-by-design" aria-label="Link to this section">#</a>Duplicate sign-up emails are allowed by design</h3>
+<p>Households share an email address. Do not "fix" this.</p>
+<hr />
+<h2 id="ch04-confirmation-emails"><a class="anchor" href="#ch04-confirmation-emails" aria-label="Link to this section">#</a>Confirmation emails</h2>
+<p>Sent through <strong>Resend</strong>, and <strong>best-effort by design</strong> — an email failure must never fail a sign-up.</p>
+<p><code>RESEND_API_KEY</code> is a Cloud Functions secret. <strong>Sending is skipped entirely when the value starts with <code>placeholder</code>.</strong> To turn emails on:</p>
+<ol><li>Verify the sending domain in Resend.</li><li><code>`bash npx firebase-tools functions:secrets:set RESEND_API_KEY --project senoiaporchfest</code>`</li><li>Run the deploy workflow by hand with <strong>"Also deploy Cloud Functions"</strong> ticked — rebinding the secret requires a functions deploy.</li></ol>
+<p>Confirmation emails carry the <code>/cancel?token=</code> link, so until this is done, volunteers cannot self-cancel.</p>
+<hr />
+<h2 id="ch04-admin-sign-in"><a class="anchor" href="#ch04-admin-sign-in" aria-label="Link to this section">#</a>Admin sign-in</h2>
+<p>Google popup or email magic link; both rely on <code>email_verified</code> in the rules.</p>
+<ol><li>Authentication → Sign-in method → <strong>Google</strong> and <strong>Email link</strong> are enabled. Until then <em>no admin can log in</em>.</li><li>Authentication → Settings → <strong>Authorized domains</strong> includes <code>senoiaporchfest.org</code>. Without it, Google sign-in from the custom domain fails with a generic error.</li></ol>
+<p>Organizers on non-Google addresses sign in via the email magic link.</p>
+<hr />
+<h2 id="ch04-printable-roster"><a class="anchor" href="#ch04-printable-roster" aria-label="Link to this section">#</a>Printable roster</h2>
+<p><code>scripts/generate_volunteer_roster.py</code> pulls shifts and active sign-ups live from production Firestore and renders a printable PDF. Grouping and empty-slot handling mirror <code>exportCsv</code> in <code>src/pages/Admin.jsx</code>.</p>
+<pre class="lang-bash"><code>TOKEN=$(gcloud auth print-access-token --account &lt;ops-account&gt;)
+python3 scripts/generate_volunteer_roster.py --token "$TOKEN"</code></pre>
+<p>Two implementation notes worth keeping:</p>
+<ul><li>It shells out to <strong><code>curl</code>, not <code>urllib</code></strong> — this Mac's python.org build has no local CA bundle, so <code>urllib</code>'s SSL verification fails while <code>curl</code> works.</li><li>It embeds a real webfont for <strong>all</strong> text. See the base-14 font trap in <a href="#ch05-the-base-14-font-trap">05 — Print &amp; Signage</a>, which was found building this script: live shift roles contain em dashes, and PyMuPDF's built-in Helvetica silently renders them as a stray dot.</li></ul></section><section class="chapter" id="ch05"><div class="ch-head"><span class="ch-num">CHAPTER 05</span></div><h2 class="ch-title">Print &amp; Signage</h2><p>Every piece of physical artwork is <strong>generated from code</strong> in this repository — PyMuPDF scripts for signs, headless Chrome for HTML-laid-out panels. Nothing is made in a design app, which is why it can all be regenerated next year without anyone owning a licence or remembering where a file went.</p>
+<p>None of these tools are website dependencies. Nothing here is bundled or deployed.</p>
+<hr />
+<h2 id="ch05-the-sign-families-at-a-glance"><a class="anchor" href="#ch05-the-sign-families-at-a-glance" aria-label="Link to this section">#</a>The sign families at a glance</h2>
+<div class="scroll"><table><thead><tr><th>Artwork</th><th>Size</th><th>Tool</th><th>Ink</th></tr></thead><tbody><tr><td>Stage-sponsor yard signs</td><td>24 × 18 in</td><td><code>.claude/skills/porchfest-sponsor-signs/</code></td><td>Royal blue <code>#002FA7</code></td></tr><tr><td>Area signs (Kids' Area, etc.)</td><td>36 × 24 in</td><td>same skill, <code>gen_area_sign.py</code></td><td>Royal blue <code>#002FA7</code></td></tr><tr><td>VIP / wayfinding yard signs</td><td>24 × 18 in</td><td><code>scripts/generate_signage.py</code></td><td>Royal blue <code>#002FA7</code></td></tr><tr><td>VIP Luxury Lounge banner</td><td>96 × 18 in</td><td><code>scripts/generate_signage.py</code></td><td>Brand navy <code>#101D3A</code></td></tr><tr><td>One-off yard signs</td><td>24 × 18 in</td><td><code>scripts/generate_more_signage.py</code></td><td>Royal blue <code>#002FA7</code></td></tr><tr><td>Sign tower</td><td>4 × (48 × 96 in)</td><td><code>scripts/signtower/</code></td><td>Brand navy <code>#101D3A</code></td></tr><tr><td>Public lineup card</td><td>PDF</td><td><code>scripts/render-lineup-card.sh</code></td><td>Brand palette</td></tr><tr><td>Volunteer roster</td><td>PDF</td><td><code>scripts/generate_volunteer_roster.py</code></td><td>—</td></tr></tbody></table></div>
+<hr />
+<h2 id="ch05-the-two-blues-do-not-unify-them"><a class="anchor" href="#ch05-the-two-blues-do-not-unify-them" aria-label="Link to this section">#</a>The two blues — do not unify them</h2>
+<p>PorchFest print signage deliberately runs <strong>two different blues</strong>. This looks like an inconsistency and is not. Do not "fix" it.</p>
+<ul><li><strong>Yard signs</strong> — white ground, Oswald Bold in <strong>royal blue <code>#002FA7</code></strong>, mirrored dove bottom-right. That royal blue was chosen off <strong>physical ink samples</strong>, not from the brand tokens. Roughly 24 signs were printed in it for 2026, so a new yard sign in brand navy would visibly mismatch the batch standing beside it, in the same venue, on the same day.</li><li><strong>Banners and sign towers</strong> — the brand guide proper: navy <code>#101D3A</code> ground, cream <code>#F5F1E6</code> type, the true-vector wordmark.</li></ul>
+<p>Flag red <code>#B02A30</code> is the one brand token used on <strong>both</strong>. It is legible on white and on navy, so it carries section rules and arrows everywhere.</p>
+<blockquote><p>"Use the brand guidelines" on a print job means Oswald, the layout, the voice and the house sign system. It does <strong>not</strong> override a print-calibrated ink.</p></blockquote>
+<p>Yard sign PDFs carry <strong>no white background fill</strong>, matching the files the printer has already run successfully. Contact sheets must therefore supply their own white.</p>
+<hr />
+<h2 id="ch05-stage-sponsor-signs"><a class="anchor" href="#ch05-stage-sponsor-signs" aria-label="Link to this section">#</a>Stage-sponsor signs</h2>
+<p>Fully documented, step by step, in</p>
+<p>actually need to build signs. It covers sourcing, logo preparation, the JSON spec, and verification.</p>
+<p>Everything it needs is committed: <code>gen_sponsor_signs.py</code>, <code>gen_area_sign.py</code>, <code>build_signs.py</code>, <code>assets/Oswald-Bold.ttf</code>, <code>assets/dove.png</code>.</p>
+<p>The short version:</p>
+<pre class="lang-bash"><code>python3 -m venv /tmp/porchfest-signs-venv
+/tmp/porchfest-signs-venv/bin/pip install -q pymupdf pillow
+/tmp/porchfest-signs-venv/bin/python \
+  .claude/skills/porchfest-sponsor-signs/scripts/build_signs.py spec.json &lt;outdir&gt;</code></pre>
+<p>It writes one PDF per sponsor, a <code>proof.png</code> contact sheet, and a delivery zip.</p>
+<p>like an afterthought on a 24 × 18 in sign — go back to sourcing (<a href="#ch06">06</a>) rather than shipping it small. Then actually look at <code>proof.png</code> before delivering.</p>
+<hr />
+<h2 id="ch05-vip-wayfinding-and-one-off-signs"><a class="anchor" href="#ch05-vip-wayfinding-and-one-off-signs" aria-label="Link to this section">#</a>VIP, wayfinding and one-off signs</h2>
+<p>Two scripts in <code>scripts/</code>, and the relationship between them is the pattern to follow:</p>
+<ul><li><strong><code>scripts/generate_signage.py</code></strong> — VIP and wayfinding yard signs plus the 96 × 18 in VIP Luxury Lounge banner. Self-contained: it derives the Oswald TTF from <code>node_modules/@fontsource/oswald</code> at run time (walking up parent directories, so it works from a git worktree), keeps its dove and print-resolution logos in <code>scripts/assets/</code>, and writes to <code>~/Downloads/PorchFest_VIP_Signage/</code> with a <code>_proof.png</code> contact sheet.</li></ul>
+<pre class="lang-bash"><code>  pip install pymupdf
+  python3 scripts/generate_signage.py</code></pre>
+<ul><li><strong><code>scripts/generate_more_signage.py</code></strong> — one-off signs. It does <code>import generate_signage as base</code> and <strong>reuses</strong> that script's fonts, palette and layout helpers rather than duplicating them.</li></ul>
+<blockquote><p>part of the VIP batch or the stage-sponsor roster, add a function to <code>generate_more_signage.py</code> (or write a small new script) that imports the closest existing generator as a module. Copying helpers is how a sign family stops looking like a family.</p>
+<p>Copy the <em>closest</em> structure, not the most convenient one. The "Cooling Tent" sign was kept as its own function rather than parameterising the "Food Truck Alley" one, because that sign has a deliberate eyebrow/headline inversion requested as a one-off — reusing it directly would have silently applied that reasoning to a sign nobody asked to invert.</p></blockquote>
+<hr />
+<h2 id="ch05-the-sign-tower"><a class="anchor" href="#ch05-the-sign-tower" aria-label="Link to this section">#</a>The sign tower</h2>
+<p>Four 48 × 96 in panels at the festival entrance, one HTML file per side, printed to trim-size PDF by headless Chrome.</p>
+<p>render and measure commands, and its own set of traps. Do not duplicate it here.</p>
+<p>The two that will cost you a reprint if you forget them:</p>
+<ul><li><strong><code>.banner</code> is fixed-height with <code>overflow: hidden</code>.</strong> Content past the bottom is silently <em>clipped</em>, and the PDF still reports one page. Any edit that changes block heights needs <code>./measure.sh &lt;panel&gt;</code> afterwards — that probe is the only thing that catches it.</li><li><strong>It must be Chrome or Chromium.</strong> The panels use flexbox and percentage-positioned pins, and Chrome's <code>--print-to-pdf</code> is the only engine that lays them out the way the preview did.</li></ul>
+<p>Fonts are <strong>self-hosted</strong> in <code>scripts/signtower/fonts/</code>. They used to come from a Google Fonts <code>@import</code>; on a slow or offline render that silently fell back to Arial Narrow — which you would not notice until the 48-inch proof.</p>
+<hr />
+<h2 id="ch05-the-public-lineup-card"><a class="anchor" href="#ch05-the-public-lineup-card" aria-label="Link to this section">#</a>The public lineup card</h2>
+<pre class="lang-bash"><code>./scripts/render-lineup-card.sh</code></pre>
+<p>Headless Chrome over <code>scripts/lineup_card_template.html</code>, writing <code>public/senoia-porchfest-2026-lineup-card.pdf</code>, which <code>/schedule</code> and <code>/map</code> link to. It also asserts that the per-hour "N Acts" pills match the act counts.</p>
+<h3 id="ch05-sanity-check-every-card-you-generate"><a class="anchor" href="#ch05-sanity-check-every-card-you-generate" aria-label="Link to this section">#</a>Sanity-check every card you generate</h3>
+<p>A correct card reports <strong><code>Producer: Skia/PDF</code></strong> and is roughly <strong>470–550 KB</strong>.</p>
+<p>A ReportLab producer, or a file around 11 KB, means something has overwritten it with a broken generator. <code>scripts/generate_lineup_pdf.py</code> was <strong>deleted in 2026 because it was exactly that trap</strong> — a second generator with its own third copy of the schedule, writing the same output path, whose layout drew act columns straight over the VIP and closing-act banner. Running it silently replaced the good card with a broken one. Do not reintroduce it.</p>
+<hr />
+<h2 id="ch05-type-and-layout-rules"><a class="anchor" href="#ch05-type-and-layout-rules" aria-label="Link to this section">#</a>Type and layout rules</h2>
+<h3 id="ch05-centre-on-cap-height-not-the-metric-box"><a class="anchor" href="#ch05-centre-on-cap-height-not-the-metric-box" aria-label="Link to this section">#</a>Centre on cap height, not the metric box</h3>
+<p>Every headline is all-caps. Centre it on <strong>cap height</strong> — Oswald's is 0.81 em, unusually tall — not on the ascender/descender box the font reports. Centring on the metric box leaves signs visibly top-heavy, because the accent space above and the descender space below sit outside the letterforms.</p>
+<p><code>generate_signage.py</code> does this correctly. The older stage-sponsor generator does not.</p>
+<h3 id="ch05-the-effective-dpi-floor"><a class="anchor" href="#ch05-the-effective-dpi-floor" aria-label="Link to this section">#</a>The effective-dpi floor</h3>
+<p>Every generator caps a raster logo at an effective-dpi floor, so a low-resolution mark places at an honest size instead of being blown up to mush:</p>
+<div class="scroll"><table><thead><tr><th>Artwork</th><th>Floor</th></tr></thead><tbody><tr><td>Yard signs (<code>generate_signage.py</code>)</td><td>52 dpi</td></tr><tr><td>The 96-inch banner</td><td>30 dpi</td></tr><tr><td>Stage-sponsor signs (older generator)</td><td>60 dpi</td></tr></tbody></table></div>
+<p>A logo needs roughly <strong>800 px of height or more</strong> to fill a yard sign. Below about 400 px, use a name-only layout instead.</p>
+<h3 id="ch05-the-base-14-font-trap"><a class="anchor" href="#ch05-the-base-14-font-trap" aria-label="Link to this section">#</a>The base-14 font trap</h3>
+<p>PyMuPDF's built-in Helvetica aliases — <code>fontname='helv'</code> / <code>'hebo'</code>, used with no <code>insert_font</code> call — <strong>silently substitute a stray dot glyph</strong> for any character outside their limited built-in encoding. There is no error, so it is easy to ship without noticing.</p>
+<p>The em dash (—) is one such character, and live shift roles in Firestore contain them. So text pulled from a database, not just hardcoded strings, is at risk.</p>
+<blockquote><p>headlines — rather than auditing every string for characters the base-14 fonts might lack. <code>generate_volunteer_roster.py</code> does this.</p></blockquote>
+<hr />
+<h2 id="ch05-the-2026-lockup"><a class="anchor" href="#ch05-the-2026-lockup" aria-label="Link to this section">#</a>The 2026 lockup</h2>
+<p>The DDA's ad banners use a flat <strong>SENOIA'S 5ᵗʰ ANNUAL / PORCHFEST</strong> lockup, not the arched <code>src/assets/porchfest-wordmark.svg</code>. The typeface is <strong>League Gothic</strong> (SIL Open Font Licence, on Google Fonts, bundled in <code>scripts/signtower/fonts/</code>), identified by rendering candidates at the sample's cap height and comparing the letterforms one for one.</p>
+<blockquote><p>different widths in one lockup is not something a real font does — it is a text box dragged narrow to survive a 90-pixel-tall ad slot. <strong>Do not reproduce the squash on large-format work.</strong></p></blockquote>
+<p>Two traps if this comes up again:</p>
+<ul><li><strong>Do not try to lift the mark from the artwork.</strong> The largest ad banner puts PORCHFEST at 165 × 56 px — about 7 dpi on a 48-inch panel.</li><li><strong>Aggregate width and ink metrics pick the wrong font.</strong> Scoring whole words ranked a different face first by a factor of five, and it is visibly far too light and 23% too narrow. Per-glyph measurement (the <code>O</code> width and stem width against cap height) plus an actual side-by-side render is what settles it.</li></ul>
+<p>Note that <code>--lockup-cap</code> in the tower panels is a <strong>font-size, not a cap height</strong>: rendered PORCHFEST comes out 4.49× that value.</p>
+<p>The ad banners also carry pure red <code>#c00000</code> and pure white on the unchanged brand navy. Sample the <strong>interior</strong> of a stroke when picking colour off artwork — edge pixels blend toward the background.</p>
+<hr />
+<h2 id="ch05-the-dove"><a class="anchor" href="#ch05-the-dove" aria-label="Link to this section">#</a>The dove</h2>
+<p>The dove mascot exists <strong>only fused into the flag-guitar illustration</strong>. Two prepared copies are committed:</p>
+<ul><li><code>scripts/assets/porchfest-dove-flip.png</code></li><li><code>.claude/skills/porchfest-sponsor-signs/assets/dove.png</code></li></ul>
+<p>The flag-guitar-with-dove illustration itself is <code>scripts/signtower/assets/guitar-bird-final.png</code> (2040 × 4752) — <strong>the only high-resolution copy that exists anywhere.</strong> It is in version control. Do not regenerate it from a smaller source.</p>
+<details>
+<summary>Rebuilding the dove from scratch, if every copy is ever lost</summary>
+<p>Extract the 3600 × 2700 raster embedded in any band yard-sign PDF, crop <code>(700, 780, 1250, 1330)</code>, white out <code>[0, 400, 550, 550]</code> and <code>[0, 0, 30, 550]</code>, threshold-trim at v &lt; 215 with 6 px padding, upscale 3× to 1035 × 900. The belly line is occluded by the guitar in the source art and must be redrawn as a quadratic bezier — p0 <code>(80, 868)</code>, p1 <code>(400, 1005)</code>, p2 <code>(660, 855)</code> — width 26, colour <code>(20, 18, 20)</code>, on a canvas extended to 1000 px tall with <code>[150, 852, 595, 1000]</code> erased first. Trim again to about 1020 × 950.</p>
+<p>This is fiddly. Only do it if the asset is genuinely gone, not to "improve" the existing one.</p>
+</details>
+<p>Note the dove is <strong>mirrored to face into the sign</strong> on the bottom-right corner where it sits.</p></section><section class="chapter" id="ch06"><div class="ch-head"><span class="ch-num">CHAPTER 06</span></div><h2 class="ch-title">Logo Sourcing</h2><p>You need a sponsor's logo at print resolution. This chapter is the accumulated research from sourcing roughly 30 of them, and it will save you hours.</p>
+<blockquote><p>artwork <strong>at signing</strong>, as a line in the sponsorship agreement. Everything below exists because that did not happen.</p></blockquote>
+<hr />
+<h2 id="ch06-first-the-repos-logos-are-useless-for-print"><a class="anchor" href="#ch06-first-the-repos-logos-are-useless-for-print" aria-label="Link to this section">#</a>First: the repo's logos are useless for print</h2>
+<p>Every <code>src/assets/sponsor-*.webp</code> and <code>vendor-*.webp</code> is downscaled to a <strong>400 px long edge</strong> for the web. At that size a logo places at roughly 6.7 in on a 24 × 18 in sign, and around 30 dpi on a large banner.</p>
+<p>They tell you <strong>which</strong> sponsors have been identified. They are not a source. Always re-source the original.</p>
+<p>Print-resolution copies actually used by the generators live in <code>scripts/assets/logo-*.png</code> and <code>scripts/signtower/assets/</code>, and are committed.</p>
+<hr />
+<h2 id="ch06-the-sourcing-ladder"><a class="anchor" href="#ch06-the-sourcing-ladder" aria-label="Link to this section">#</a>The sourcing ladder</h2>
+<p>Work down it and stop at the first usable hit. <strong>Always sanity-check resolution before moving on</strong> — see the floors in <a href="#ch05-the-effective-dpi-floor">05</a>.</p>
+<h3 id="ch06-1-the-organizers-own-files"><a class="anchor" href="#ch06-1-the-organizers-own-files" aria-label="Link to this section">#</a>1. The organizers' own files</h3>
+<p><code>~/Downloads</code> and the DDA's Google Drive, <strong>before any web research</strong>. Sponsors often send artwork with their sign-up, and it is usually the best copy anyone will find.</p>
+<h3 id="ch06-2-enjoysenoiacom-partnersslug"><a class="anchor" href="#ch06-2-enjoysenoiacom-partnersslug" aria-label="Link to this section">#</a>2. enjoysenoia.com <code>/partners/&lt;slug&gt;</code></h3>
+<p>These pages host <strong>print-quality uploads</strong> — genuinely the second-best source for Senoia businesses.</p>
+<p>Note the distinction: <code>/partners/&lt;slug&gt;</code> pages carry real logo uploads; <code>/downtown-business/&lt;slug&gt;</code> pages on the same site carry photos only, and the site's own header and footer assets are web derivatives.</p>
+<pre class="lang-bash"><code>curl -sL https://enjoysenoia.com/sitemap.xml    # find the slug</code></pre>
+<p>Then fetch the page and look for <code>https://cdn.prod.website-files.com/...</code> image URLs. <strong>Filter out anything with <code>-p-&lt;number&gt;</code> in the filename</strong> — those are downscaled variants; the bare filename is the original upload.</p>
+<blockquote><p>can decode <strong>inverted</strong>. Before trusting one, verify that a corner pixel reads white and the artwork reads dark, then <code>.convert('RGB')</code>.</p></blockquote>
+<h3 id="ch06-3-facebook-graph-the-trick-that-rescues-small-businesses"><a class="anchor" href="#ch06-3-facebook-graph-the-trick-that-rescues-small-businesses" aria-label="Link to this section">#</a>3. Facebook Graph — the trick that rescues small businesses</h3>
+<pre><code>https://graph.facebook.com/&lt;page-slug&gt;/picture?width=2000&amp;height=2000&amp;redirect=1</code></pre>
+<p>Returns a page's profile picture at its <strong>true stored resolution</strong>. No auth, no token, no API key.</p>
+<blockquote><p><code>?type=large</code> caps at 200 px. <strong>Always use the <code>width</code>/<code>height</code> form.</strong></p></blockquote>
+<p>This beat every other source repeatedly and rescued four dead ends in 2026 — turning a 200 × 83 px logo into 1079 px, a 292 px into 1179 px, and two others into 2048 px. Get the slug from a <code>facebook.com/&lt;slug&gt;</code> link on the sponsor's own site.</p>
+<p>It does not always work: at least one Senoia business's page slug does not resolve through this path at all. If it 404s or returns a generic image, move on rather than retrying variants.</p>
+<h3 id="ch06-4-the-sponsors-own-website-last"><a class="anchor" href="#ch06-4-the-sponsors-own-website-last" aria-label="Link to this section">#</a>4. The sponsor's own website — last</h3>
+<p>Counter-intuitively the <strong>worst</strong> source in practice. Business sites serve web-optimised derivatives, typically 400–500 px, which place worse than what Facebook or enjoysenoia already gave you.</p>
+<p>Exceptions exist and are worth a look: a WordPress site may hide a larger file in <code>/wp-content/uploads/</code>, and some restaurant platforms serve a 2000 px roundel.</p>
+<h3 id="ch06-5-name-only"><a class="anchor" href="#ch06-5-name-only" aria-label="Link to this section">#</a>5. Name-only</h3>
+<p>If nothing above works, ship a name-only sign (<code>"logo": null</code> in the spec).</p>
+<p>sign.</p>
+<hr />
+<h2 id="ch06-a-true-vector-source-beats-any-raster-at-any-size"><a class="anchor" href="#ch06-a-true-vector-source-beats-any-raster-at-any-size" aria-label="Link to this section">#</a>A true vector source beats any raster, at any size</h2>
+<p>If you find an SVG, EPS or PDF, use it. Render it with PyMuPDF at whatever resolution you need rather than using a bitmap export.</p>
+<blockquote><p>returned a black blob. When that happens, render the SVG through <strong>headless Chrome</strong> to PDF instead — that is how the committed <code>scripts/assets/bmw-roundel.pdf</code> was produced, and it is sharp at any size.</p></blockquote>
+<h3 id="ch06-split-the-mark-from-the-name"><a class="anchor" href="#ch06-split-the-mark-from-the-name" aria-label="Link to this section">#</a>Split the mark from the name</h3>
+<p>The single most useful trick for a stubborn logo. A dealer or franchise raster usually bakes the symbol and the wordmark together, and it is the <strong>lettering</strong> that caps the usable resolution.</p>
+<p>Set the name as <strong>live Oswald type</strong> and place the symbol separately as vector. The BMW roundel was unlocked exactly this way — and it is what the DDA's own VIP flyer does.</p>
+<hr />
+<h2 id="ch06-preparing-a-logo-before-it-goes-in-a-spec"><a class="anchor" href="#ch06-preparing-a-logo-before-it-goes-in-a-spec" aria-label="Link to this section">#</a>Preparing a logo before it goes in a spec</h2>
+<p><code>prep_logo()</code> auto-trims near-white margins and flattens transparency onto white. It does <strong>nothing useful</strong> for a logo whose field is a solid dark colour — that trims to nothing and places as a giant colour block. Handle these yourself first:</p>
+<div class="scroll"><table><thead><tr><th>Case</th><th>What to do</th></tr></thead><tbody><tr><td><strong>White-on-solid-colour, colour is load-bearing</strong> (a brand's teal or black plaque)</td><td>Threshold on the non-white content, take that bounding box + 5% padding, crop the plaque to a proportionate size. <strong>Keep the field</strong> — it is part of the mark.</td></tr><tr><td><strong>Pure white knockout, no colour data</strong> (verify opaque pixels really are <code>255,255,255</code> and only alpha carries the shape)</td><td>Recolour by setting RGB to the sign's ink and compositing on white. Nothing is lost.</td></tr><tr><td><strong>Mark inside a busy or circular crop</strong> (an oval Facebook profile picture)</td><td>Fit an ellipse or rectangle to the light region's bounding box, composite outside it to white, crop.</td></tr><tr><td><strong>CMYK JPEG</strong></td><td><code>Image.open(path).convert('RGB')</code> before anything else.</td></tr><tr><td><strong>White plaque on a flat colour field</strong></td><td>Threshold <code>(a &gt; 225).all(axis=2)</code>, take the bounding box, crop — the field falls away and the plaque's inner rule becomes the frame.</td></tr></tbody></table></div>
+<p>Save the prepped file next to the spec's <code>logos/</code> folder and point the spec at it.</p>
+<hr />
+<h2 id="ch06-known-dead-ends-do-not-spend-time-on-these-again"><a class="anchor" href="#ch06-known-dead-ends-do-not-spend-time-on-these-again" aria-label="Link to this section">#</a>Known dead ends — do not spend time on these again</h2>
+<ul><li><strong>A national dealer's full lockup.</strong> The dealer site sits behind Cloudflare bot protection (do not try to bypass it), and only the 400 px web asset exists locally, placing at about 30 dpi on a 96-inch banner. Dealer co-op artwork has to come from the dealer's approved brand pack — <strong>ask the DDA or the brand representative.</strong> Precedent: the existing 48 × 96 in sign towers were also built from 400 px web logos, and the DDA accepted that.</li><li><strong>The Senoia DDA "America 250" logo does not exist publicly.</strong> All 340 enjoysenoia.com sitemap pages, 3,211 unique CDN images, and the DDA's Facebook profile picture were checked — all carry the standard seal. Ask the DDA directly.</li><li><strong>Some businesses genuinely have no better source than a 400–500 px file.</strong> Use a name-only layout rather than blowing it up.</li></ul>
+<h2 id="ch06-one-file-to-avoid"><a class="anchor" href="#ch06-one-file-to-avoid" aria-label="Link to this section">#</a>One file to avoid</h2>
+<p>A file named <code>kim_peacock_logo.png</code> in Downloads is <strong>a contact card carrying personal contact details</strong>, not a logo. Do not place it on a public sign. Use the 2000 × 2000 JPEG instead — and note that the PDF of the same name has artwork rotated 90°.</p>
+<hr />
+<h2 id="ch06-recording-what-you-find"><a class="anchor" href="#ch06-recording-what-you-find" aria-label="Link to this section">#</a>Recording what you find</h2>
+<p>When you finish a batch, write down <strong>the source for each logo</strong> — the exact URL or file path — so next year's rebuild does not redo this research. Add it here, in this chapter, in the same pull request that adds the signs.</p>
+<p>That is the whole reason this chapter is useful: someone wrote it down.</p></section><section class="chapter" id="ch07"><div class="ch-head"><span class="ch-num">CHAPTER 07</span></div><h2 class="ch-title">Accounts &amp; Access</h2><p>Which systems exist, what each is for, and how to get into them.</p>
+<blockquote><p>repository is public. Who holds what belongs in the <strong>private companion document</strong> in the DDA's Google Drive. See <a href="#handover">the handover section</a> below for what that document must contain.</p></blockquote>
+<hr />
+<h2 id="ch07-the-systems"><a class="anchor" href="#ch07-the-systems" aria-label="Link to this section">#</a>The systems</h2>
+<div class="scroll"><table><thead><tr><th>System</th><th>What it holds</th><th>Who administers it</th></tr></thead><tbody><tr><td><strong>Firebase / Google Cloud</strong> — project <code>senoiaporchfest</code></td><td>Hosting, Firestore, Cloud Functions, Auth. Blaze (pay-as-you-go) plan.</td><td>The site maintainer</td></tr><tr><td><strong>GitHub</strong> — <code>jermdw/porchfest</code> (public)</td><td>All code, print generators, this playbook</td><td>The site maintainer</td></tr><tr><td><strong>Namecheap</strong></td><td>DNS for <code>senoiaporchfest.org</code></td><td>The site maintainer</td></tr><tr><td><strong>Ticket Tailor</strong></td><td>VIP tickets and sponsorship checkout</td><td><strong>The DDA</strong></td></tr><tr><td><strong>Resend</strong></td><td>Volunteer confirmation emails</td><td>The site maintainer</td></tr><tr><td><strong>Google Tag Manager / GA4</strong></td><td>Site analytics</td><td>The site maintainer</td></tr><tr><td><strong>Google Drive</strong></td><td>Source artwork, sponsor logos, rosters, the private companion</td><td>The DDA</td></tr></tbody></table></div>
+<p>The <strong>sister site</strong> is the Senoia Car Show (<code>jermdw/senoia-car-show</code>, project <code>senoiacar</code>, senoiacar.show) — same architecture. Fixes that apply to both should usually be ported across.</p>
+<hr />
+<h2 id="ch07-operational-conventions"><a class="anchor" href="#ch07-operational-conventions" aria-label="Link to this section">#</a>Operational conventions</h2>
+<h3 id="ch07-one-account-for-everything"><a class="anchor" href="#ch07-one-account-for-everything" aria-label="Link to this section">#</a>One account for everything</h3>
+<p>All Firebase and Google Cloud work for this project runs through a <strong>single designated operations Google account</strong>. The other login available on this machine has a broken gcloud token, and its default can silently flip back after re-authentication.</p>
+<p>Guard against that:</p>
+<pre class="lang-bash"><code>npx firebase-tools login:use &lt;ops-account&gt;          # pin per directory
+gcloud auth print-access-token --account &lt;ops-account&gt;   # always pass --account</code></pre>
+<p>The Firebase Hosting REST API additionally needs an <code>x-goog-user-project: senoiaporchfest</code> header.</p>
+<h3 id="ch07-ci-has-its-own-identity"><a class="anchor" href="#ch07-ci-has-its-own-identity" aria-label="Link to this section">#</a>CI has its own identity</h3>
+<p>GitHub Actions authenticates by <strong>Workload Identity Federation</strong> — GitHub's OIDC token is exchanged for a <code>github-deploy</code> service account. There is <strong>no service-account key in this repository</strong>, and there should never be one.</p>
+<p>One-time GCP setup is <code>scripts/setup-ci-deploy.sh</code>. It is idempotent — re-run it after granting a new role. (2nd-generation function deploys needed <code>roles/run.admin</code> added this way.)</p>
+<h3 id="ch07-emulator-writes"><a class="anchor" href="#ch07-emulator-writes" aria-label="Link to this section">#</a>Emulator writes</h3>
+<p>Local emulator REST writes need <code>Authorization: Bearer owner</code> to bypass rules.</p>
+<hr />
+<h2 id="ch07-granting-a-new-organizer-access"><a class="anchor" href="#ch07-granting-a-new-organizer-access" aria-label="Link to this section">#</a>Granting a new organizer access</h2>
+<p>Both allowlists are <strong>Firestore documents</strong>, not code. No deploy is needed, and changes take effect immediately.</p>
+<p>lowercase email address. They get the full <code>/admin</code> dashboard, including volunteer contact details.</p>
+<p>their lowercase email, with a <code>categories: string[]</code> field naming the shift categories they may see. They get a read-only roster for those categories only.</p>
+<p>Then confirm they can actually sign in — see <a href="#ch04-admin-sign-in">04 — Admin sign-in</a>. Google accounts use the popup; every other address uses the email magic link.</p>
+<blockquote><p>immediately. Make this part of the post-event close-out.</p></blockquote>
+<hr />
+<h2 id="ch07-cost"><a class="anchor" href="#ch07-cost" aria-label="Link to this section">#</a>Cost</h2>
+<p>The Firebase project is on the <strong>Blaze</strong> plan, which is pay-as-you-go with a free tier. At this event's scale the site costs effectively nothing, but Blaze means there is a <strong>billing account attached</strong> and no hard spending cap by default.</p>
+<p>Worth doing once: set a <strong>budget alert</strong> in Google Cloud Billing so an unexpected bill is noticed early. Ticket Tailor and Resend have their own billing, owned by the DDA and the maintainer respectively.</p>
+<hr />
+<h2 id="ch07-handover"><a class="anchor" href="#ch07-handover" aria-label="Link to this section">#</a>Handover</h2>
+<p>The single biggest continuity risk is not the code — it is that access and context sit with one person. Before handing this off, make sure the <strong>private companion document</strong> in the DDA's Drive contains:</p>
+<ol><li><strong>Who holds each account above</strong>, with the email address used.</li><li><strong>The current <code>admins/</code> and <code>organizers/</code> rosters</strong> — names and emails.</li><li><strong>Billing owners</strong> for Firebase, Ticket Tailor and Resend.</li><li><strong>Domain registrar login ownership</strong> for senoiaporchfest.org.</li><li><strong>Sponsor and vendor contacts</strong>, and <strong>porch host contacts</strong> — never in this repository.</li><li><strong>A named second person</strong> with Firebase project Owner and GitHub admin, so a single unavailable person cannot block the festival.</li></ol>
+<p>Then link that document from the DDA's own files — not from here.</p>
+<blockquote><p>something in it needs to be referenced from the code, reference the <em>role</em> ("the ops account") and keep the identity in Drive.</p></blockquote></section><section class="chapter" id="ch08"><div class="ch-head"><span class="ch-num">CHAPTER 08</span></div><h2 class="ch-title">Open Decisions &amp; Known Issues</h2><p>Things that look like bugs and are not, decisions still owed an answer, and issues handed forward. <strong>Read this before "fixing" anything that seems wrong.</strong></p>
+<hr />
+<h2 id="ch08-the-four-hand-kept-copies-of-the-lineup"><a class="anchor" href="#ch08-the-four-hand-kept-copies-of-the-lineup" aria-label="Link to this section">#</a>The four hand-kept copies of the lineup</h2>
+<p><code>src/data/schedule.js</code> is the source of truth — but <strong>only <code>/schedule</code> and <code>/map</code> read it.</strong> Four other places carry their own hardcoded copy and must be edited by hand on every lineup change:</p>
+<div class="scroll"><table><thead><tr><th>Copy</th><th>Extra hazard</th></tr></thead><tbody><tr><td><code>scripts/lineup_card_template.html</code></td><td>Also carries per-hour <strong>"N Acts" pills</strong> as separate literals from the act lists — they can disagree with the list beside them</td></tr><tr><td><code>scripts/signtower/side4-lineup.html</code></td><td>Tower lineup panel</td></tr><tr><td><code>scripts/signtower/side2-map.html</code></td><td>Tower map pins are <strong>baked percentages</strong>, not derived — a retired stage's pin survives and must be deleted by hand</td></tr><tr><td><code>public/lineup-poster-2026.png</code></td><td>A raster with <strong>no source file in the repo</strong> — see <a href="#stale-artwork-with-no-source">below</a></td></tr></tbody></table></div>
+<h3 id="ch08-the-check-to-run-after-every-lineup-edit"><a class="anchor" href="#ch08-the-check-to-run-after-every-lineup-edit" aria-label="Link to this section">#</a>The check to run after every lineup edit</h3>
+<p>read them side by side; compare them as sets. A 2026 lineup move left one hour's pill claiming eight acts while listing seven, and that is exactly the class of error reading catches too late.</p>
+<p>Expect only these benign differences:</p>
+<ul><li>Curly quotes on the tower panel.</li><li>Column-fitting abbreviations on the lineup card (a long band name shortened to fit).</li></ul>
+<p>Anything else is drift.</p>
+<blockquote><p>The tower panels are <strong>print</strong>. Settle every lineup question before the tower goes to the printer.</p></blockquote>
+<h3 id="ch08-the-tower-map-uses-a-different-bounding-box"><a class="anchor" href="#ch08-the-tower-map-uses-a-different-bounding-box" aria-label="Link to this section">#</a>The tower map uses a different bounding box</h3>
+<p><code>scripts/signtower/side2-map.html</code> uses a z19 crop, whose bounding box differs from <code>BBOX</code> in <code>src/lib/venueGeo.js</code>. To identify an unlabelled pin on it, fit the bounding box from two known pins and compare the X percentage — that method matched to within 0.1%.</p>
+<hr />
+<h2 id="ch08-deliberate-decisions-that-look-like-defects"><a class="anchor" href="#ch08-deliberate-decisions-that-look-like-defects" aria-label="Link to this section">#</a>Deliberate decisions that look like defects</h2>
+<h3 id="ch08-two-blues-on-the-print-signage"><a class="anchor" href="#ch08-two-blues-on-the-print-signage" aria-label="Link to this section">#</a>Two blues on the print signage</h3>
+<p>Yard signs are royal blue <code>#002FA7</code>; banners and towers are brand navy <code>#101D3A</code>. This is intentional and calibrated to physical ink samples. Full reasoning in <a href="#ch05-the-two-blues--do-not-unify-them">05</a>.</p>
+<h3 id="ch08-the-grey-squares-on-the-map-are-openstreetmap-parking-lots"><a class="anchor" href="#ch08-the-grey-squares-on-the-map-are-openstreetmap-parking-lots" aria-label="Link to this section">#</a>The grey squares on the map are OpenStreetMap parking lots</h3>
+<p>Pale grey fill with a dashed outline, baked into the base image; the solid tan shapes are buildings. They sit behind amenity pins because the beverage stations, restrooms and kids' area really are in those lots.</p>
+<p>Verified in 2026: present in both the PNG proof and the PDF, rendered identically by two engines, and unaffected by washing the base image toward white.</p>
+<p>Removing them means re-stitching the base from a fill-free tile style — and <code>BBOX</code> must be regenerated in the same pass or <strong>every pin moves</strong>, on the live <code>/map</code> as well as the tower. Left as-is deliberately.</p>
+<h3 id="ch08-duplicate-volunteer-sign-up-emails-are-allowed"><a class="anchor" href="#ch08-duplicate-volunteer-sign-up-emails-are-allowed" aria-label="Link to this section">#</a>Duplicate volunteer sign-up emails are allowed</h3>
+<p>Households share an address. Not a validation gap.</p>
+<h3 id="ch08-html-background-is-navy-on-purpose"><a class="anchor" href="#ch08-html-background-is-navy-on-purpose" aria-label="Link to this section">#</a><code>html</code> background is navy on purpose</h3>
+<p>So iOS overscroll matches the footer.</p>
+<h3 id="ch08-there-is-no-cms"><a class="anchor" href="#ch08-there-is-no-cms" aria-label="Link to this section">#</a>There is no CMS</h3>
+<p>Page content is hardcoded by choice.</p>
+<hr />
+<h2 id="ch08-open-questions-for-the-organizers"><a class="anchor" href="#ch08-open-questions-for-the-organizers" aria-label="Link to this section">#</a>Open questions for the organizers</h2>
+<p>These are assumptions currently baked into the site and the artwork. Each needs a real answer, and each will otherwise be re-guessed next year.</p>
+<ol><li><strong>Stage number at 57 Morgan St.</strong> The official 2026 card prints "15" for this address <em>and</em> for another; the printed map shows 26 on Morgan. The site uses <strong>26</strong>. Confirm which is correct and fix the card.</li><li><strong>The published act and porch counts.</strong> The marketing copy states counts that the schedule data does not currently support, after a mid-season act withdrawal and a stage retirement. The organizers chose to leave the copy unchanged in the expectation of refilling the vacancy. <strong>Reconcile the copy against <code>src/data/schedule.js</code> before publishing next year's numbers.</strong> The counts appear in <code>src/pages/Landing.jsx</code>, <code>src/pages/Schedule.jsx</code> (both the SEO description <em>and</em> the body), <code>src/pages/Bands.jsx</code>, <code>scripts/lineup_card_template.html</code>, and both tower <code>side1-logo*.html</code> files.</li><li><strong>The VIP event window on Ticket Tailor</strong> is listed as 2:00–3:00 PM. That is on their side, not ours, and is likely just the kickoff hour. The DDA may want to widen it.</li><li><strong>Five Lower Creek Trail porch pins are interpolated</strong> to within about ±30 m from house-number data. Worth an eyeball against the paper map, and worth correcting permanently in <code>src/data/eventMap.js</code> if they are off.</li><li><strong>Clean-up crew timing</strong> was read from a handwritten sheet as 8:00–9:00 PM. Confirm.</li></ol>
+<hr />
+<h2 id="ch08-stale-artwork-with-no-source"><a class="anchor" href="#ch08-stale-artwork-with-no-source" aria-label="Link to this section">#</a>Stale artwork with no source</h2>
+<p>graphic — still lists an act that withdrew. It is referenced in <code>index.html</code>'s Event JSON-LD <code>image</code> array.</p>
+<p>It reads as a design-tool export with a hand-illustrated guitar and <strong>has no generator in this repository</strong>. Fixing it means obtaining the original source file from whoever made it, or redrawing it; editing the raster in place would mean reflowing every row below the deleted one.</p>
+<blockquote><p>replace this poster with something generated from <code>schedule.js</code> like everything else. This is the last piece of artwork that cannot be rebuilt from code.</p></blockquote>
+<hr />
+<h2 id="ch08-pii-currently-public"><a class="anchor" href="#ch08-pii-currently-public" aria-label="Link to this section">#</a>PII currently public</h2>
+<p>The repository is public. Two things in it deserve a deliberate decision by the DDA rather than being left by default:</p>
+<ol><li><strong><code>CLAUDE.md</code> lists five organizers' personal email addresses</strong> (the admin allowlist). These are readable by anyone. The allowlist is <em>data in Firestore</em>, so the file does not need to name anyone — it could say "see the private companion document" and lose nothing operationally.</li></ol>
+<ol><li><strong><code>data/shifts_&lt;year&gt;.csv</code> contains the full names of ten private volunteers</strong>, each paired with a specific location and time window on a specific date. Contact columns are empty, which is good, but the names are not. Pre-registration could instead be seeded from a file kept out of version control, with the committed CSV carrying only open slots.</li></ol>
+<p>Neither is catastrophic and neither is urgent, but both are the kind of thing that is easier to fix now than to explain later. <strong>Nothing was changed here</strong> — this is flagged for the DDA to decide.</p>
+<p>Related: a 2026 pull request already removed personal and payment details from source-code comments, so this repository has been scrubbed once before.</p>
+<hr />
+<h2 id="ch08-console-only-setup-that-must-be-verified-each-year"><a class="anchor" href="#ch08-console-only-setup-that-must-be-verified-each-year" aria-label="Link to this section">#</a>Console-only setup that must be verified each year</h2>
+<p>These cannot be done from code and are easy to forget:</p>
+<ul><li class="task"><input type="checkbox" disabled /><strong>Authentication → Sign-in method</strong> — enable <strong>Google</strong> and <strong>Email link</strong>. Until this is done, <em>no admin can log in</em>.</li><li class="task"><input type="checkbox" disabled /><strong>Authentication → Settings → Authorized domains</strong> — add <code>senoiaporchfest.org</code> once Hosting shows the domain as Connected. Otherwise Google sign-in fails from the custom domain with a generic error.</li><li class="task"><input type="checkbox" disabled /><strong>Resend</strong> — verify the sending domain, set the real <code>RESEND_API_KEY</code>, then run the deploy workflow <strong>by hand with "Also deploy Cloud Functions" ticked</strong>. Until then the secret is a <code>placeholder-*</code> value, sends are skipped, and volunteers cannot self-cancel.</li><li class="task"><input type="checkbox" disabled />Optional: add a DNS record for <code>www.senoiaporchfest.org</code> — it currently has none.</li><li class="task"><input type="checkbox" disabled />Optional: delete the unused stray Firebase project created by mistake in 2026.</li></ul></section></main>
+</div>
+<footer><div class="fin">
+  Generated from <code>docs/playbook/*.md</code> in
+  <code>jermdw/porchfest</code> by <code>scripts/build-playbook-html.py</code>.
+  The markdown is the source of truth — edit there, then regenerate.
+</div></footer>

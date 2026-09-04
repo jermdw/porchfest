@@ -79,7 +79,7 @@ still pointing at it. `/volunteer` then shows **both**.
 The damage is invisible until someone notices the duplicates.
 
 Pre-registered volunteer IDs have the same property one level down —
-`sha1(`${shiftId}|${first}|${last}`).hex.slice(0, 20)` — so a role edit changes
+``sha1(`${shiftId}|${first}|${last}`).hex.slice(0, 20)`` — so a role edit changes
 those too, and the de-duplication lookup misses, duplicating the person.
 
 ### Renaming a role safely
