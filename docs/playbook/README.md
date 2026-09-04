@@ -47,10 +47,10 @@ by keeping personal information out:
   companion document** kept in the DDA's Google Drive, not here. See
   [07 — Accounts & Access](07-accounts-and-access.md).
 
-> **Open item for the DDA:** `CLAUDE.md` in this public repository currently
-> lists five organizers' personal email addresses. See
-> [08 — Open Decisions](08-open-decisions.md#pii-currently-public) for the
-> decision to make.
+> Two PII exposures found while writing this playbook — organizer emails in
+> `CLAUDE.md`, and volunteer names in the shift CSV — were **fixed**. See
+> [08 — PII: resolved, and what remains](08-open-decisions.md#pii-resolved-and-what-remains),
+> which also explains why git history was deliberately left alone.
 
 ---
 

@@ -41,9 +41,13 @@ three identical rows.
 Fill the last four columns to seed someone who signed up on paper. Leave them
 empty for an open slot.
 
-> **Do not commit volunteer contact details.** This repository is public. See
-> [08 — PII currently public](08-open-decisions.md#pii-currently-public); the
-> current CSV already carries names that should be reconsidered.
+> **Two CSVs, on purpose.** This repository is public, so the committed
+> `data/shifts_<year>.csv` carries **open slots only** — columns 4–7 blank. The
+> working sheet with real names and contacts is `data/shifts_<year>.local.csv`,
+> kept out of git by the `*.local.csv` rule, and **that is the one you seed prod
+> from.** Both yield identical shift IDs and `spotsTotal`, since only columns 1–2
+> form a shift's identity — so seeding from either is safe; only the
+> pre-registered volunteers differ. Never commit the local sheet.
 
 ### Seeding
 

@@ -18,7 +18,7 @@ Pulls shifts and active signups via the Firestore REST API (same auth this
 repo's other admin scripts use) rather than the emulator, since a printable
 roster is only useful with real signup data:
 
-    TOKEN=$(gcloud auth print-access-token --account jermdw@gmail.com)
+    TOKEN=$(gcloud auth print-access-token --account <ops-account>)
     python3 scripts/generate_volunteer_roster.py --token "$TOKEN" [--outdir DIR]
 
 Grouping and empty-slot handling mirror the CSV export in src/pages/Admin.jsx

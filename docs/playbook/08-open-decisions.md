@@ -121,30 +121,37 @@ mean reflowing every row below the deleted one.
 
 ---
 
-## PII currently public
+## PII: resolved, and what remains
 
-The repository is public. Two things in it deserve a deliberate decision by the
-DDA rather than being left by default:
+The repository is public. Two exposures were found while writing this playbook
+and **both were fixed** in the same pull request:
 
-1. **`CLAUDE.md` lists five organizers' personal email addresses** (the admin
-   allowlist). These are readable by anyone. The allowlist is *data in
-   Firestore*, so the file does not need to name anyone — it could say "see the
-   private companion document" and lose nothing operationally.
+1. **`CLAUDE.md` listed five organizers' personal email addresses** (the admin
+   allowlist), plus the operations account throughout its commands. The allowlist
+   is *data in Firestore*, so the file never needed to name anyone: it now
+   describes the roster and points at
+   [07 — Accounts & Access](07-accounts-and-access.md), and commands use an
+   `<ops-account>` placeholder named only in the DDA's private Drive companion.
 
-2. **`data/shifts_<year>.csv` contains the full names of ten private
-   volunteers**, each paired with a specific location and time window on a
-   specific date. Contact columns are empty, which is good, but the names are
-   not. Pre-registration could instead be seeded from a file kept out of version
-   control, with the committed CSV carrying only open slots.
+2. **`data/shifts_<year>.csv` contained ten volunteers' full names**, each paired
+   with a location and time on a specific date. The committed CSV now carries
+   open slots only; the working sheet lives at `data/shifts_<year>.local.csv`,
+   gitignored. See
+   [04 — The shift CSV](04-volunteer-system.md#the-shift-csv).
 
-Neither is catastrophic and neither is urgent, but both are the kind of thing
-that is easier to fix now than to explain later. **Nothing was changed here** —
-this is flagged for the DDA to decide.
+> **Git history still holds both.** Scrubbing the files removes them from the
+> current tree and from everything published going forward, but the old commits
+> remain reachable to anyone who looks. Erasing those would mean rewriting the
+> history of a public repository and force-pushing it — destructive, and it
+> breaks every existing clone and PR. **That was deliberately not done.** If the
+> DDA decides the history must be purged too, that is a separate, considered
+> operation to plan on its own.
 
-Related: a 2026 pull request already removed personal and payment details from
-source-code comments, so this repository has been scrubbed once before.
+Keep it that way: the checklist in [the index](README.md#2-this-is-a-public-document)
+is the standing rule for anything added here.
 
----
+An earlier 2026 pull request removed personal and payment details from source
+comments, so this repository has now been scrubbed twice.
 
 ## Console-only setup that must be verified each year
 

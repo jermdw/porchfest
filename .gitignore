@@ -32,3 +32,7 @@ dist-ssr
 # Python (skill scripts)
 __pycache__/
 *.pyc
+
+# Volunteer sheets carrying real names/contacts — this repo is public.
+# Seed from these locally; the committed CSV holds open slots only.
+*.local.csv

@@ -164,7 +164,7 @@ async function seedViaAdminSdk() {
 async function seedViaRest() {
   const token = process.env.GCLOUD_ACCESS_TOKEN
   if (!token) {
-    console.error('Set GCLOUD_ACCESS_TOKEN (gcloud auth print-access-token --account jermdw@gmail.com) for --prod')
+    console.error('Set GCLOUD_ACCESS_TOKEN (gcloud auth print-access-token --account <ops-account>) for --prod')
     process.exit(1)
   }
   const dbPath = `projects/${PROJECT_ID}/databases/(default)`
