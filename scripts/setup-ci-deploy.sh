@@ -2,10 +2,11 @@
 # One-time GCP setup for .github/workflows/deploy.yml (keyless GitHub → Firebase
 # deploys). Idempotent: safe to re-run. Needs gcloud authed as a project Owner:
 #
-#   gcloud auth login jermdw@gmail.com
+#   gcloud auth login <ops-account>
 #   bash scripts/setup-ci-deploy.sh
 #
-# Everything in this project uses jermdw@gmail.com — the CLI's other login
+# Everything in this project uses one ops Google account (see CLAUDE.md;
+# named in the DDA's private Drive companion, not here) — the CLI's other login
 # (senoiahistory.com) has a broken gcloud token. See CLAUDE.md § Accounts.
 #
 # What it does, and why:

@@ -13,6 +13,10 @@ architecture; fixes that apply to both should usually be ported across.
 Event facts (date, lineup, porches, prices, tiers) come from the organizers or
 the official cards/flyers in `public/` — never invent or extrapolate them.
 
+Year-over-year operating knowledge — annual timeline, rollover, print artwork,
+logo sourcing, open decisions — lives in **`docs/playbook/`**. This file stays
+focused on architecture, invariants and gotchas; process goes in the playbook.
+
 ## Status (as of 2026-08-15) — read this first after a break
 
 Shipped and live: landing, `/schedule` (full 41-act lineup), `/map` (interactive
@@ -34,10 +38,12 @@ with correct DNS.
 4. Optional: `www.senoiaporchfest.org` has no DNS record — add in Hosting +
    Namecheap if wanted.
 
-**Admins allowlist** (`admins/{email}` docs, live in prod): stacey211328@gmail.com,
-buffalocreekmama@gmail.com (Melissa Quinn, DDA), georgiareeders@yahoo.com,
-jermdw@gmail.com, jeremywarren@senoiahistory.com. Non-Google addresses sign in
-via the email magic link.
+**Admins allowlist**: `admins/{email}` docs, live in prod — five organizers
+(DDA staff plus the site maintainer). The roster is *data*, so read it from
+Firestore rather than from here, and add or remove a doc to change it; no
+deploy needed. Names and addresses live in the DDA's private Drive companion,
+deliberately not in this public repo. Non-Google addresses sign in via the
+email magic link. See `docs/playbook/07-accounts-and-access.md`.
 
 **Open questions for the organizers** (assumptions currently baked in):
 - Stage number at 57 Morgan St: the official card prints "15" for it AND for
@@ -85,20 +91,28 @@ work for deploying by hand.
 
 Prod seed (idempotent — updates shift text/spotsTotal, never clobbers
 `spotsFilled`, creates only new pre-registered volunteers):
-`GCLOUD_ACCESS_TOKEN=$(gcloud auth print-access-token --account jermdw@gmail.com) node scripts/seed-shifts.mjs data/shifts_2026.csv --prod`
+`GCLOUD_ACCESS_TOKEN=$(gcloud auth print-access-token --account <ops-account>) node scripts/seed-shifts.mjs data/shifts_2026.local.csv --prod`
 
-To change spots on a shift: edit the CSV (one row per slot) and re-seed prod;
+**Two CSVs on purpose.** `data/shifts_2026.csv` is committed and carries open
+slots only — columns 4–7 blank — because this repo is public. The working sheet
+with real names/contacts is `data/shifts_2026.local.csv`, gitignored via
+`*.local.csv`; **seed prod from that one.** Both produce identical shift IDs and
+`spotsTotal` (the columns that form a shift's identity are the same), so seeding
+from either is safe; only the pre-registered volunteers differ.
+
+To change spots on a shift: edit both CSVs (one row per slot) and re-seed prod;
 or use Edit in `/admin`. To add a named pre-registered volunteer: fill columns
-4–7 on their row and re-seed.
+4–7 on their row in the **`.local.csv`** and re-seed.
 
 ### Accounts
 
-- Everything for this project uses **jermdw@gmail.com** — the Firebase CLI's
-  other login (senoiahistory.com) has a broken gcloud token, and its default
-  can silently flip back after re-auth. Pinned per directory via
-  `npx firebase-tools login:use jermdw@gmail.com`; gcloud REST calls need
-  `--account jermdw@gmail.com`; the Firebase Hosting REST API additionally
-  needs an `x-goog-user-project: senoiaporchfest` header.
+- Everything for this project uses a single **ops Google account**, written
+  `<ops-account>` throughout this file (it is named in the DDA's private Drive
+  companion, not here). The Firebase CLI's other available login has a broken
+  gcloud token, and its default can silently flip back after re-auth. Pin it
+  per directory via `npx firebase-tools login:use <ops-account>`; gcloud REST
+  calls need `--account <ops-account>`; the Firebase Hosting REST API
+  additionally needs an `x-goog-user-project: senoiaporchfest` header.
 - A stray Firebase project **`porchfest-6e7dc`** exists (created by mistake;
   the domain was briefly claimed there). It is unused — safe to delete.
 - Emulator REST writes need `Authorization: Bearer owner` to bypass rules.

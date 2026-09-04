@@ -34,11 +34,13 @@ instead of a bespoke heredoc every time.
 
 ### 1. Check what's already done
 
-Read the roster memory before starting: look for a `porchfest-sponsor-signs-roster`
-project memory (`/Users/jermdw/.claude/projects/-Users-jermdw-git-porchfest/memory/`
-if it exists on this machine). It lists every sponsor who already has a sign --
-skip them. If the memory doesn't exist yet, ask the user or check
-`~/Downloads/PorchFest_Sponsor_Signs*` for prior output folders/zips.
+Read **`docs/playbook/06-logo-sourcing.md`** in this repo before starting. It
+lists every sponsor who already has a sign, plus the logo source for each --
+skip the ones that are done, and don't redo the sourcing research for the rest.
+
+That roster is the canonical one and travels with the repo. Prior output
+folders and zips may also exist under `~/Downloads/PorchFest_Sponsor_Signs*`
+on the machine they were built on, but do not rely on them being there.
 
 ### 2. Source each sponsor's logo
 
