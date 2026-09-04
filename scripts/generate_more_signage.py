@@ -1,4 +1,4 @@
-"""Generate two more 24x18in PorchFest yard signs, joining the VIP/wayfinding
+"""Generate more 24x18in PorchFest yard signs, joining the VIP/wayfinding
 batch already printed (`generate_signage.py`, imported here as `base` for its
 palette, fonts, and layout helpers -- same relationship gen_area_sign.py has
 to gen_sponsor_signs.py in the sponsor-sign skill).
@@ -10,6 +10,14 @@ to gen_sponsor_signs.py in the sponsor-sign skill).
    arrows are.
 2. **Parking** -- type-only, same treatment as the existing type-only "VIP
    Parking Only" sign, just the single word so it sets as large as possible.
+3. **VIP Sold Out** -- type-only announcement, same treatment as the existing
+   "VIP Management Only" sign (stacked caps + a flag-red rule underneath).
+4. **Cooling Tent** -- sponsor-led, same structural family as
+   `generate_signage.py`'s "Food Truck Alley" sign: PROVIDED BY / [logo] /
+   rule / COOLING TENT. Logo is Progressive Heating, Air & Plumbing's mark,
+   `scripts/assets/logo-progressive.png` (their own site's header logo --
+   clean vector-quality edges beat the higher-pixel-count photo of a physical
+   decal found on their enjoysenoia.com partner page).
 
     python3 scripts/generate_more_signage.py [--outdir DIR]
 """
@@ -26,6 +34,8 @@ import generate_signage as base
 GUITAR = os.path.join(base.REPO, 'scripts', 'signtower', 'assets',
                        'guitar-bird-final.png')
 GUITAR_ASPECT = 2040 / 4752   # width / height -- a tall, narrow mark
+
+PROGRESSIVE_LOGO = os.path.join(base.ASSETS, 'logo-progressive.png')
 
 
 def sign_strike_a_pose(doc):
@@ -91,6 +101,62 @@ def sign_parking(doc):
     base.place_dove(page, base.YARD_W, base.YARD_H)
 
 
+def sign_vip_sold_out(doc):
+    """VIP SOLD OUT, type-only with the flag-red rule accent -- copies the
+    existing "VIP Management Only" sign's structure exactly (stacked caps,
+    then a short centered rule), just with different words. An announcement
+    rather than a direction, so it keeps that sign's rule for a more
+    finished look instead of the plainer type-only "VIP Parking Only"
+    treatment (no rule, dropped by request when that sign lost its arrows).
+    """
+    page = base.new_yard(doc)
+    text = 'VIP SOLD OUT'
+    gap, rule_th = 78, 14
+    size, lines = base.best_layout(text, base.BAND[2] - base.BAND[0], 860, 400, 3, glue=False)
+    th = base.block_height(size, lines)
+    top = base._band_top(th + gap + rule_th)
+    base.draw_lines(page, lines, size, top, base.ROYAL, base.YARD_W / 2)
+    base.draw_rule(page, base.YARD_W / 2, top + th + gap, 620, base.FLAG, rule_th)
+    base.place_dove(page, base.YARD_W, base.YARD_H)
+
+
+def sign_cooling_tent(doc):
+    """COOLING TENT / PROVIDED BY: / rule / [Progressive logo] -- headline
+    first, sponsor logo last: the standard porch-sponsor sign order ("This
+    Stage Sponsored by:" then the name/logo), not the Food Truck Alley
+    sign's logo-first inversion this originally copied. Changed on request
+    after the first version shipped with the logo above the words.
+    """
+    page = base.new_yard(doc)
+    line1, line2 = 'COOLING TENT', 'PROVIDED BY:'
+    aw = base.BAND[2] - base.BAND[0]
+    band_h = base.BAND[3] - base.BAND[1]
+
+    # One size across both lines so they read as a matched pair.
+    h_size = min(base.best_layout(t, aw, 460, 300, 1, glue=False)[0]
+                 for t in (line1, line2))
+    head_h = base.block_height(h_size, [line1, line2])
+
+    g1, rule_th, g2 = 40, 13, 44
+    logo_h_avail = band_h - head_h - g1 - rule_th - g2
+
+    prepped, pw, ph = base.prep_logo(PROGRESSIVE_LOGO, cache_key='_progressive')
+    lw, lh = base.fit_logo(pw, ph, aw, logo_h_avail, min_dpi=52)
+
+    group_h = head_h + g1 + rule_th + g2 + lh
+    top = base._band_top(group_h)
+    cx = base.YARD_W / 2
+
+    base.draw_lines(page, [line1, line2], h_size, top, base.ROYAL, cx)
+    y = top + head_h + g1
+    base.draw_rule(page, cx, y, 460, base.FLAG, rule_th)
+    y += rule_th + g2
+    page.insert_image(
+        pymupdf.Rect(cx - lw / 2, y, cx + lw / 2, y + lh),
+        filename=prepped)
+    base.place_dove(page, base.YARD_W, base.YARD_H)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--outdir',
@@ -110,6 +176,8 @@ def main():
 
     emit('01 Strike a Chord Strike a Pose', sign_strike_a_pose)
     emit('02 Parking', sign_parking)
+    emit('03 VIP Sold Out', sign_vip_sold_out)
+    emit('04 Cooling Tent', sign_cooling_tent)
 
     base.proof_sheet(made, os.path.join(args.outdir, '_proof.png'))
     for p in made:
