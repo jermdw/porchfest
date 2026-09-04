@@ -81,7 +81,7 @@ export default function Vendors() {
         <p className="text-stone-600 text-sm mt-6">
           Find them on the{' '}
           <a className="underline font-semibold" href="/map?poi=food-trucks">
-            day-of map
+            map
           </a>
           . This is the list as vendors register — if you&rsquo;re expecting someone who
           isn&rsquo;t here yet, they may still be finishing their paperwork.

@@ -68,7 +68,7 @@ export const FAQS = [
     answer:
       'Free public parking is available in municipal downtown lots and along public streets where designated. Senoia is a golf cart-friendly community, and street-legal golf carts are welcome in standard parking spaces. Carts are not permitted on closed pedestrian street segments or residential lawns.',
     link: {
-      text: 'Check parking locations on the day-of map',
+      text: 'Check parking locations on the map',
       url: '/map?poi=parking',
     },
   },

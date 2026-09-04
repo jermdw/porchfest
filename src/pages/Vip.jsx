@@ -73,7 +73,7 @@ export default function Vip() {
           <p className="text-stone-600 text-sm mt-4">
             The lounge is also a porch stage &mdash; Tim McGee plays at 4:00 and the Ashton
             Dooley Band at 7:00. Find it on the{' '}
-            <Link to="/map?poi=vip" className="underline text-flag font-semibold">day-of map</Link>.
+            <Link to="/map?poi=vip" className="underline text-flag font-semibold">map</Link>.
           </p>
         </section>
 

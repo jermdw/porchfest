@@ -46,7 +46,7 @@ export default function Schedule() {
               to="/map"
               className="inline-flex items-center gap-2 bg-flag hover:bg-flag-deep text-cream font-display font-semibold uppercase tracking-wider px-5 py-2.5 rounded-lg text-sm transition-colors shadow"
             >
-              <span>🗺️ Open Interactive Day-Of Map</span>
+              <span>🗺️ Open Interactive Map</span>
               <span>→</span>
             </Link>
             <a
@@ -223,7 +223,7 @@ export default function Schedule() {
           <p className="text-stone-600 text-sm">
             Stage numbers match the physical signs at each porch and the pins on the{' '}
             <Link to="/map" className="font-semibold text-flag underline hover:text-ink">
-              Day-Of Map
+              Map
             </Link>
             .
           </p>

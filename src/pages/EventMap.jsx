@@ -15,7 +15,7 @@ import {
 
 export default function EventMap() {
   usePageMeta({
-    title: 'Day-Of Map — Porch Stages, Food & Parking | Senoia PorchFest',
+    title: 'Map — Porch Stages, Food & Parking | Senoia PorchFest',
     description:
       'The interactive Senoia PorchFest 2026 festival map: every porch stage, plus food, restrooms, parking, and more across historic Senoia, Georgia.',
     path: '/map',
@@ -105,7 +105,7 @@ export default function EventMap() {
       <SiteHeader />
       <main className="flex-1 max-w-3xl mx-auto px-4 py-10 w-full">
         <h1 className="font-display text-4xl uppercase tracking-wide text-ink mb-2">
-          PorchFest <span className="text-flag">Day Of</span>
+          PorchFest <span className="text-flag">Map</span>
         </h1>
         <p className="font-script text-flag text-2xl mb-4">
           Sunday, September 6, 2026
@@ -153,7 +153,7 @@ export default function EventMap() {
         {/* Two intents, one page: "where is it" and "when is it". */}
         <div
           role="tablist"
-          aria-label="Day-of guide"
+          aria-label="Map guide"
           className="flex border-b-2 border-flag mb-6 print:hidden"
         >
           {[
