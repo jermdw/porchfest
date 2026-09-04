@@ -6,6 +6,13 @@ Website + volunteer sign-up system for [Senoia PorchFest](https://www.enjoysenoi
 Firebase project: `senoiaporchfest`. Sister site to
 [senoia-car-show](../senoia-car-show) — same architecture.
 
+## Organizer's Playbook
+
+**[docs/playbook/](docs/playbook/README.md)** — how this festival gets built each
+year: annual timeline, site rollover, volunteer system, print artwork, logo
+sourcing, and the decisions worth not relitigating. Start there if you are
+picking this up after a break.
+
 ## Local development
 
 ```bash

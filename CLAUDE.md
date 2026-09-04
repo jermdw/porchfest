@@ -13,6 +13,10 @@ architecture; fixes that apply to both should usually be ported across.
 Event facts (date, lineup, porches, prices, tiers) come from the organizers or
 the official cards/flyers in `public/` — never invent or extrapolate them.
 
+Year-over-year operating knowledge — annual timeline, rollover, print artwork,
+logo sourcing, open decisions — lives in **`docs/playbook/`**. This file stays
+focused on architecture, invariants and gotchas; process goes in the playbook.
+
 ## Status (as of 2026-08-15) — read this first after a break
 
 Shipped and live: landing, `/schedule` (full 41-act lineup), `/map` (interactive
