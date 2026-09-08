@@ -127,11 +127,22 @@ Hand-edited data files, all under `src/data/`:
 | `foodVendors.js` | `/vendors` |
 | `faq.js` | `/faq` |
 | `bands.js` | `/bands` (currently unpublished) |
+| `gallery.js` | `/photos` |
 
 Reconcile the sponsor roster against the Ticket Tailor export rather than
 against email threads — that is how 2026 finally settled it.
 
-Also update the dates in the site footer and on the landing page.
+`gallery.js` is the one that needs a decision rather than an edit: last year's
+photos are the only content on the site that gets *better* with age. Point
+`GALLERY_YEAR` at the new year and empty `PHOTOS` when the new season opens, but
+keep the old `public/photos/<year>/` files — a future "past years" page is the
+obvious use, and deleting them forecloses it. Photo files are write-once; see
+the caching note at the top of `gallery.js` before replacing one.
+
+Also revert the post-event copy the site is left in over the winter: the landing
+hero's "that's a wrap" line and its `SECTIONS`, the VIP hero and its "VIP
+Tickets" heading (which becomes "Buy VIP Tickets" again), and the dates in the
+site footer and on the landing page.
 
 ## 8. SEO and social
 

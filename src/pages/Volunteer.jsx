@@ -66,9 +66,16 @@ export default function Volunteer() {
           Volunteer <span className="text-flag-bright">Sign-Up</span>
         </h1>
         <p className="text-pale/80 mt-3 max-w-xl mx-auto">
-          PorchFest is free to attend because volunteers make it happen. Pick a
-          shift below — no account needed. You'll get a confirmation email with
-          a link in case you need to cancel.
+          PorchFest is free to attend because volunteers make it happen.
+          {/* Only promise a sign-up once we know sign-ups are actually open.
+              `event` is null until the listener fires, and claiming "pick a
+              shift below" directly above a "sign-ups are closed" message — for
+              even a moment — reads as a broken page. */}
+          {event === null
+            ? null
+            : closed
+              ? ' Thank you to everyone who took a shift this year.'
+              : " Pick a shift below — no account needed. You'll get a confirmation email with a link in case you need to cancel."}
         </p>
       </header>
 

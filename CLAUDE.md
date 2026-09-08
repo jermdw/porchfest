@@ -63,7 +63,9 @@ email magic link. See `docs/playbook/07-accounts-and-access.md`.
 lineup); amenity POIs in `src/data/eventMap.js`; Ticket Tailor URLs in
 `src/pages/Vip.jsx` (new events each year); `index.html` JSON-LD/social meta
 + `public/share-card-*.png`; `public/sitemap.xml` lastmods; posters in
-`public/`; footer/landing dates. Consider whether the map base image still
+`public/`; footer/landing dates; `GALLERY_YEAR`/`PHOTOS` in
+`src/data/gallery.js` (+ a new `public/photos/<year>/`) and the post-event
+copy on Landing/Vip. Consider whether the map base image still
 covers the venue (`BBOX` in `venueGeo.js` must match the image exactly).
 
 ## Commands

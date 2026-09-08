@@ -36,7 +36,7 @@ export default function Vip() {
     <div className="min-h-screen bg-cream flex flex-col">
       <SiteHeader />
       <header className="bg-ink text-cream px-6 pt-8 pb-10 text-center">
-        <p className="font-script text-flag-bright text-3xl mb-1">Kick off PorchFest as a VIP</p>
+        <p className="font-script text-flag-bright text-3xl mb-1">A sold-out afternoon</p>
         <h1 className="text-3xl sm:text-5xl font-display font-semibold uppercase tracking-wide">
           VIP Luxury Lounge
         </h1>
@@ -44,16 +44,19 @@ export default function Vip() {
           Sponsored by BMW of South Atlanta
         </p>
         <p className="text-pale/90 mt-5 max-w-xl mx-auto">
-          Sunday, September 6 &middot; doors at 2:00pm &middot; the Senoia Farmers&rsquo;
-          Market, 40 Travis Street. <strong className="text-cream">$100 per ticket</strong>{' '}
-          &mdash; limited tickets sold.
+          The 2026 lounge sold out. It ran on Sunday, September 6 at the Senoia
+          Farmers&rsquo; Market, 40 Travis Street &mdash; thank you to everyone who joined
+          us. <strong className="text-cream">Watch this page for 2027 tickets.</strong>
         </p>
       </header>
 
       <main className="flex-1 max-w-3xl mx-auto px-4 py-10 w-full">
         <section aria-labelledby="buy" className="mb-12">
+          {/* Not "Buy" while the 2026 event is sold out and over — the widget
+              below still renders, and inviting a purchase above it reads as
+              broken. Reword to "Buy VIP Tickets" at the 2027 rollover. */}
           <h2 id="buy" className="font-display text-2xl uppercase tracking-wide text-ink border-b-2 border-flag pb-2 mb-4">
-            Buy VIP Tickets
+            VIP Tickets
           </h2>
           <TicketTailorWidget checkoutUrl={VIP_CHECKOUT} />
         </section>
