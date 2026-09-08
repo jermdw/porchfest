@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import AppRoutes from './AppRoutes.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
-import { initGtm } from './lib/gtm.js'
+import { initGtm, pushError } from './lib/gtm.js'
 
 // Analytics must not race the hero art for a congested pipe: on Slow 4G the
 // gtm.js request was measured going out ahead of the wordmark and both fonts.
@@ -25,6 +25,10 @@ class ErrorBoundary extends Component {
   }
   componentDidCatch(error, info) {
     console.error('render error', error, info)
+    // The console line above only ever reached the visitor's own devtools, so
+    // a white screen in the wild left no trace. Report it to GA4 as well —
+    // pushError swallows its own failures, so this cannot make things worse.
+    pushError(error, info?.componentStack)
   }
   render() {
     if (!this.state.failed) return this.props.children

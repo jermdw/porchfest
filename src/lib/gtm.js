@@ -39,3 +39,54 @@ export function pushVolunteerSignup(shift) {
     shift_category: shift.category,
   })
 }
+
+// Fires when the ErrorBoundary catches a render error, for GTM's "Custom Event
+// - app_error" trigger. Until now a render failure only reached the visitor's
+// own console, so a white screen in the wild was invisible to us.
+//
+// Three constraints shape this:
+//
+// 1. It must never throw. It runs inside componentDidCatch, i.e. the app is
+//    already broken; an exception here would take out the error boundary too.
+//    Hence the try/catch around everything, including the dataLayer push.
+// 2. It must not carry PII. `/cancel?token=` holds a live cancellation token in
+//    its query string, so we send `pathname` only — never `search` — for the
+//    same reason pushPageView does.
+// 3. GA4 truncates event parameters at 100 characters, silently. Truncating
+//    here instead keeps the useful half rather than whatever happens to fall in
+//    the first 100 chars, and makes what we send predictable.
+//
+// Safe to call before GTM has loaded: the container replays whatever is already
+// queued on dataLayer when it arrives.
+const GA4_PARAM_MAX = 100
+
+function clip(value, max = GA4_PARAM_MAX) {
+  const text = String(value ?? '')
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text
+}
+
+// The first frame of React's component stack — "    in Schedule (at ...)" —
+// names the component that actually threw, which is the single most useful
+// field when triaging. The rest is ancestry we can infer.
+function topFrame(componentStack) {
+  const first = String(componentStack ?? '')
+    .split('\n')
+    .map((line) => line.trim())
+    .find(Boolean)
+  return first ? clip(first.replace(/^in\s+/, '')) : 'unknown'
+}
+
+export function pushError(error, componentStack) {
+  try {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({
+      event: 'app_error',
+      error_name: clip(error?.name || 'Error'),
+      error_message: clip(error?.message || String(error)),
+      error_component: topFrame(componentStack),
+      error_path: window.location.pathname,
+    })
+  } catch {
+    // Reporting must never be the reason a broken page gets worse.
+  }
+}
