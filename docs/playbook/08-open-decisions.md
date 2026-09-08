@@ -166,7 +166,65 @@ These cannot be done from code and are easy to forget:
       run the deploy workflow **by hand with "Also deploy Cloud Functions"
       ticked**. Until then the secret is a `placeholder-*` value, sends are
       skipped, and volunteers cannot self-cancel.
-- [ ] Optional: add a DNS record for `www.senoiaporchfest.org` — it currently has
-      none.
+- [ ] **Cloud Run invoker on every callable** — a green functions deploy does not
+      prove a new callable is reachable. See
+      [04 — the invoker trap](04-volunteer-system.md#the-invoker-trap-a-green-deploy-does-not-mean-the-callable-is-reachable).
 - [ ] Optional: delete the unused stray Firebase project created by mistake in
       2026.
+
+### Where 2026 actually landed
+
+Verified against the live project on 6-8 Sep 2026. Re-verify each year — this is
+a record of one year's outcome, not a substitute for the checklist above.
+
+- **Sign-in methods** — done. Google and Email link both enabled.
+- **Authorized domains** — done, and it includes `www.senoiaporchfest.org`.
+- **Resend** — *never done.* The key stayed on `placeholder` for the whole
+  season, so no confirmation email was ever sent. This is the one item that
+  actually cost something; see
+  [04 — Confirmation emails](04-volunteer-system.md#confirmation-emails).
+- **`www`** — a DNS record now exists (`CNAME` → `senoiaporchfest.web.app`), but
+  the subdomain is **broken**, see below.
+
+### `www.senoiaporchfest.org` was broken by a typo — fixed 8 Sep 2026
+
+On 23 Aug 2026 someone set up the `www` → apex redirect and got it half right.
+The DNS record was created with the correct spelling; the Hosting custom domain
+was created as **`www.seniaporchfest.org`** — missing the `o` in *Senoia*.
+
+The two halves then waited for each other for a fortnight. Hosting sat in
+`HOST_UNHOSTED` / `OWNERSHIP_MISSING`, asking for a `CNAME` on a hostname nobody
+owns, while the real `www.senoiaporchfest.org` resolved to Firebase with no
+certificate covering it.
+
+It was worth being sure this was a typo and not a leftover, because the two imply
+different fixes. It was a typo: the record was created on 23 Aug 2026 (long after
+the stray project of early 2026, which has no custom domains at all), and its
+`redirectTarget` is set to `senoiaporchfest.org` — someone was deliberately
+building the `www` redirect. Auth's authorized-domains list, set up separately,
+has the correct spelling.
+
+A visitor who typed `www.` got:
+
+```
+http  → 301 to https://www.senoiaporchfest.org/
+https → SSL: no alternative certificate subject name matches target host name
+```
+
+— a browser security warning, not the site. Bare `senoiaporchfest.org` was
+`HOST_ACTIVE` and unaffected throughout, which is why this went unnoticed for two
+weeks.
+
+**What fixed it**, on 8 Sep 2026: `www.senoiaporchfest.org` was added as a custom
+domain redirecting to the apex, and the misspelled entry deleted. Because the DNS
+record was already correct, ownership verified immediately — the domain went
+straight to `HOST_ACTIVE` / `OWNERSHIP_ACTIVE`, leaving only the certificate to
+issue, which takes up to 24h.
+
+If you ever add it again, check the spelling character by character; that is
+exactly how this happened the first time.
+
+**The general lesson:** a custom domain stuck in `HOST_UNHOSTED` is not
+necessarily "still propagating." Read `requiredDnsUpdates` and compare the
+hostname it is asking about against the one you actually own — Hosting will wait
+patiently forever for a domain that does not exist.
