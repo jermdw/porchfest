@@ -57,6 +57,12 @@ is not done for a copy change.
 > This is why **setting the real `RESEND_API_KEY` requires a manual workflow
 > run** — the secret value is only picked up by a functions deploy.
 
+A successful functions deploy does not prove a *new* callable is reachable —
+Firebase grants the public invoker role in a separate step that can silently not
+happen, leaving Cloud Run to reject every request before your code runs. After
+adding a callable, check its invoker binding:
+[04 — the invoker trap](04-volunteer-system.md#the-invoker-trap-a-green-deploy-does-not-mean-the-callable-is-reachable).
+
 Authentication to GCP is keyless (Workload Identity Federation); no
 service-account key lives in the repo. One-time setup is in
 `scripts/setup-ci-deploy.sh`, which is idempotent — re-run it after adding a

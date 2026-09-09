@@ -164,6 +164,59 @@ list rules cannot filter per-document through a `get()` indirection — the whol
 query fails unless the client's `where` clauses let Firestore prove every match
 passes. The callable was the smaller change.
 
+### The invoker trap: a green deploy does not mean the callable is reachable
+
+Firebase grants `allUsers` the `run.invoker` role on a v2 callable as a step
+*after* the Cloud Run service is created. When that step doesn't happen, **the
+deploy still reports success** and the callable is unreachable — Cloud Run
+rejects every request at the edge, before any of your code runs.
+
+This happened to `getOrganizerRoster`. It went out on 2 Sep 2026 with no IAM
+bindings at all and was found during the show-day check on 7 Sep. `signUp` and
+`cancelSignup`, added a year earlier, both had theirs.
+
+**Why it hides so well.** The status code is 403 either way. Only the sender
+differs:
+
+| Rejected by | What comes back |
+| --- | --- |
+| Cloud Run edge (no invoker) | `The request was not authenticated... Empty Authorization header value` |
+| Your function (`functions/index.js`) | `{"error":{"message":"Sign in required.","status":"PERMISSION_DENIED"}}` |
+
+The edge rejection logs a `WARNING` against the **Cloud Run service**, not in the
+function's own logs — so the place you would naturally look shows nothing at all,
+and the browser only sees the callable SDK surface a generic `internal` error.
+
+**Check this after adding any callable.** The service name is the function name
+**lowercased** (`getOrganizerRoster` → `getorganizerroster`), which matters here
+and when filtering logs:
+
+```bash
+gcloud run services get-iam-policy getorganizerroster \
+  --region us-central1 --project senoiaporchfest \
+  --format="value(bindings.role,bindings.members)"
+```
+
+Expect `roles/run.invoker ['allUsers']`. **Empty output is the trap.** Fix it:
+
+```bash
+gcloud run services add-iam-policy-binding getorganizerroster \
+  --region us-central1 --project senoiaporchfest \
+  --member=allUsers --role=roles/run.invoker
+```
+
+That is live IAM only — no repo change, no deploy, effective immediately.
+
+Granting `allUsers` is correct here and is **not** a hole: it only means "Cloud
+Run will let the request reach the function." Each callable still authenticates
+its own caller — `getOrganizerRoster` verifies the Firebase ID token and the
+`organizers/{email}` allowlist before returning anything. It is the same posture
+as `signUp` and `cancelSignup`, which have to serve volunteers who have no
+account at all.
+
+The Senoia Car Show has only `signUp` and `cancelSignup`, and both were verified
+correct in Sep 2026 — but run the same check there after adding a third.
+
 ### Duplicate sign-up emails are allowed by design
 
 Households share an email address. Do not "fix" this.
@@ -185,8 +238,15 @@ the value starts with `placeholder`.** To turn emails on:
 3. Run the deploy workflow by hand with **"Also deploy Cloud Functions"** ticked
    — rebinding the secret requires a functions deploy.
 
-Confirmation emails carry the `/cancel?token=` link, so until this is done,
-volunteers cannot self-cancel.
+Confirmation emails carry the `/cancel?token=` link, so until this is done
+volunteers have no way to reach it on their own.
+
+The token itself does **not** come from the email path — `signUp` writes
+`cancelToken` onto the sign-up document either way. So an organizer can always
+read it from `/admin` and pass the link on, or just remove the volunteer there.
+Worth knowing before anyone panics: in 2026 the key sat on `placeholder` all
+season, so every self-serve sign-up went un-emailed — and every one of them had a
+working token the whole time.
 
 ---
 
