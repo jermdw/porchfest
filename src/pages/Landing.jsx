@@ -5,32 +5,37 @@ import usePageMeta from '../lib/usePageMeta.js'
 import wordmark from '../assets/porchfest-wordmark.svg'
 
 const HIGHLIGHTS = [
-  ['Free', 'Admission — stroll porch to porch all evening'],
+  ['Free', 'Admission — porch to porch, all evening'],
   ['29 Porches', 'Plus the Main Stage closing act at 8pm'],
-  ['3–10pm', 'Sunday, September 6 · music starts at 3'],
+  ['3–10pm', 'Sunday, September 6, 2026'],
 ]
 
+// Post-event, the landing page's job changes: it stops selling the day and
+// starts being the record of it. Schedule and Map stay because they are the
+// archive people link to; Sponsors is the thank-you. VIP and Volunteer are
+// deliberately not cards any more — tickets are gone and sign-ups are closed —
+// but both are still one tap away in the nav.
+//
+// The /photos gallery is built but deliberately unlinked until it has photos
+// in it; an empty gallery is worse than no gallery. When the photos land, add
+// its card back here as `featured`, point the hero CTA at it, restore the nav
+// link in SiteHeader and the sitemap entry.
 const SECTIONS = [
   {
     to: '/schedule',
     title: 'Schedule',
-    text: 'Who’s playing, where, and when — plan your porch-to-porch route.',
+    text: 'Who played, where, and when — the full 2026 lineup.',
+    featured: true,
   },
   {
     to: '/map',
     title: 'Map',
-    text: 'The interactive festival map: porch stages, food, parking, and more.',
+    text: 'The 2026 festival map: porch stages, food, parking, and more.',
   },
   {
-    to: '/vip',
-    title: 'VIP Tickets',
-    text: 'The VIP Luxury Lounge sponsored by BMW of South Atlanta — $100, limited.',
-  },
-  {
-    to: '/volunteer',
-    title: 'Volunteer',
-    text: 'PorchFest runs on volunteers — grab a shift and be part of it.',
-    featured: true,
+    to: '/sponsors',
+    title: 'Sponsors',
+    text: 'The local businesses who kept PorchFest free for everyone.',
   },
 ]
 
@@ -64,14 +69,17 @@ export default function Landing() {
               Sunday, September 6, 2026 &middot; 3&ndash;10pm
             </span>
           </h1>
-          <p className="font-display text-lg uppercase tracking-widest text-pale/80 mt-1 mb-10">
+          <p className="font-display text-lg uppercase tracking-widest text-pale/80 mt-1 mb-8">
             5th Annual &middot; Live music on the porches of historic Senoia
           </p>
+          <p className="font-script text-flag-bright text-2xl sm:text-3xl mb-8">
+            That&rsquo;s a wrap — thank you, Senoia. See you in 2027.
+          </p>
           <Link
-            to="/volunteer"
+            to="/schedule"
             className="inline-block bg-flag hover:bg-flag-deep text-cream font-display font-semibold text-xl uppercase tracking-wider px-10 py-4 rounded-md shadow-lg transition-colors"
           >
-            Volunteer Sign-Up
+            See the 2026 Lineup
           </Link>
         </section>
 
