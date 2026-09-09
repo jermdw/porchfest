@@ -121,6 +121,12 @@ export default function Gallery() {
     title: `${GALLERY_YEAR} Photo Gallery | Senoia PorchFest`,
     description: `Highlights from Senoia PorchFest ${GALLERY_YEAR} — a day of live music on the porches of historic Senoia, Georgia.`,
     path: '/photos',
+    // An empty gallery is not worth indexing, and a "check back soon" page in
+    // search results is worse than no result at all. This flips itself the
+    // moment the first photo is added, so there is nothing to remember —
+    // but the nav link and the sitemap entry are still manual (see
+    // playbook 02 → Content pages).
+    noindex: PHOTOS.length === 0,
   })
 
   const [openIndex, setOpenIndex] = useState(null)

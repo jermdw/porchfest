@@ -132,6 +132,14 @@ Hand-edited data files, all under `src/data/`:
 Reconcile the sponsor roster against the Ticket Tailor export rather than
 against email threads — that is how 2026 finally settled it.
 
+**Publishing the gallery is four edits, not one.** The page is deliberately
+inert until it has photos in it — an empty gallery is worse than no gallery — so
+adding the first photos means also: restoring the `/photos` link in
+`SiteHeader.jsx`, adding its card back to `SECTIONS` in `Landing.jsx` (and
+pointing the hero CTA at it), and adding the route to `public/sitemap.xml`. The
+`noindex` flag is the one thing that clears itself, since it is derived from
+`PHOTOS.length`.
+
 `gallery.js` is the one that needs a decision rather than an edit: last year's
 photos are the only content on the site that gets *better* with age. Point
 `GALLERY_YEAR` at the new year and empty `PHOTOS` when the new season opens, but

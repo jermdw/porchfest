@@ -11,21 +11,21 @@ const HIGHLIGHTS = [
 ]
 
 // Post-event, the landing page's job changes: it stops selling the day and
-// starts being the record of it. Photos lead; Schedule and Map stay because
-// they are the archive people link to; Sponsors is the thank-you. VIP and
-// Volunteer are deliberately not cards any more — tickets are gone and
-// sign-ups are closed — but both are still one tap away in the nav.
+// starts being the record of it. Schedule and Map stay because they are the
+// archive people link to; Sponsors is the thank-you. VIP and Volunteer are
+// deliberately not cards any more — tickets are gone and sign-ups are closed —
+// but both are still one tap away in the nav.
+//
+// The /photos gallery is built but deliberately unlinked until it has photos
+// in it; an empty gallery is worse than no gallery. When the photos land, add
+// its card back here as `featured`, point the hero CTA at it, restore the nav
+// link in SiteHeader and the sitemap entry.
 const SECTIONS = [
-  {
-    to: '/photos',
-    title: '2026 Highlights',
-    text: 'Photos from the day — porches, crowds, and ten hours of music.',
-    featured: true,
-  },
   {
     to: '/schedule',
     title: 'Schedule',
     text: 'Who played, where, and when — the full 2026 lineup.',
+    featured: true,
   },
   {
     to: '/map',
@@ -76,10 +76,10 @@ export default function Landing() {
             That&rsquo;s a wrap — thank you, Senoia. See you in 2027.
           </p>
           <Link
-            to="/photos"
+            to="/schedule"
             className="inline-block bg-flag hover:bg-flag-deep text-cream font-display font-semibold text-xl uppercase tracking-wider px-10 py-4 rounded-md shadow-lg transition-colors"
           >
-            See the Highlights
+            See the 2026 Lineup
           </Link>
         </section>
 

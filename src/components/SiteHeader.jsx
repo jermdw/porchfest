@@ -18,7 +18,7 @@ const LINKS = [
   { to: '/vendors', label: 'Food' },
   { to: '/sponsors', label: 'Sponsors' },
   { to: '/faq', label: 'FAQ' },
-  { to: '/photos', label: 'Photos' },
+  // { to: '/photos', label: 'Photos' },  ← restore once gallery.js has photos
   { to: '/volunteer', label: 'Volunteer' },
 ]
 
