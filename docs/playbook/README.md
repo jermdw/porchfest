@@ -16,6 +16,7 @@ planners can pick it up cold, a full year later, without re-deriving any of it.
 | 06 | [Logo Sourcing](06-logo-sourcing.md) | You need a sponsor's logo at print resolution. |
 | 07 | [Accounts & Access](07-accounts-and-access.md) | You need to get into something. |
 | 08 | [Open Decisions & Known Issues](08-open-decisions.md) | Before you "fix" something that was decided deliberately. |
+| 09 | [2026 Performance Report](09-performance-2026.md) | Setting this year's targets, or comparing against the 2026 baseline. |
 
 ---
 
